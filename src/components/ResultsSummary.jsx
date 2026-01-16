@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity, Zap } from 'lucide-react';
+import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity, Zap, Terminal } from 'lucide-react';
 
 export const ResultsSummary = ({ 
   monthlyPayment, 
@@ -15,6 +15,11 @@ export const ResultsSummary = ({
 }) => {
 
   const isBenefitNegative = netBenefit < 0;
+
+  // Texto dinámico para Dummies
+  const analysisText = isBenefitNegative
+    ? `ATENCIÓN: Bonificar NO te compensa. Al contratar los seguros, tu cuota mensual de hipoteca baja, pero el coste de estos productos es superior al ahorro. En la práctica, tu TAE (coste real) SUBE del ${nonBonifiedTAE.toFixed(2)}% al ${tae.toFixed(2)}%. Estás pagando ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en seguros para ahorrarte solo ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses.`
+    : `VEREDICTO: Bonificar ES rentable. Al contratar los productos, tu TAE (coste real) baja del ${nonBonifiedTAE.toFixed(2)}% al ${tae.toFixed(2)}%. Aunque pagas ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ por los seguros, el banco te perdona ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses, dejándote un beneficio limpio de ${netBenefit.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€.`;
 
   return (
     <div className="space-y-8 font-mono">
@@ -45,11 +50,11 @@ export const ResultsSummary = ({
         
         {/* BLOQUE DE ANÁLISIS DE DATOS */}
         <div className="col-span-1 md:col-span-2 bg-card p-6 border border-border cyber-chamfer">
-          <h3 className="text-sm font-bold text-accent-tertiary mb-8 flex items-center gap-2 uppercase tracking-[0.2em]">
+          <h3 className="text-sm font-bold text-accent-tertiary mb-6 flex items-center gap-2 uppercase tracking-[0.2em]">
             <Activity className="w-4 h-4" /> Flujo de Crédito vs Coste de Vida
           </h3>
 
-          <div className="flex flex-col lg:flex-row items-stretch justify-between gap-4">
+          <div className="flex flex-col lg:flex-row items-stretch justify-between gap-4 mb-6">
             
             {/* SAVINGS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent">
@@ -57,12 +62,9 @@ export const ResultsSummary = ({
               <div className="text-3xl font-display font-black text-accent mt-1 tracking-tighter">
                 {interestSavings.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
-              <p className="text-xs text-gray-500 px-2">
-                Al bajar el interés (TAE del {nonBonifiedTAE.toFixed(2)}% al {tae.toFixed(2)}%), pagas menos al banco.
-              </p>
             </div>
 
-            <div className="flex items-center justify-center text-border">-</div>
+            <div className="hidden lg:flex items-center justify-center text-border text-2xl font-mono">-</div>
 
             {/* COSTS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent-secondary">
@@ -70,12 +72,9 @@ export const ResultsSummary = ({
               <div className="text-3xl font-display font-black text-accent-secondary mt-1 tracking-tighter">
                 -{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
-              <div className="mt-2 text-[10px] text-gray-500 font-mono italic">
-                TOTAL_LIFE_CYCLE_COST
-              </div>
             </div>
 
-            <div className="flex items-center justify-center text-border">=</div>
+            <div className="hidden lg:flex items-center justify-center text-border text-2xl font-mono">=</div>
 
             {/* NET RESULT */}
             <div className={`flex-1 p-4 border-2 shadow-neon ${isBenefitNegative ? 'bg-red-950/40 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'bg-accent/10 border-accent'}`}>
@@ -85,12 +84,22 @@ export const ResultsSummary = ({
               <div className={`text-4xl font-display font-black mt-1 tracking-tighter ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
                 {Math.abs(netBenefit).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
-              <div className="mt-2 text-[10px] opacity-50 font-mono uppercase">
-                Resultado de Operación Final
-              </div>
             </div>
 
           </div>
+
+          {/* LOG TÁCTICO PARA DUMMIES */}
+          <div className="bg-black/60 border border-gray-800 p-4 font-mono text-xs leading-relaxed text-gray-400 relative">
+             <div className="absolute top-0 left-0 bg-gray-800 text-[9px] font-bold px-1 text-gray-300 uppercase">Mission_Log</div>
+             <div className="flex gap-3 mt-2">
+                <Terminal className="w-4 h-4 text-accent flex-shrink-0 mt-0.5" />
+                <p>
+                  <span className="text-accent mr-2">{'>'}</span>
+                  {analysisText}
+                </p>
+             </div>
+          </div>
+
         </div>
 
         {/* COLUMNA IZQUIERDA: PAGO MENSUAL HUD */}
