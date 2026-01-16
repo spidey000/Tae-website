@@ -16,10 +16,10 @@ export const ResultsSummary = ({
 
   const isBenefitNegative = netBenefit < 0;
 
-  // Texto dinámico para Dummies
+  // Texto dinámico para Dummies (Refined Logic)
   const analysisText = isBenefitNegative
-    ? `ATENCIÓN: Bonificar NO te compensa. Al contratar los seguros, tu cuota mensual de hipoteca baja, pero el coste de estos productos es superior al ahorro. En la práctica, tu TAE (coste real) SUBE del ${nonBonifiedTAE.toFixed(2)}% al ${tae.toFixed(2)}%. Estás pagando ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en seguros para ahorrarte solo ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses.`
-    : `VEREDICTO: Bonificar ES rentable. Al contratar los productos, tu TAE (coste real) baja del ${nonBonifiedTAE.toFixed(2)}% al ${tae.toFixed(2)}%. Aunque pagas ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ por los seguros, el banco te perdona ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses, dejándote un beneficio limpio de ${netBenefit.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€.`;
+    ? `DECISIÓN: NO COMPENSA. Hemos aislado la comparativa: los gastos iniciales (Notaría, Registro...) los pagas igual en ambos casos, así que los hemos sacado de la ecuación. Nos centramos solo en la bonificación: Contratar los seguros te cuesta ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€, pero solo te ahorra ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses. Resultado: Regalas dinero al banco.`
+    : `DECISIÓN: SÍ COMPENSA. Análisis simplificado: Los gastos de constitución (Notaría, Registro...) no afectan a esta decisión porque los pagas en ambos escenarios. La clave está en la bonificación: Te gastas ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en seguros, pero a cambio el banco te perdona ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses. El ahorro es real y directo a tu bolsillo.`;
 
   return (
     <div className="space-y-8 font-mono">
