@@ -76,6 +76,21 @@ function App() {
 
     const totalPaid = (monthlyOutflow * years * 12) + activeExpensesSum;
 
+    // --- NON-BONIFIED SCENARIO (Comparison) ---
+    // Assuming no products are taken, so TIN is baseTIN
+    const nonBonifiedPayment = calculateMonthlyPayment(capital, baseTIN, years);
+    const nonBonifiedTotalPaid = (nonBonifiedPayment * years * 12) + activeExpensesSum;
+    // TAE for non-bonified: uses baseTIN payment, but still includes initial expenses (netCapital is same)
+    const nonBonifiedTAE = calculateTAE(netCapital, nonBonifiedPayment, years); 
+    
+    // --- METRICS FOR DASHBOARD ---
+    const totalInterestBonified = (payment * years * 12) - capital;
+    const totalInterestNonBonified = (nonBonifiedPayment * years * 12) - capital;
+    
+    const interestSavings = totalInterestNonBonified - totalInterestBonified;
+    const totalProductCost = activeProductsMonthlyCost * years * 12;
+    const netBenefit = interestSavings - totalProductCost;
+
     return {
       finalTIN: calculatedTIN,
       monthlyPayment: payment,
@@ -84,7 +99,15 @@ function App() {
       totalCost: totalPaid,
       activeInitialExpenses: activeExpensesSum,
       activeProductsCost: activeProductsMonthlyCost,
-      activeBonus: activeBonusTotal
+      activeBonus: activeBonusTotal,
+      // New Comparison Data
+      nonBonifiedTAE,
+      interestSavings,
+      totalProductCost,
+      netBenefit,
+      nonBonifiedPayment,
+      totalInterestBonified,
+      totalInterestNonBonified
     };
   }, [capital, years, baseTIN, initialExpenses, linkedProducts]);
 
@@ -209,10 +232,21 @@ function App() {
         {/* Right Column: Results */}
         <div className="lg:col-span-8 space-y-6">
           <ResultsSummary 
+            // Basic
             monthlyPayment={monthlyPayment} 
             finalTIN={finalTIN} 
             tae={tae} 
             totalCost={totalCost}
+            // Comparison / Dashboard Data
+            nonBonifiedTAE={nonBonifiedTAE}
+            interestSavings={interestSavings}
+            totalProductCost={totalProductCost}
+            netBenefit={netBenefit}
+            activeProductsMonthlyCost={activeProductsMonthlyCost}
+            activeInitialExpenses={activeInitialExpenses}
+            initialExpensesList={initialExpenses.filter(e => e.enabled)}
+            capital={capital}
+            totalInterestBonified={totalInterestBonified}
           />
           
           <div className="bg-white p-5 rounded-lg shadow border border-gray-200">
