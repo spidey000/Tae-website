@@ -15,7 +15,7 @@ export const InputGroup = ({ label, value, onChange, type = 'number', suffix, pr
           type={type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="block w-full bg-black/40 border border-border text-accent font-mono text-sm p-2.5 pl-8 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all cyber-chamfer"
+          className="block w-full bg-black/40 border border-border text-accent font-numbers text-sm p-2.5 pl-8 focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all cyber-chamfer"
           placeholder="0.00"
           min={min}
           max={max}

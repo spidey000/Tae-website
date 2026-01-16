@@ -57,7 +57,7 @@ export const ResultsSummary = ({
             {/* SAVINGS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent">
               <span className="text-[10px] font-bold text-accent/60 uppercase">Intereses Evitados</span>
-              <div className="text-3xl font-display font-black text-accent mt-1 tracking-tighter">
+              <div className="text-3xl font-numbers font-bold text-accent mt-1 tracking-tighter tabular-nums">
                 {interestSavings.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
             </div>
@@ -67,7 +67,7 @@ export const ResultsSummary = ({
             {/* COSTS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent-secondary">
               <span className="text-[10px] font-bold text-accent-secondary/60 uppercase">Carga de Vinculación</span>
-              <div className="text-3xl font-display font-black text-accent-secondary mt-1 tracking-tighter">
+              <div className="text-3xl font-numbers font-bold text-accent-secondary mt-1 tracking-tighter tabular-nums">
                 -{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
             </div>
@@ -79,7 +79,7 @@ export const ResultsSummary = ({
               <span className={`text-[10px] font-bold uppercase ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
                 {isBenefitNegative ? 'DÉFICIT_NETO' : 'CRÉDITO_LIMPIO'}
               </span>
-              <div className={`text-4xl font-display font-black mt-1 tracking-tighter ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
+              <div className={`text-4xl font-numbers font-bold mt-1 tracking-tighter tabular-nums ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
                 {Math.abs(netBenefit).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
             </div>
@@ -112,13 +112,13 @@ export const ResultsSummary = ({
           <div className="space-y-4">
             <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-accent/30">
               <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Base Hipotecaria</span>
-              <span className="font-bold text-foreground font-display">
+              <span className="font-bold text-foreground font-numbers tabular-nums">
                 {monthlyPayment.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-accent-secondary/30">
               <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Suscripciones Vinc.</span>
-              <span className="font-bold text-accent-secondary font-display">
+              <span className="font-bold text-accent-secondary font-numbers tabular-nums">
                 +{activeProductsMonthlyCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
@@ -127,7 +127,7 @@ export const ResultsSummary = ({
                 <p className="text-[10px] text-accent font-bold uppercase tracking-[0.3em] mb-1">Total Mes</p>
                 <div className="w-12 h-1 bg-accent/30" />
               </div>
-              <span className="text-4xl font-display font-black text-foreground shadow-neon-secondary">
+              <span className="text-4xl font-numbers font-bold text-foreground shadow-neon-secondary tabular-nums">
                 {(monthlyPayment + activeProductsMonthlyCost).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
@@ -144,14 +144,14 @@ export const ResultsSummary = ({
             {initialExpensesList.map((item) => (
               <div key={item.id} className="flex justify-between text-[11px] border-b border-border/30 pb-1 font-mono uppercase text-gray-400">
                 <span>{item.name}</span>
-                <span className="text-foreground">{item.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                <span className="text-foreground font-numbers tabular-nums">{item.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
               </div>
             ))}
           </div>
           
           <div className="flex justify-between items-center pt-4 border-t border-accent-tertiary/30">
             <span className="text-xs font-bold text-accent-tertiary uppercase tracking-widest">Suma Total</span>
-            <span className="text-2xl font-display font-black text-accent-tertiary">
+            <span className="text-2xl font-numbers font-bold text-accent-tertiary tabular-nums">
               {activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
             </span>
           </div>
@@ -170,7 +170,7 @@ export const ResultsSummary = ({
            </div>
            
            <div className="text-right">
-              <span className="text-4xl font-display font-black text-accent tracking-tighter drop-shadow-[0_0_10px_rgba(0,255,136,0.5)]">
+              <span className="text-4xl font-numbers font-bold text-accent tracking-tighter drop-shadow-[0_0_10px_rgba(0,255,136,0.5)] tabular-nums">
                 {totalCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
            </div>

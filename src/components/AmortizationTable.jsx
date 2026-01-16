@@ -28,7 +28,7 @@ export const AmortizationTable = ({ schedule }) => {
               </th>
             </tr>
           </thead>
-          <tbody className="bg-transparent divide-y divide-border/20 font-mono">
+          <tbody className="bg-transparent divide-y divide-border/20 font-numbers tabular-nums">
             {schedule.map((row, index) => (
               <tr 
                 key={row.month} 
@@ -46,7 +46,7 @@ export const AmortizationTable = ({ schedule }) => {
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-right text-accent-secondary/80 font-medium">
                   {row.amortization.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </td>
-                <td className="px-4 py-2 whitespace-nowrap text-[11px] text-right text-gray-500 font-mono opacity-60 group-hover:opacity-100">
+                <td className="px-4 py-2 whitespace-nowrap text-[11px] text-right text-gray-500 font-numbers opacity-60 group-hover:opacity-100">
                   {row.balance.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </td>
               </tr>

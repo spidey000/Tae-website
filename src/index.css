@@ -3,6 +3,7 @@
 @theme {
   --font-display: "Orbitron", "Share Tech Mono", monospace;
   --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-numbers: "Roboto Mono", monospace;
 
   --color-background: #0a0a0f;
   --color-foreground: #e0e0e0;
