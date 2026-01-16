@@ -4,7 +4,7 @@ import { Toggle } from './components/Toggle';
 import { ResultsSummary } from './components/ResultsSummary';
 import { AmortizationTable } from './components/AmortizationTable';
 import { calculateMonthlyPayment, calculateTAE, generateAmortizationSchedule } from './utils/mortgageCalculations';
-import { Calculator, Euro, Percent, FileText, Home, ShieldCheck, Briefcase } from 'lucide-react';
+import { Calculator, FileText, ShieldCheck, Briefcase } from 'lucide-react';
 
 function App() {
   // --- State ---
@@ -142,114 +142,123 @@ function App() {
       <main className="max-w-7xl mx-auto mt-12 px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
         {/* Left Column: Data Input Terminals */}
-        <div className="lg:col-span-4 space-y-8">
+        <div className="lg:col-span-4 space-y-12 pt-4">
           
           {/* Main Inputs Terminal */}
-          <section className="bg-card p-6 border border-border cyber-chamfer relative group">
-            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent uppercase tracking-widest">
+          <section className="relative group">
+            <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
+            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent uppercase tracking-widest z-10">
               [ PARAM_INPUT_01 ]
             </div>
-            <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
-              <FileText className="h-4 w-4" /> Configuración de Crédito
-            </h2>
-            <div className="space-y-5">
-              <InputGroup 
-                label="Capital del Préstamo" 
-                value={capital} 
-                onChange={(v) => setCapital(Number(v))} 
-                suffix="EUR" 
-                min={1000} 
-                step={1000}
-              />
-              <InputGroup 
-                label="Ciclo de Vida (Años)" 
-                value={years} 
-                onChange={(v) => setYears(Number(v))} 
-                suffix="YEARS" 
-                min={1} 
-                max={50} 
-              />
-              <InputGroup 
-                label="TIN Base (Nominal)" 
-                value={baseTIN} 
-                onChange={(v) => setBaseTIN(Number(v))} 
-                suffix="%" 
-                step={0.01} 
-              />
+            <div className="relative p-6 pt-8">
+              <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
+                <FileText className="h-4 w-4" /> Configuración de Crédito
+              </h2>
+              <div className="space-y-5">
+                <InputGroup 
+                  label="Capital del Préstamo" 
+                  value={capital} 
+                  onChange={(v) => setCapital(Number(v))} 
+                  suffix="EUR" 
+                  min={1000} 
+                  step={1000}
+                />
+                <InputGroup 
+                  label="Ciclo de Vida (Años)" 
+                  value={years} 
+                  onChange={(v) => setYears(Number(v))} 
+                  suffix="YEARS" 
+                  min={1} 
+                  max={50} 
+                />
+                <InputGroup 
+                  label="TIN Base (Nominal)" 
+                  value={baseTIN} 
+                  onChange={(v) => setBaseTIN(Number(v))} 
+                  suffix="%" 
+                  step={0.01} 
+                />
+              </div>
             </div>
           </section>
 
           {/* Linked Products: Bonification Nodes */}
-          <section className="bg-card p-6 border border-border cyber-chamfer relative group">
-            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-secondary uppercase tracking-widest">
+          <section className="relative group">
+            <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
+            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-secondary uppercase tracking-widest z-10">
               [ BONIF_NODES_02 ]
             </div>
-            <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-secondary uppercase tracking-widest">
-              <ShieldCheck className="h-4 w-4" /> Bonificaciones Activas
-            </h2>
-            <div className="space-y-4">
-              <div className="text-[10px] font-bold text-gray-500 mb-2 flex justify-between uppercase tracking-widest border-b border-border/30 pb-2">
-                <span>Reducción de TIN Total:</span>
-                <span className="text-accent">-{activeBonus.toFixed(2)}%</span>
-              </div>
-              {linkedProducts.map((product) => (
-                <div key={product.id} className="p-4 bg-black/20 border border-border/50 hover:border-accent-secondary/50 transition-colors">
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="font-bold text-xs uppercase tracking-widest text-gray-300">{product.name}</span>
-                    <Toggle enabled={product.enabled} onChange={(v) => handleProductChange(product.id, 'enabled', v)} />
-                  </div>
-                  {product.enabled && (
-                    <div className="grid grid-cols-2 gap-4">
-                      <InputGroup 
-                        label="Coste/Mes" 
-                        value={product.cost} 
-                        onChange={(v) => handleProductChange(product.id, 'cost', Number(v))} 
-                        suffix="€" 
-                      />
-                      <InputGroup 
-                        label="Impacto TIN" 
-                        value={product.bonus} 
-                        onChange={(v) => handleProductChange(product.id, 'bonus', Number(v))} 
-                        suffix="%" 
-                        step={0.01}
-                      />
-                    </div>
-                  )}
+            <div className="relative p-6 pt-8">
+              <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-secondary uppercase tracking-widest">
+                <ShieldCheck className="h-4 w-4" /> Bonificaciones Activas
+              </h2>
+              <div className="space-y-4">
+                <div className="text-[10px] font-bold text-gray-500 mb-2 flex justify-between uppercase tracking-widest border-b border-border/30 pb-2">
+                  <span>Reducción de TIN Total:</span>
+                  <span className="text-accent">-{activeBonus.toFixed(2)}%</span>
                 </div>
-              ))}
+                {linkedProducts.map((product) => (
+                  <div key={product.id} className="p-4 bg-black/20 border border-border/50 hover:border-accent-secondary/50 transition-colors">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-bold text-xs uppercase tracking-widest text-gray-300">{product.name}</span>
+                      <Toggle enabled={product.enabled} onChange={(v) => handleProductChange(product.id, 'enabled', v)} />
+                    </div>
+                    {product.enabled && (
+                      <div className="grid grid-cols-2 gap-4">
+                        <InputGroup 
+                          label="Coste/Mes" 
+                          value={product.cost} 
+                          onChange={(v) => handleProductChange(product.id, 'cost', Number(v))} 
+                          suffix="€" 
+                        />
+                        <InputGroup 
+                          label="Impacto TIN" 
+                          value={product.bonus} 
+                          onChange={(v) => handleProductChange(product.id, 'bonus', Number(v))} 
+                          suffix="%" 
+                          step={0.01}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
 
           {/* Initial Expenses: Initial Burn */}
-          <section className="bg-card p-6 border border-border cyber-chamfer relative group">
-            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-tertiary uppercase tracking-widest">
+          <section className="relative group">
+            <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
+            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-tertiary uppercase tracking-widest z-10">
               [ INITIAL_BURN_03 ]
             </div>
-            <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
-              <Briefcase className="h-4 w-4" /> Gastos de Constitución
-            </h2>
-            <div className="space-y-4">
-              {initialExpenses.map((expense) => (
-                <div key={expense.id} className="flex items-center justify-between py-2 border-b border-border/20 last:border-0 group/row">
-                  <div className="flex items-center gap-3">
-                    <Toggle enabled={expense.enabled} onChange={(v) => handleExpenseChange(expense.id, 'enabled', v)} />
-                    <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${expense.enabled ? 'text-gray-200' : 'text-gray-600'}`}>{expense.name}</span>
-                  </div>
-                  {expense.enabled && (
-                    <div className="w-24">
-                      <input 
-                        type="number" 
-                        className="w-full bg-transparent text-right text-xs font-mono text-accent outline-none"
-                        value={expense.cost}
-                        onChange={(e) => handleExpenseChange(expense.id, 'cost', Number(e.target.value))}
-                      />
+            <div className="relative p-6 pt-8">
+              <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
+                <Briefcase className="h-4 w-4" /> Gastos de Constitución
+              </h2>
+              <div className="space-y-4">
+                {initialExpenses.map((expense) => (
+                  <div key={expense.id} className="flex items-center justify-between py-2 border-b border-border/20 last:border-0 group/row">
+                    <div className="flex items-center gap-3">
+                      <Toggle enabled={expense.enabled} onChange={(v) => handleExpenseChange(expense.id, 'enabled', v)} />
+                      <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${expense.enabled ? 'text-gray-200' : 'text-gray-600'}`}>{expense.name}</span>
                     </div>
-                  )}
+                    {expense.enabled && (
+                      <div className="w-24">
+                        <input 
+                          type="number" 
+                          className="w-full bg-transparent text-right text-xs font-mono text-accent outline-none"
+                          value={expense.cost}
+                          onChange={(e) => handleExpenseChange(expense.id, 'cost', Number(e.target.value))}
+                        />
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <div className="pt-4 flex justify-between items-center border-t border-border">
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Inyección Requerida:</span>
+                  <span className="text-sm font-bold text-red-500">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
                 </div>
-              ))}
-              <div className="pt-4 flex justify-between items-center border-t border-border">
-                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Inyección Requerida:</span>
-                <span className="text-sm font-bold text-red-500">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
               </div>
             </div>
           </section>
