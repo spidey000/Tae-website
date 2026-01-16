@@ -1,4 +1,5 @@
 export const calculateMonthlyPayment = (principal, annualTIN, years) => {
+  if (isNaN(principal) || isNaN(annualTIN) || isNaN(years)) return 0;
   if (principal <= 0 || years <= 0) return 0;
   if (annualTIN === 0) return principal / (years * 12);
 
@@ -12,7 +13,12 @@ export const calculateMonthlyPayment = (principal, annualTIN, years) => {
 };
 
 export const calculateTAE = (netPrincipal, monthlyOutflow, years) => {
+  if (isNaN(netPrincipal) || isNaN(monthlyOutflow) || isNaN(years)) return 0;
   if (netPrincipal <= 0 || monthlyOutflow <= 0 || years <= 0) return 0;
+  
+  // Check for simple 0% case (Total paid ~= Principal)
+  const totalPaid = monthlyOutflow * years * 12;
+  if (Math.abs(totalPaid - netPrincipal) < 1e-5) return 0;
 
   const numberOfPayments = years * 12;
   let guess = 0.01; // Initial guess
@@ -52,6 +58,7 @@ export const calculateTAE = (netPrincipal, monthlyOutflow, years) => {
 };
 
 export const generateAmortizationSchedule = (principal, annualTIN, years) => {
+  if (isNaN(principal) || isNaN(annualTIN) || isNaN(years)) return [];
   if (principal <= 0 || years <= 0) return [];
   
   const monthlyRate = annualTIN / 100 / 12;

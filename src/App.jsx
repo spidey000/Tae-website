@@ -52,7 +52,8 @@ function App() {
     totalProductCost,
     netBenefit,
     activeProductsMonthlyCost,
-    totalInterestBonified
+    totalInterestBonified,
+    totalInterestNonBonified
   } = useMemo(() => {
     const activeExpensesSum = initialExpenses
       .filter(e => e.enabled)

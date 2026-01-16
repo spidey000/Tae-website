@@ -50,4 +50,22 @@ describe('Motor Financiero - Auditoría de Precisión', () => {
     const end = performance.now();
     expect(end - start).toBeLessThan(10); 
   });
+
+  it('Debe manejar entradas inválidas (NaN) de forma segura', () => {
+    expect(calculateMonthlyPayment(NaN, 2.5, 20)).toBe(0);
+    expect(calculateMonthlyPayment(100000, NaN, 20)).toBe(0);
+    expect(calculateTAE(NaN, 500, 20)).toBe(0);
+    expect(generateAmortizationSchedule(100000, NaN, 20)).toEqual([]);
+  });
+
+  it('Debe manejar el caso de TAE 0% exacto', () => {
+    // Si devuelvo exactamente lo que me prestaron en total
+    const principal = 120000;
+    const monthlyPayment = 1000; // 1000 * 12 * 10 = 120000
+    const years = 10;
+    
+    // TAE debería ser 0
+    const tae = calculateTAE(principal, monthlyPayment, years);
+    expect(tae).toBeCloseTo(0, 5);
+  });
 });
