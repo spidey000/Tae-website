@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity } from 'lucide-react';
+import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity, ArrowRight } from 'lucide-react';
 
 export const ResultsSummary = ({ 
   monthlyPayment, 
@@ -22,139 +22,147 @@ export const ResultsSummary = ({
   return (
     <div className="space-y-6">
       
-      {/* HEADER DASHBOARD */}
-      <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-indigo-600">
-        <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
-          <Activity className="w-6 h-6 text-indigo-600" />
-          Análisis de Viabilidad Financiera
-        </h2>
-        <p className="text-sm text-gray-500 mt-1">
-          Evaluación de impacto de productos vinculados y punto de equilibrio.
-        </p>
+      {/* HEADER: VEREDICTO CLARO */}
+      <div className={`p-6 rounded-xl shadow-lg border-l-8 ${isBenefitNegative ? 'bg-orange-50 border-orange-500' : 'bg-green-50 border-green-500'}`}>
+        <div className="flex items-start justify-between">
+          <div>
+            <h2 className={`text-2xl font-bold mb-2 ${isBenefitNegative ? 'text-orange-800' : 'text-green-800'}`}>
+              {isBenefitNegative ? 'NO TE COMPENSA BONIFICAR' : '¡SÍ, TE AHORRAS DINERO!'}
+            </h2>
+            <p className="text-gray-700 font-medium">
+              {isBenefitNegative 
+                ? 'Los seguros te cuestan más de lo que te ahorras en intereses.' 
+                : 'El descuento en la hipoteca supera el coste de los seguros.'}
+            </p>
+          </div>
+          {isBenefitNegative ? (
+             <AlertTriangle className="w-12 h-12 text-orange-400 opacity-80" />
+          ) : (
+             <PiggyBank className="w-12 h-12 text-green-500 opacity-80" />
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
-        {/* BLOQUE 1: EFICIENCIA DE BONIFICACIONES */}
-        <div className={`col-span-1 md:col-span-2 p-6 rounded-xl shadow-md border ${isBenefitNegative ? 'bg-orange-50 border-orange-200' : 'bg-white border-gray-200'}`}>
-          <div className="flex justify-between items-start mb-4">
-            <h3 className="font-bold text-gray-700 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-blue-600" /> Eficiencia de Bonificaciones
-            </h3>
-            {isBenefitNegative ? (
-              <span className="bg-orange-100 text-orange-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 border border-orange-200">
-                <AlertTriangle className="w-3 h-3" /> No Compensa
-              </span>
-            ) : (
-              <span className="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 border border-green-200">
-                <CheckCircle className="w-3 h-3" /> Ahorro Confirmado
-              </span>
-            )}
-          </div>
+        {/* BLOQUE 1: LA CUENTA DE LA VIEJA (Explicación para Dummies) */}
+        <div className="col-span-1 md:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-200">
+          <h3 className="font-bold text-gray-800 mb-6 flex items-center gap-2 border-b pb-2">
+            <Activity className="w-5 h-5 text-indigo-600" />
+            ¿De dónde sale este resultado?
+          </h3>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="p-3 bg-white bg-opacity-60 rounded border border-gray-100">
-              <p className="text-xs text-gray-500 uppercase font-semibold">Diferencial TAE</p>
-              <div className="mt-1">
-                <span className="text-sm text-gray-400 line-through mr-2">{nonBonifiedTAE.toFixed(2)}%</span>
-                <span className={`text-lg font-bold ${isBenefitNegative ? 'text-orange-600' : 'text-green-600'}`}>
-                  {tae.toFixed(2)}%
-                </span>
-              </div>
-              <p className="text-[10px] text-gray-400">Sin bonificar vs Real</p>
-            </div>
-
-            <div className="p-3 bg-white bg-opacity-60 rounded border border-gray-100">
-              <p className="text-xs text-gray-500 uppercase font-semibold">Ahorro Intereses</p>
-              <p className="text-lg font-bold text-green-600 mt-1">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            {/* LO BUENO: El Ahorro */}
+            <div className="flex-1 text-center w-full bg-green-50 p-4 rounded-lg border border-green-100">
+              <span className="text-sm font-bold text-green-600 uppercase tracking-wide">Ahorras en Hipoteca</span>
+              <div className="text-2xl font-bold text-green-700 my-1">
                 {interestSavings.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+              </div>
+              <p className="text-xs text-gray-500 px-2">
+                Al bajar el interés (TAE del {nonBonifiedTAE.toFixed(2)}% al {tae.toFixed(2)}%), pagas menos al banco.
               </p>
-              <p className="text-[10px] text-gray-400">Bruto (toda la vida)</p>
             </div>
 
-            <div className="p-3 bg-white bg-opacity-60 rounded border border-gray-100">
-              <p className="text-xs text-gray-500 uppercase font-semibold">Coste Productos</p>
-              <p className="text-lg font-bold text-red-500 mt-1">
-                -{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+            {/* EL OPERADOR: Menos */}
+            <div className="text-gray-400 font-bold text-xl hidden md:block">-</div>
+
+            {/* LO MALO: El Coste */}
+            <div className="flex-1 text-center w-full bg-red-50 p-4 rounded-lg border border-red-100">
+              <span className="text-sm font-bold text-red-600 uppercase tracking-wide">Pagas en Seguros</span>
+              <div className="text-2xl font-bold text-red-700 my-1">
+                {totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+              </div>
+              <p className="text-xs text-gray-500 px-2">
+                Coste total acumulado de todos los productos vinculados durante el préstamo.
               </p>
-              <p className="text-[10px] text-gray-400">Suma total cuotas</p>
             </div>
 
-            <div className={`p-3 rounded border ${isBenefitNegative ? 'bg-white border-orange-300 shadow-sm' : 'bg-green-50 border-green-200'}`}>
-              <p className="text-xs text-gray-700 uppercase font-bold">Beneficio Neto Real</p>
-              <p className={`text-xl font-extrabold mt-1 ${isBenefitNegative ? 'text-red-600' : 'text-green-700'}`}>
-                {netBenefit.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-              </p>
-              <p className="text-[10px] text-gray-500">
-                {isBenefitNegative ? 'Pierdes dinero con los productos' : 'Ganancia real tras costes'}
+            {/* EL OPERADOR: Igual */}
+            <div className="text-gray-400 font-bold text-xl hidden md:block">=</div>
+
+            {/* EL RESULTADO */}
+            <div className={`flex-1 text-center w-full p-4 rounded-lg border-2 ${isBenefitNegative ? 'bg-orange-50 border-orange-300' : 'bg-indigo-50 border-indigo-300'}`}>
+              <span className={`text-sm font-bold uppercase tracking-wide ${isBenefitNegative ? 'text-orange-700' : 'text-indigo-700'}`}>
+                {isBenefitNegative ? 'Pierdes en total' : 'Beneficio Real'}
+              </span>
+              <div className={`text-3xl font-extrabold my-1 ${isBenefitNegative ? 'text-red-600' : 'text-indigo-700'}`}>
+                {Math.abs(netBenefit).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+              </div>
+              <p className="text-xs text-gray-500">
+                {isBenefitNegative ? 'Te sale más barato NO coger los productos.' : 'Dinero que se queda en tu bolsillo.'}
               </p>
             </div>
+
           </div>
         </div>
 
-        {/* BLOQUE 2: DESGLOSE MENSUAL */}
+        {/* BLOQUE 2: TU PAGO MENSUAL REAL */}
         <div className="bg-white p-5 rounded-xl shadow-md border border-gray-200">
           <h3 className="font-bold text-gray-700 mb-4 flex items-center gap-2">
-            <Wallet className="w-5 h-5 text-indigo-500" /> Desglose Cuota Mensual
+            <Wallet className="w-5 h-5 text-indigo-500" /> Tu Letra Mensual "Real"
           </h3>
           
           <div className="space-y-4">
-            <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-              <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-600">Cuota Hipotecaria</span>
+            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+              <div className="text-sm">
+                <p className="font-semibold text-gray-700">Cuota al Banco</p>
+                <p className="text-xs text-gray-400">Hipoteca pura y dura</p>
               </div>
-              <span className="font-bold text-gray-800">
+              <span className="font-bold text-gray-800 text-lg">
                 {monthlyPayment.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
 
-            <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
-              <div className="flex items-center gap-2">
-                <Shield className="w-4 h-4 text-gray-400" />
-                <span className="text-sm text-gray-600">Carga Vinculación</span>
+            <div className="flex justify-center -my-2 relative z-10">
+              <div className="bg-white border border-gray-200 rounded-full p-1">
+                <span className="text-gray-400 text-xs font-bold">+</span>
               </div>
-              <span className="font-bold text-red-500 text-sm">
-                +{activeProductsMonthlyCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+            </div>
+
+            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+              <div className="text-sm">
+                <p className="font-semibold text-gray-700">Extra de Productos</p>
+                <p className="text-xs text-gray-400">Seguros, alarmas, etc.</p>
+              </div>
+              <span className="font-bold text-red-500 text-lg">
+                {activeProductsMonthlyCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
 
-            <div className="pt-3 border-t border-gray-100 flex justify-between items-end">
-              <div>
-                <p className="text-xs text-gray-500 font-semibold uppercase">Desembolso Total Mes</p>
-                <p className="text-[10px] text-gray-400">Lo que sale de tu banco</p>
+            <div className="pt-4 mt-2 border-t-2 border-dashed border-gray-200">
+              <div className="flex justify-between items-end">
+                <div>
+                  <p className="text-sm font-bold text-gray-800 uppercase">Total a Pagar</p>
+                  <p className="text-xs text-gray-500">Lo que sale de tu cuenta cada mes</p>
+                </div>
+                <span className="text-3xl font-bold text-indigo-900">
+                  {(monthlyPayment + activeProductsMonthlyCost).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                </span>
               </div>
-              <span className="text-2xl font-bold text-indigo-900">
-                {(monthlyPayment + activeProductsMonthlyCost).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-              </span>
             </div>
           </div>
         </div>
 
-        {/* BLOQUE 3: AUDITORÍA GASTOS INICIALES */}
+        {/* BLOQUE 3: LA LUPA EN LOS GASTOS INICIALES */}
         <div className="bg-white p-5 rounded-xl shadow-md border border-gray-200">
           <h3 className="font-bold text-gray-700 mb-4 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-indigo-500" /> Gastos de Constitución
+            <FileText className="w-5 h-5 text-indigo-500" /> Gastos "Ocultos" Iniciales
           </h3>
           
-          <div className="mb-4">
-            <div className="flex justify-between text-xs text-gray-500 mb-1">
-               <span>Impacto sobre Capital</span>
-               <span>{expensesPercentage.toFixed(2)}%</span>
-            </div>
-            <div className="w-full bg-gray-100 rounded-full h-2">
-              <div className="bg-indigo-500 h-2 rounded-full" style={{ width: `${Math.min(expensesPercentage, 100)}%` }}></div>
-            </div>
+          <div className="bg-blue-50 p-3 rounded-lg mb-4 text-sm text-blue-800 border border-blue-100">
+             Para pedir <strong>{capital.toLocaleString()}€</strong>, necesitas tener ahorrados otros <strong>{activeInitialExpenses.toLocaleString()}€</strong> para gastos.
           </div>
 
-          <div className="space-y-2 max-h-40 overflow-y-auto pr-1 custom-scrollbar">
+          <div className="space-y-3">
             {initialExpensesList.length === 0 ? (
-               <p className="text-sm text-gray-400 text-center py-2">Sin gastos iniciales seleccionados.</p>
+               <p className="text-sm text-gray-400 text-center py-4">No has seleccionado gastos de inicio (Notaría, etc).</p>
             ) : (
               initialExpensesList.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm border-b border-gray-50 pb-1 last:border-0">
-                  <span className="text-gray-600">{item.name}</span>
-                  <span className="font-medium text-gray-800">
+                <div key={item.id} className="flex justify-between items-center text-sm border-b border-gray-100 pb-2 last:border-0">
+                  <span className="text-gray-600 font-medium">{item.name}</span>
+                  <span className="font-bold text-gray-800">
                     {item.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
                   </span>
                 </div>
@@ -162,45 +170,31 @@ export const ResultsSummary = ({
             )}
           </div>
           
-          <div className="mt-3 pt-2 border-t border-gray-100 flex justify-between">
-            <span className="text-xs font-bold text-gray-500 uppercase">Total Gastos</span>
-            <span className="font-bold text-indigo-900">
+          <div className="mt-auto pt-4 flex justify-between items-center">
+            <span className="text-xs font-bold text-gray-500 uppercase">Total a desembolsar</span>
+            <span className="text-xl font-bold text-indigo-900">
               {activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
             </span>
           </div>
         </div>
 
-        {/* BLOQUE 4: MÉTRICAS CICLO DE VIDA */}
-        <div className="col-span-1 md:col-span-2 bg-gray-50 p-5 rounded-xl border border-gray-200">
-           <h3 className="font-bold text-gray-700 mb-4 flex items-center gap-2">
-            <PieChart className="w-5 h-5 text-gray-600" /> Proyección a Largo Plazo
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Total Intereses</p>
-              <p className="text-xl font-bold text-indigo-600">
-                {totalInterestBonified.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-              </p>
-              <p className="text-[10px] text-gray-400">Coste financiero del dinero</p>
-            </div>
-            
-            <div className="md:border-l md:border-r border-gray-200 px-4">
-              <p className="text-xs text-gray-500 uppercase font-semibold">Capital + Intereses</p>
-              <p className="text-xl font-bold text-gray-800">
-                {(capital + totalInterestBonified).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-              </p>
-              <p className="text-[10px] text-gray-400">Total a devolver al banco</p>
-            </div>
-
-            <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold">Coste Real Operación</p>
-              <p className="text-xl font-extrabold text-gray-900">
+        {/* BLOQUE 4: TOTAL DE TOTALES */}
+        <div className="col-span-1 md:col-span-2 bg-gray-100 p-6 rounded-xl border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+           <div className="flex items-center gap-3">
+              <div className="p-3 bg-white rounded-full shadow-sm">
+                <PieChart className="w-6 h-6 text-gray-700" />
+              </div>
+              <div>
+                <h4 className="font-bold text-gray-800">Coste REAL de la Hipoteca</h4>
+                <p className="text-sm text-gray-500">Sumando capital, intereses, gastos y seguros.</p>
+              </div>
+           </div>
+           
+           <div className="text-right">
+              <span className="block text-3xl font-black text-gray-900">
                 {totalCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-              </p>
-              <p className="text-[10px] text-gray-400">Incluyendo gastos y productos</p>
-            </div>
-          </div>
+              </span>
+           </div>
         </div>
 
       </div>
