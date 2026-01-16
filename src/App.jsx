@@ -47,7 +47,13 @@ function App() {
     schedule,
     totalCost,
     activeInitialExpenses,
-    activeBonus
+    activeBonus,
+    nonBonifiedTAE,
+    interestSavings,
+    totalProductCost,
+    netBenefit,
+    activeProductsMonthlyCost,
+    totalInterestBonified
   } = useMemo(() => {
     const activeExpensesSum = initialExpenses
       .filter(e => e.enabled)
@@ -79,7 +85,6 @@ function App() {
     // --- NON-BONIFIED SCENARIO (Comparison) ---
     // Assuming no products are taken, so TIN is baseTIN
     const nonBonifiedPayment = calculateMonthlyPayment(capital, baseTIN, years);
-    const nonBonifiedTotalPaid = (nonBonifiedPayment * years * 12) + activeExpensesSum;
     // TAE for non-bonified: uses baseTIN payment, but still includes initial expenses (netCapital is same)
     const nonBonifiedTAE = calculateTAE(netCapital, nonBonifiedPayment, years); 
     
@@ -107,7 +112,8 @@ function App() {
       netBenefit,
       nonBonifiedPayment,
       totalInterestBonified,
-      totalInterestNonBonified
+      totalInterestNonBonified,
+      activeProductsMonthlyCost
     };
   }, [capital, years, baseTIN, initialExpenses, linkedProducts]);
 

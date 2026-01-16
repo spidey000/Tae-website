@@ -3,7 +3,6 @@ import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Laye
 
 export const ResultsSummary = ({ 
   monthlyPayment, 
-  finalTIN, 
   tae, 
   totalCost, 
   nonBonifiedTAE, 
