@@ -10,6 +10,9 @@ export const ResultsSummary = ({
   activeProductsMonthlyCost,
   activeInitialExpenses,
   initialExpensesList,
+  capital,
+  totalInterestBonified,
+  totalInterestNonBonified
 }) => {
 
   const isBenefitNegative = netBenefit < 0;
@@ -18,6 +21,8 @@ export const ResultsSummary = ({
   const analysisText = isBenefitNegative
     ? `DECISIÓN: NO COMPENSA. Hemos aislado la comparativa: los gastos iniciales (Notaría, Registro...) los pagas igual en ambos casos, así que los hemos sacado de la ecuación. Nos centramos solo en la bonificación: Contratar los seguros te cuesta ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€, pero solo te ahorra ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses. Resultado: Regalas dinero al banco.`
     : `DECISIÓN: SÍ COMPENSA. Análisis simplificado: Los gastos de constitución (Notaría, Registro...) no afectan a esta decisión porque los pagas en ambos escenarios. La clave está en la bonificación: Te gastas ${Math.abs(totalProductCost).toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en seguros, pero a cambio el banco te perdona ${interestSavings.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€ en intereses. El ahorro es real y directo a tu bolsillo.`;
+
+  const totalNonBonified = capital + totalInterestNonBonified + activeInitialExpenses;
 
   return (
     <div className="space-y-8 font-mono">
@@ -30,12 +35,12 @@ export const ResultsSummary = ({
         
         <div className="flex items-center justify-between relative z-10">
           <div>
-            <h2 className={`text-4xl font-black font-display tracking-tighter uppercase cyber-glitch ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`} data-text={isBenefitNegative ? 'LINK_CORRUPTED' : 'OPTIMAL_FLUX'}>
+            <h2 className={`text-2xl md:text-4xl font-black font-display tracking-tighter uppercase cyber-glitch ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`} data-text={isBenefitNegative ? 'LINK_CORRUPTED' : 'OPTIMAL_FLUX'}>
               {isBenefitNegative ? 'SISTEMA_NO_RENTABLE' : 'AHORRO_CONFIRMADO'}
             </h2>
             <div className="flex items-center gap-2 mt-2">
               <span className={`w-2 h-2 rounded-full animate-ping ${isBenefitNegative ? 'bg-red-500' : 'bg-accent'}`} />
-              <p className="text-sm opacity-70 uppercase tracking-[0.3em]">
+              <p className={`text-sm opacity-70 uppercase tracking-widest md:tracking-[0.3em]`}>
                 {isBenefitNegative ? 'BONIFICACIÓN_RECHAZADA' : 'INFILTRACIÓN_BANCARIA_ÉXITO'}
               </p>
             </div>
@@ -157,22 +162,74 @@ export const ResultsSummary = ({
           </div>
         </div>
 
-        {/* FOOTER: TOTAL OPERACIÓN */}
-        <div className="col-span-1 md:col-span-2 bg-accent/5 p-6 border border-accent/20 cyber-chamfer flex flex-col md:flex-row justify-between items-center">
-           <div className="flex items-center gap-4">
-              <div className="p-3 border border-accent/40 bg-accent/10">
-                <PieChart className="w-6 h-6 text-accent" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Carga Financiera Total del Sistema</h4>
-                <p className="text-[10px] text-accent/50 italic">Cap + Int + Gast + Vinc</p>
-              </div>
-           </div>
+        {/* FOOTER: TOTAL OPERACIÓN DESGLOSADO */}
+        <div className="col-span-1 md:col-span-2 space-y-4">
            
-           <div className="text-right">
-              <span className="text-4xl font-numbers font-bold text-accent tracking-tighter drop-shadow-[0_0_10px_rgba(0,255,136,0.5)] tabular-nums">
-                {totalCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-              </span>
+           <div className="flex items-center gap-2 mb-2">
+              <PieChart className="w-5 h-5 text-accent" />
+              <h4 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Carga Financiera Total del Sistema</h4>
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              
+              {/* MODELO BONIFICADO */}
+              <div className="bg-accent/5 p-5 border border-accent/20 cyber-chamfer">
+                 <h5 className="text-[10px] font-bold text-accent uppercase tracking-widest mb-4 border-b border-accent/20 pb-2">Modelo Bonificado (Actual)</h5>
+                 <div className="space-y-2 text-[11px] text-gray-400 font-mono">
+                    <div className="flex justify-between">
+                       <span>Capital Amortizado</span>
+                       <span className="text-gray-300 tabular-nums">{capital.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                    <div className="flex justify-between">
+                       <span>Intereses Totales</span>
+                       <span className="text-accent tabular-nums">{totalInterestBonified.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                    <div className="flex justify-between">
+                       <span>Coste Productos</span>
+                       <span className="text-accent-secondary tabular-nums">{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                    <div className="flex justify-between">
+                       <span>Gastos Iniciales</span>
+                       <span className="text-accent-tertiary tabular-nums">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                 </div>
+                 <div className="mt-4 pt-3 border-t border-accent/20 flex justify-between items-end">
+                    <span className="text-[10px] text-accent/70 uppercase">Total Estimado</span>
+                    <span className="text-2xl font-numbers font-bold text-accent tabular-nums">
+                       {totalCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                    </span>
+                 </div>
+              </div>
+
+              {/* MODELO ESTÁNDAR (NO BONIFICADO) */}
+              <div className="bg-black/20 p-5 border border-border/50 cyber-chamfer">
+                 <h5 className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-4 border-b border-gray-800 pb-2">Modelo Estándar (Sin Bonificar)</h5>
+                 <div className="space-y-2 text-[11px] text-gray-500 font-mono">
+                    <div className="flex justify-between">
+                       <span>Capital Amortizado</span>
+                       <span className="text-gray-400 tabular-nums">{capital.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                    <div className="flex justify-between">
+                       <span>Intereses Totales</span>
+                       <span className="text-gray-300 tabular-nums">{totalInterestNonBonified.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                    <div className="flex justify-between opacity-50">
+                       <span>Coste Productos</span>
+                       <span className="tabular-nums">0,00 €</span>
+                    </div>
+                    <div className="flex justify-between">
+                       <span>Gastos Iniciales</span>
+                       <span className="text-accent-tertiary/70 tabular-nums">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+                    </div>
+                 </div>
+                 <div className="mt-4 pt-3 border-t border-gray-800 flex justify-between items-end">
+                    <span className="text-[10px] text-gray-500 uppercase">Total Estimado</span>
+                    <span className="text-xl font-numbers font-bold text-gray-300 tabular-nums">
+                       {totalNonBonified.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+                    </span>
+                 </div>
+              </div>
+
            </div>
         </div>
 

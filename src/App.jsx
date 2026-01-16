@@ -280,6 +280,7 @@ function App() {
             initialExpensesList={initialExpenses.filter(e => e.enabled)}
             capital={capital}
             totalInterestBonified={totalInterestBonified}
+            totalInterestNonBonified={totalInterestNonBonified}
           />
           
           <div className="space-y-4">
