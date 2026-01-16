@@ -41,7 +41,6 @@ function App() {
 
   // --- Calculations ---
   const {
-    finalTIN,
     monthlyPayment,
     tae,
     schedule,
@@ -97,7 +96,6 @@ function App() {
     const netBenefit = interestSavings - totalProductCost;
 
     return {
-      finalTIN: calculatedTIN,
       monthlyPayment: payment,
       tae: calculatedTAE,
       schedule: generatedSchedule,
@@ -118,44 +116,61 @@ function App() {
   }, [capital, years, baseTIN, initialExpenses, linkedProducts]);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pb-10">
-      {/* Header */}
-      <header className="bg-indigo-600 text-white p-4 shadow-lg">
-        <div className="max-w-6xl mx-auto flex items-center gap-3">
-          <Calculator className="h-8 w-8" />
-          <h1 className="text-2xl font-bold tracking-tight">Simulador Hipotecario Pro</h1>
+    <div className="min-h-screen bg-background text-foreground font-mono pb-20 selection:bg-accent selection:text-black overflow-x-hidden">
+      
+      {/* HEADER: NEON HUD BAR */}
+      <header className="border-b border-accent/30 bg-black/60 backdrop-blur-md sticky top-0 z-50 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-2 border border-accent shadow-neon">
+              <Calculator className="h-6 w-6 text-accent" />
+            </div>
+            <div>
+              <h1 className="text-xl font-display font-black tracking-[0.2em] uppercase cyber-glitch" data-text="MORTGAGE_CORE_v2.0">
+                MORTGAGE_CORE_v2.0
+              </h1>
+              <p className="text-[10px] text-accent/50 font-bold uppercase tracking-widest">Financial_Infiltration_System</p>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center gap-6 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
+            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" /> SYSTEM_ONLINE</span>
+            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent-secondary rounded-full" /> ENCRYPTION_AES256</span>
+          </div>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto mt-8 px-4 grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <main className="max-w-7xl mx-auto mt-12 px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
-        {/* Left Column: Inputs */}
-        <div className="lg:col-span-4 space-y-6">
+        {/* Left Column: Data Input Terminals */}
+        <div className="lg:col-span-4 space-y-8">
           
-          {/* Main Inputs */}
-          <section className="bg-white p-5 rounded-lg shadow border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-indigo-700">
-              <FileText className="h-5 w-5" /> Datos del Préstamo
+          {/* Main Inputs Terminal */}
+          <section className="bg-card p-6 border border-border cyber-chamfer relative group">
+            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent uppercase tracking-widest">
+              [ PARAM_INPUT_01 ]
+            </div>
+            <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
+              <FileText className="h-4 w-4" /> Configuración de Crédito
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-5">
               <InputGroup 
-                label="Capital Solicitado" 
+                label="Capital del Préstamo" 
                 value={capital} 
                 onChange={(v) => setCapital(Number(v))} 
-                suffix="€" 
+                suffix="EUR" 
                 min={1000} 
                 step={1000}
               />
               <InputGroup 
-                label="Plazo (Años)" 
+                label="Ciclo de Vida (Años)" 
                 value={years} 
                 onChange={(v) => setYears(Number(v))} 
-                suffix="años" 
+                suffix="YEARS" 
                 min={1} 
                 max={50} 
               />
               <InputGroup 
-                label="TIN Base (sin bonificar)" 
+                label="TIN Base (Nominal)" 
                 value={baseTIN} 
                 onChange={(v) => setBaseTIN(Number(v))} 
                 suffix="%" 
@@ -164,32 +179,35 @@ function App() {
             </div>
           </section>
 
-          {/* Linked Products (Bonifications) */}
-          <section className="bg-white p-5 rounded-lg shadow border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-indigo-700">
-              <ShieldCheck className="h-5 w-5" /> Bonificaciones
+          {/* Linked Products: Bonification Nodes */}
+          <section className="bg-card p-6 border border-border cyber-chamfer relative group">
+            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-secondary uppercase tracking-widest">
+              [ BONIF_NODES_02 ]
+            </div>
+            <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-secondary uppercase tracking-widest">
+              <ShieldCheck className="h-4 w-4" /> Bonificaciones Activas
             </h2>
             <div className="space-y-4">
-              <div className="text-sm text-gray-500 mb-2 flex justify-between">
-                <span>Bonificación Actual:</span>
-                <span className="font-bold text-green-600">-{activeBonus.toFixed(2)}%</span>
+              <div className="text-[10px] font-bold text-gray-500 mb-2 flex justify-between uppercase tracking-widest border-b border-border/30 pb-2">
+                <span>Reducción de TIN Total:</span>
+                <span className="text-accent">-{activeBonus.toFixed(2)}%</span>
               </div>
               {linkedProducts.map((product) => (
-                <div key={product.id} className="p-3 bg-gray-50 rounded border border-gray-100">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-medium text-sm">{product.name}</span>
+                <div key={product.id} className="p-4 bg-black/20 border border-border/50 hover:border-accent-secondary/50 transition-colors">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-bold text-xs uppercase tracking-widest text-gray-300">{product.name}</span>
                     <Toggle enabled={product.enabled} onChange={(v) => handleProductChange(product.id, 'enabled', v)} />
                   </div>
                   {product.enabled && (
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-4">
                       <InputGroup 
-                        label="Coste Mes" 
+                        label="Coste/Mes" 
                         value={product.cost} 
                         onChange={(v) => handleProductChange(product.id, 'cost', Number(v))} 
                         suffix="€" 
                       />
                       <InputGroup 
-                        label="Bonif. TIN" 
+                        label="Impacto TIN" 
                         value={product.bonus} 
                         onChange={(v) => handleProductChange(product.id, 'bonus', Number(v))} 
                         suffix="%" 
@@ -202,27 +220,26 @@ function App() {
             </div>
           </section>
 
-          {/* Initial Expenses */}
-          <section className="bg-white p-5 rounded-lg shadow border border-gray-200">
-            <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 text-indigo-700">
-              <Briefcase className="h-5 w-5" /> Gastos Iniciales
+          {/* Initial Expenses: Initial Burn */}
+          <section className="bg-card p-6 border border-border cyber-chamfer relative group">
+            <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-tertiary uppercase tracking-widest">
+              [ INITIAL_BURN_03 ]
+            </div>
+            <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
+              <Briefcase className="h-4 w-4" /> Gastos de Constitución
             </h2>
-            <div className="space-y-3">
-              <div className="text-sm text-gray-500 mb-2 flex justify-between">
-                <span>Total Gastos:</span>
-                <span className="font-bold text-red-600">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
-              </div>
+            <div className="space-y-4">
               {initialExpenses.map((expense) => (
-                <div key={expense.id} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-                  <div className="flex items-center gap-2">
+                <div key={expense.id} className="flex items-center justify-between py-2 border-b border-border/20 last:border-0 group/row">
+                  <div className="flex items-center gap-3">
                     <Toggle enabled={expense.enabled} onChange={(v) => handleExpenseChange(expense.id, 'enabled', v)} />
-                    <span className={`text-sm ${expense.enabled ? 'text-gray-900' : 'text-gray-400'}`}>{expense.name}</span>
+                    <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${expense.enabled ? 'text-gray-200' : 'text-gray-600'}`}>{expense.name}</span>
                   </div>
                   {expense.enabled && (
                     <div className="w-24">
                       <input 
                         type="number" 
-                        className="w-full text-right text-sm p-1 border rounded border-gray-300"
+                        className="w-full bg-transparent text-right text-xs font-mono text-accent outline-none"
                         value={expense.cost}
                         onChange={(e) => handleExpenseChange(expense.id, 'cost', Number(e.target.value))}
                       />
@@ -230,20 +247,21 @@ function App() {
                   )}
                 </div>
               ))}
+              <div className="pt-4 flex justify-between items-center border-t border-border">
+                <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Inyección Requerida:</span>
+                <span className="text-sm font-bold text-red-500">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+              </div>
             </div>
           </section>
 
         </div>
 
-        {/* Right Column: Results */}
-        <div className="lg:col-span-8 space-y-6">
+        {/* Right Column: HUD & Data Stream */}
+        <div className="lg:col-span-8 space-y-10">
           <ResultsSummary 
-            // Basic
             monthlyPayment={monthlyPayment} 
-            finalTIN={finalTIN} 
             tae={tae} 
             totalCost={totalCost}
-            // Comparison / Dashboard Data
             nonBonifiedTAE={nonBonifiedTAE}
             interestSavings={interestSavings}
             totalProductCost={totalProductCost}
@@ -255,8 +273,13 @@ function App() {
             totalInterestBonified={totalInterestBonified}
           />
           
-          <div className="bg-white p-5 rounded-lg shadow border border-gray-200">
-            <h3 className="text-lg font-semibold mb-4 text-gray-900">Cuadro de Amortización</h3>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between px-2">
+              <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] flex items-center gap-2">
+                <div className="w-2 h-2 bg-accent" /> Matriz de Amortización Mensual
+              </h3>
+              <span className="text-[9px] text-accent/30 font-mono tracking-tighter">DATA_STREAM_OUTPUT_v4.1</span>
+            </div>
             <AmortizationTable schedule={schedule} />
           </div>
         </div>

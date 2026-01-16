@@ -87,7 +87,6 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
     // precision, but mathematically: PrevBalance - Amortization (which is rounded-ish)
     // should stay consistent.
     
-    const previousBalance = balance;
     balance -= amortization;
     
     // Safety clamp for floating point nastiness around 0

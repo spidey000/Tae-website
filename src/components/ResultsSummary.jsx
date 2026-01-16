@@ -1,5 +1,5 @@
 import React from 'react';
-import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity, ArrowRight } from 'lucide-react';
+import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity, Zap } from 'lucide-react';
 
 export const ResultsSummary = ({ 
   monthlyPayment, 
@@ -12,52 +12,49 @@ export const ResultsSummary = ({
   activeProductsMonthlyCost,
   activeInitialExpenses,
   initialExpensesList,
-  capital,
-  totalInterestBonified
 }) => {
 
   const isBenefitNegative = netBenefit < 0;
-  const expensesPercentage = (activeInitialExpenses / capital) * 100;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 font-mono">
       
-      {/* HEADER: VEREDICTO CLARO */}
-      <div className={`p-6 rounded-xl shadow-lg border-l-8 ${isBenefitNegative ? 'bg-orange-50 border-orange-500' : 'bg-green-50 border-green-500'}`}>
-        <div className="flex items-start justify-between">
+      {/* HEADER: STATUS OVERRIDE */}
+      <div className={`relative p-8 cyber-chamfer border-2 ${isBenefitNegative ? 'bg-red-950/20 border-red-500' : 'bg-accent/10 border-accent'} overflow-hidden`}>
+        {/* Decorative corner brackets */}
+        <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-inherit" />
+        <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-inherit" />
+        
+        <div className="flex items-center justify-between relative z-10">
           <div>
-            <h2 className={`text-2xl font-bold mb-2 ${isBenefitNegative ? 'text-orange-800' : 'text-green-800'}`}>
-              {isBenefitNegative ? 'NO TE COMPENSA BONIFICAR' : '¡SÍ, TE AHORRAS DINERO!'}
+            <h2 className={`text-4xl font-black font-display tracking-tighter uppercase cyber-glitch ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`} data-text={isBenefitNegative ? 'LINK_CORRUPTED' : 'OPTIMAL_FLUX'}>
+              {isBenefitNegative ? 'SISTEMA_NO_RENTABLE' : 'AHORRO_CONFIRMADO'}
             </h2>
-            <p className="text-gray-700 font-medium">
-              {isBenefitNegative 
-                ? 'Los seguros te cuestan más de lo que te ahorras en intereses.' 
-                : 'El descuento en la hipoteca supera el coste de los seguros.'}
-            </p>
+            <div className="flex items-center gap-2 mt-2">
+              <span className={`w-2 h-2 rounded-full animate-ping ${isBenefitNegative ? 'bg-red-500' : 'bg-accent'}`} />
+              <p className="text-sm opacity-70 uppercase tracking-[0.3em]">
+                {isBenefitNegative ? 'BONIFICACIÓN_RECHAZADA' : 'INFILTRACIÓN_BANCARIA_ÉXITO'}
+              </p>
+            </div>
           </div>
-          {isBenefitNegative ? (
-             <AlertTriangle className="w-12 h-12 text-orange-400 opacity-80" />
-          ) : (
-             <PiggyBank className="w-12 h-12 text-green-500 opacity-80" />
-          )}
+          <Zap className={`w-12 h-12 ${isBenefitNegative ? 'text-red-500 animate-pulse' : 'text-accent'}`} />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         
-        {/* BLOQUE 1: LA CUENTA DE LA VIEJA (Explicación para Dummies) */}
-        <div className="col-span-1 md:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-200">
-          <h3 className="font-bold text-gray-800 mb-6 flex items-center gap-2 border-b pb-2">
-            <Activity className="w-5 h-5 text-indigo-600" />
-            ¿De dónde sale este resultado?
+        {/* BLOQUE DE ANÁLISIS DE DATOS */}
+        <div className="col-span-1 md:col-span-2 bg-card p-6 border border-border cyber-chamfer">
+          <h3 className="text-sm font-bold text-accent-tertiary mb-8 flex items-center gap-2 uppercase tracking-[0.2em]">
+            <Activity className="w-4 h-4" /> Flujo de Crédito vs Coste de Vida
           </h3>
 
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col lg:flex-row items-stretch justify-between gap-4">
             
-            {/* LO BUENO: El Ahorro */}
-            <div className="flex-1 text-center w-full bg-green-50 p-4 rounded-lg border border-green-100">
-              <span className="text-sm font-bold text-green-600 uppercase tracking-wide">Ahorras en Hipoteca</span>
-              <div className="text-2xl font-bold text-green-700 my-1">
+            {/* SAVINGS */}
+            <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent">
+              <span className="text-[10px] font-bold text-accent/60 uppercase">Intereses Evitados</span>
+              <div className="text-3xl font-display font-black text-accent mt-1 tracking-tighter">
                 {interestSavings.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
               <p className="text-xs text-gray-500 px-2">
@@ -65,133 +62,108 @@ export const ResultsSummary = ({
               </p>
             </div>
 
-            {/* EL OPERADOR: Menos */}
-            <div className="text-gray-400 font-bold text-xl hidden md:block">-</div>
+            <div className="flex items-center justify-center text-border">-</div>
 
-            {/* LO MALO: El Coste */}
-            <div className="flex-1 text-center w-full bg-red-50 p-4 rounded-lg border border-red-100">
-              <span className="text-sm font-bold text-red-600 uppercase tracking-wide">Pagas en Seguros</span>
-              <div className="text-2xl font-bold text-red-700 my-1">
-                {totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+            {/* COSTS */}
+            <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent-secondary">
+              <span className="text-[10px] font-bold text-accent-secondary/60 uppercase">Carga de Vinculación</span>
+              <div className="text-3xl font-display font-black text-accent-secondary mt-1 tracking-tighter">
+                -{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
-              <p className="text-xs text-gray-500 px-2">
-                Coste total acumulado de todos los productos vinculados durante el préstamo.
-              </p>
+              <div className="mt-2 text-[10px] text-gray-500 font-mono italic">
+                TOTAL_LIFE_CYCLE_COST
+              </div>
             </div>
 
-            {/* EL OPERADOR: Igual */}
-            <div className="text-gray-400 font-bold text-xl hidden md:block">=</div>
+            <div className="flex items-center justify-center text-border">=</div>
 
-            {/* EL RESULTADO */}
-            <div className={`flex-1 text-center w-full p-4 rounded-lg border-2 ${isBenefitNegative ? 'bg-orange-50 border-orange-300' : 'bg-indigo-50 border-indigo-300'}`}>
-              <span className={`text-sm font-bold uppercase tracking-wide ${isBenefitNegative ? 'text-orange-700' : 'text-indigo-700'}`}>
-                {isBenefitNegative ? 'Pierdes en total' : 'Beneficio Real'}
+            {/* NET RESULT */}
+            <div className={`flex-1 p-4 border-2 shadow-neon ${isBenefitNegative ? 'bg-red-950/40 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'bg-accent/10 border-accent'}`}>
+              <span className={`text-[10px] font-bold uppercase ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
+                {isBenefitNegative ? 'DÉFICIT_NETO' : 'CRÉDITO_LIMPIO'}
               </span>
-              <div className={`text-3xl font-extrabold my-1 ${isBenefitNegative ? 'text-red-600' : 'text-indigo-700'}`}>
+              <div className={`text-4xl font-display font-black mt-1 tracking-tighter ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
                 {Math.abs(netBenefit).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
-              <p className="text-xs text-gray-500">
-                {isBenefitNegative ? 'Te sale más barato NO coger los productos.' : 'Dinero que se queda en tu bolsillo.'}
-              </p>
+              <div className="mt-2 text-[10px] opacity-50 font-mono uppercase">
+                Resultado de Operación Final
+              </div>
             </div>
 
           </div>
         </div>
 
-        {/* BLOQUE 2: TU PAGO MENSUAL REAL */}
-        <div className="bg-white p-5 rounded-xl shadow-md border border-gray-200">
-          <h3 className="font-bold text-gray-700 mb-4 flex items-center gap-2">
-            <Wallet className="w-5 h-5 text-indigo-500" /> Tu Letra Mensual "Real"
+        {/* COLUMNA IZQUIERDA: PAGO MENSUAL HUD */}
+        <div className="bg-card p-6 border border-border cyber-chamfer relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-2 opacity-10">
+            <Layers className="w-16 h-16" />
+          </div>
+          <h3 className="text-xs font-bold text-gray-500 mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
+            <Wallet className="w-4 h-4 text-accent" /> Desembolso Mensual Real
           </h3>
           
           <div className="space-y-4">
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <div className="text-sm">
-                <p className="font-semibold text-gray-700">Cuota al Banco</p>
-                <p className="text-xs text-gray-400">Hipoteca pura y dura</p>
-              </div>
-              <span className="font-bold text-gray-800 text-lg">
+            <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-accent/30">
+              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Base Hipotecaria</span>
+              <span className="font-bold text-foreground font-display">
                 {monthlyPayment.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
-
-            <div className="flex justify-center -my-2 relative z-10">
-              <div className="bg-white border border-gray-200 rounded-full p-1">
-                <span className="text-gray-400 text-xs font-bold">+</span>
-              </div>
-            </div>
-
-            <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-              <div className="text-sm">
-                <p className="font-semibold text-gray-700">Extra de Productos</p>
-                <p className="text-xs text-gray-400">Seguros, alarmas, etc.</p>
-              </div>
-              <span className="font-bold text-red-500 text-lg">
-                {activeProductsMonthlyCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+            <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-accent-secondary/30">
+              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Suscripciones Vinc.</span>
+              <span className="font-bold text-accent-secondary font-display">
+                +{activeProductsMonthlyCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
-
-            <div className="pt-4 mt-2 border-t-2 border-dashed border-gray-200">
-              <div className="flex justify-between items-end">
-                <div>
-                  <p className="text-sm font-bold text-gray-800 uppercase">Total a Pagar</p>
-                  <p className="text-xs text-gray-500">Lo que sale de tu cuenta cada mes</p>
-                </div>
-                <span className="text-3xl font-bold text-indigo-900">
-                  {(monthlyPayment + activeProductsMonthlyCost).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-                </span>
+            <div className="pt-6 border-t border-border flex justify-between items-end">
+              <div>
+                <p className="text-[10px] text-accent font-bold uppercase tracking-[0.3em] mb-1">Total Mes</p>
+                <div className="w-12 h-1 bg-accent/30" />
               </div>
+              <span className="text-4xl font-display font-black text-foreground shadow-neon-secondary">
+                {(monthlyPayment + activeProductsMonthlyCost).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+              </span>
             </div>
           </div>
         </div>
 
-        {/* BLOQUE 3: LA LUPA EN LOS GASTOS INICIALES */}
-        <div className="bg-white p-5 rounded-xl shadow-md border border-gray-200">
-          <h3 className="font-bold text-gray-700 mb-4 flex items-center gap-2">
-            <FileText className="w-5 h-5 text-indigo-500" /> Gastos "Ocultos" Iniciales
+        {/* COLUMNA DERECHA: AUDITORÍA DE GASTOS */}
+        <div className="bg-card p-6 border border-border cyber-chamfer">
+          <h3 className="text-xs font-bold text-gray-500 mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
+            <FileText className="w-4 h-4 text-accent-tertiary" /> Reserva de Capital (Gastos)
           </h3>
           
-          <div className="bg-blue-50 p-3 rounded-lg mb-4 text-sm text-blue-800 border border-blue-100">
-             Para pedir <strong>{capital.toLocaleString()}€</strong>, necesitas tener ahorrados otros <strong>{activeInitialExpenses.toLocaleString()}€</strong> para gastos.
-          </div>
-
-          <div className="space-y-3">
-            {initialExpensesList.length === 0 ? (
-               <p className="text-sm text-gray-400 text-center py-4">No has seleccionado gastos de inicio (Notaría, etc).</p>
-            ) : (
-              initialExpensesList.map((item) => (
-                <div key={item.id} className="flex justify-between items-center text-sm border-b border-gray-100 pb-2 last:border-0">
-                  <span className="text-gray-600 font-medium">{item.name}</span>
-                  <span className="font-bold text-gray-800">
-                    {item.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
-                  </span>
-                </div>
-              ))
-            )}
+          <div className="space-y-2 mb-6 h-32 overflow-y-auto custom-scrollbar pr-2">
+            {initialExpensesList.map((item) => (
+              <div key={item.id} className="flex justify-between text-[11px] border-b border-border/30 pb-1 font-mono uppercase text-gray-400">
+                <span>{item.name}</span>
+                <span className="text-foreground">{item.cost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
+              </div>
+            ))}
           </div>
           
-          <div className="mt-auto pt-4 flex justify-between items-center">
-            <span className="text-xs font-bold text-gray-500 uppercase">Total a desembolsar</span>
-            <span className="text-xl font-bold text-indigo-900">
+          <div className="flex justify-between items-center pt-4 border-t border-accent-tertiary/30">
+            <span className="text-xs font-bold text-accent-tertiary uppercase tracking-widest">Suma Total</span>
+            <span className="text-2xl font-display font-black text-accent-tertiary">
               {activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
             </span>
           </div>
         </div>
 
-        {/* BLOQUE 4: TOTAL DE TOTALES */}
-        <div className="col-span-1 md:col-span-2 bg-gray-100 p-6 rounded-xl border border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-           <div className="flex items-center gap-3">
-              <div className="p-3 bg-white rounded-full shadow-sm">
-                <PieChart className="w-6 h-6 text-gray-700" />
+        {/* FOOTER: TOTAL OPERACIÓN */}
+        <div className="col-span-1 md:col-span-2 bg-accent/5 p-6 border border-accent/20 cyber-chamfer flex flex-col md:flex-row justify-between items-center">
+           <div className="flex items-center gap-4">
+              <div className="p-3 border border-accent/40 bg-accent/10">
+                <PieChart className="w-6 h-6 text-accent" />
               </div>
               <div>
-                <h4 className="font-bold text-gray-800">Coste REAL de la Hipoteca</h4>
-                <p className="text-sm text-gray-500">Sumando capital, intereses, gastos y seguros.</p>
+                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">Carga Financiera Total del Sistema</h4>
+                <p className="text-[10px] text-accent/50 italic">Cap + Int + Gast + Vinc</p>
               </div>
            </div>
            
            <div className="text-right">
-              <span className="block text-3xl font-black text-gray-900">
+              <span className="text-4xl font-display font-black text-accent tracking-tighter drop-shadow-[0_0_10px_rgba(0,255,136,0.5)]">
                 {totalCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
            </div>
