@@ -20,17 +20,17 @@ Focus on the primary data visualization and the application shell.
 ## Phase 2: Results Summary & Dashboard Components
 Simplify the analysis dashboard and summary metrics.
 
-- [~] Task: Update `ResultsSummary.jsx` terminology
-    - [ ] Rename `Flujo de Crédito vs Coste de Vida` to `Comparativa de Ahorro`
-    - [ ] Rename `Carga de Vinculación` to `Coste de los Seguros`
-    - [ ] Rename `DÉFICIT_NETO` -> `Pérdida Total`, `CRÉDITO_LIMPIO` -> `Ahorro Total`
-    - [ ] Rename `Reserva de Capital (Gastos)` to `Gastos Iniciales (Notaría, etc.)`
-    - [ ] Rename `Desembolso Mensual Real` to `Tu Cuota Mensual Real`
-    - [ ] Update status messages: `INFILTRACIÓN_BANCARIA_ÉXITO` -> `AHORRO CONFIRMADO`, `SISTEMA_NO_RENTABLE` -> `SISTEMA NO RENTABLE`
-    - [ ] Update glitch data-text attributes: `LINK_CORRUPTED` -> `NO COMPENSA`, `OPTIMAL_FLUX` -> `COMPENSA`
-- [ ] Task: Update ResultsSummary tests
-    - [ ] Update `src/components/__tests__/ResultsSummary.test.jsx` to match new labels
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+- [x] Task: Update `ResultsSummary.jsx` terminology 6580673
+    - [x] Rename `Flujo de Crédito vs Coste de Vida` to `Comparativa de Ahorro`
+    - [x] Rename `Carga de Vinculación` to `Coste de los Seguros`
+    - [x] Rename `DÉFICIT_NETO` -> `Pérdida Total`, `CRÉDITO_LIMPIO` -> `Ahorro Total`
+    - [x] Rename `Reserva de Capital (Gastos)` to `Gastos Iniciales (Notaría, etc.)`
+    - [x] Rename `Desembolso Mensual Real` to `Tu Cuota Mensual Real`
+    - [x] Update status messages: `INFILTRACIÓN_BANCARIA_ÉXITO` -> `AHORRO CONFIRMADO`, `SISTEMA_NO_RENTABLE` -> `SISTEMA NO RENTABLE`
+    - [x] Update glitch data-text attributes: `LINK_CORRUPTED` -> `NO COMPENSA`, `OPTIMAL_FLUX` -> `COMPENSA`
+- [x] Task: Update ResultsSummary tests 6580673
+    - [x] Update `src/components/__tests__/ResultsSummary.test.jsx` to match new labels
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md) [checkpoint: 6392b5a]
 
 ## Phase 3: Educational Content & Concepts
 Refactor the glossary and math sections for maximum clarity.
