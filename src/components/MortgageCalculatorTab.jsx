@@ -145,7 +145,7 @@ export function MortgageCalculatorTab() {
               <InputGroup 
                 label="Capital del Préstamo" 
                 value={capital} 
-                onChange={(v) => setCapital(Number(v))} 
+                onChange={(v) => setCapital(v === '' ? '' : Number(v))} 
                 suffix="EUR" 
                 min={1000} 
                 step={1000}
@@ -154,7 +154,7 @@ export function MortgageCalculatorTab() {
               <InputGroup 
                 label="Plazo (Años)" 
                 value={years} 
-                onChange={(v) => setYears(Number(v))} 
+                onChange={(v) => setYears(v === '' ? '' : Number(v))} 
                 suffix="Años" 
                 min={1} 
                 max={50} 
@@ -163,7 +163,7 @@ export function MortgageCalculatorTab() {
               <InputGroup 
                 label="Interés Base (TIN)" 
                 value={baseTIN} 
-                onChange={(v) => setBaseTIN(Number(v))} 
+                onChange={(v) => setBaseTIN(v === '' ? '' : Number(v))} 
                 suffix="%" 
                 step={0.01} 
                 helpText="Interés ofertado por el banco SIN restar bonificaciones."
@@ -198,14 +198,14 @@ export function MortgageCalculatorTab() {
                       <InputGroup 
                         label="Coste/Mes" 
                         value={product.cost} 
-                        onChange={(v) => handleProductChange(product.id, 'cost', Number(v))} 
+                        onChange={(v) => handleProductChange(product.id, 'cost', v === '' ? '' : Number(v))} 
                         suffix="€" 
                         helpText="Precio mensual del servicio (seguro, alarma, etc)."
                       />
                       <InputGroup 
                         label="Bajada de Interés" 
                         value={product.bonus} 
-                        onChange={(v) => handleProductChange(product.id, 'bonus', Number(v))} 
+                        onChange={(v) => handleProductChange(product.id, 'bonus', v === '' ? '' : Number(v))} 
                         suffix="%" 
                         step={0.01}
                         helpText="Porcentaje que el banco reduce tu interés si contratas esto."
@@ -244,7 +244,7 @@ export function MortgageCalculatorTab() {
                         type="number" 
                         className="w-full bg-transparent text-right text-xs font-mono text-accent outline-none"
                         value={expense.cost}
-                        onChange={(e) => handleExpenseChange(expense.id, 'cost', Number(e.target.value))}
+                        onChange={(e) => handleExpenseChange(expense.id, 'cost', e.target.value === '' ? '' : Number(e.target.value))}
                       />
                     </div>
                   )}

@@ -3,6 +3,7 @@ import { BaseLoanInputs } from './Simulator/BaseLoanInputs';
 import { ScenarioInputs } from './Simulator/ScenarioInputs';
 import { ComparisonSummary } from './Simulator/ComparisonSummary';
 import { calculateAmortizationWithInjection } from '../utils/amortizationEngine';
+import { Plus, Trash2 } from 'lucide-react';
 
 export function AmortizationSimulatorTab() {
   // --- State ---
@@ -12,24 +13,26 @@ export function AmortizationSimulatorTab() {
     annualTIN: 3.5,
   });
 
-  const [scenarioA, setScenarioA] = useState({
-    name: 'Ahorro Agresivo',
-    injectionAmount: 15000,
-    injectionMonth: 12,
-    strategy: 'reduceTerm',
-  });
-
-  const [scenarioB, setScenarioB] = useState({
-    name: 'Cuota Cómoda',
-    injectionAmount: 15000,
-    injectionMonth: 12,
-    strategy: 'reduceInstallment',
-  });
+  const [scenarios, setScenarios] = useState([
+    {
+      injectionAmount: 15000,
+      injectionMonth: 12,
+      injectionFrequency: 'once',
+      injectionCount: null,
+      strategy: 'reduceTerm',
+    },
+    {
+      injectionAmount: 15000,
+      injectionMonth: 12,
+      injectionFrequency: 'once',
+      injectionCount: null,
+      strategy: 'reduceInstallment',
+    }
+  ]);
 
   const [results, setResults] = useState({
     base: null,
-    scenA: null,
-    scenB: null,
+    scenarios: [],
   });
 
   // --- Handlers ---
@@ -37,36 +40,54 @@ export function AmortizationSimulatorTab() {
     setBaseData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleScenarioChange = (setter) => (field, value) => {
-    setter((prev) => ({ ...prev, [field]: value }));
+  const handleScenarioChange = (index, field, value) => {
+    setScenarios((prev) => {
+      const newScenarios = [...prev];
+      newScenarios[index] = { ...newScenarios[index], [field]: value };
+      return newScenarios;
+    });
+  };
+
+  const addScenario = () => {
+    if (scenarios.length < 4) {
+      setScenarios(prev => [...prev, {
+        injectionAmount: 10000,
+        injectionMonth: 12,
+        injectionFrequency: 'once',
+        injectionCount: null,
+        strategy: 'reduceTerm',
+      }]);
+    }
+  };
+
+  const removeScenario = (index) => {
+    if (scenarios.length > 1) {
+      setScenarios(prev => prev.filter((_, i) => i !== index));
+    }
   };
 
   // --- Calculation Effect ---
   useEffect(() => {
-    // 1. Calculate Base (No Injection) to get baseline totals
+    // 1. Calculate Base (No Injection)
     const baseResult = calculateAmortizationWithInjection({
       ...baseData,
       injectionAmount: 0,
     });
 
-    // 2. Calculate Scenario A
-    const resultA = calculateAmortizationWithInjection({
-      ...baseData,
-      ...scenarioA,
-    });
-
-    // 3. Calculate Scenario B
-    const resultB = calculateAmortizationWithInjection({
-      ...baseData,
-      ...scenarioB,
+    // 2. Calculate All Scenarios
+    const scenarioResults = scenarios.map(scen => {
+        const res = calculateAmortizationWithInjection({
+          ...baseData,
+          ...scen,
+        });
+        return { ...res, strategy: scen.strategy };
     });
 
     setResults({
       base: baseResult,
-      scenA: { ...resultA, strategy: scenarioA.strategy },
-      scenB: { ...resultB, strategy: scenarioB.strategy },
+      scenarios: scenarioResults,
     });
-  }, [baseData, scenarioA, scenarioB]);
+  }, [baseData, scenarios]);
 
   return (
     <div className="space-y-8 animate-in fade-in zoom-in duration-500">
@@ -81,7 +102,7 @@ export function AmortizationSimulatorTab() {
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-        {/* Left Column: Inputs (4 cols on large screens) */}
+        {/* Left Column: Inputs */}
         <div className="xl:col-span-4 space-y-6">
           <BaseLoanInputs data={baseData} onChange={handleBaseChange} />
           
@@ -89,25 +110,41 @@ export function AmortizationSimulatorTab() {
             {/* Visual connector line */}
             <div className="absolute left-6 top-0 bottom-0 w-px bg-border -z-10 hidden xl:block"></div>
             
-            <ScenarioInputs 
-              index={0} 
-              scenario={scenarioA} 
-              onChange={handleScenarioChange(setScenarioA)} 
-            />
-            <ScenarioInputs 
-              index={1} 
-              scenario={scenarioB} 
-              onChange={handleScenarioChange(setScenarioB)} 
-            />
+            {scenarios.map((scen, idx) => (
+              <div key={idx} className="relative group/scen">
+                 <ScenarioInputs 
+                    index={idx} 
+                    scenario={scen} 
+                    onChange={(field, val) => handleScenarioChange(idx, field, val)} 
+                 />
+                 {scenarios.length > 1 && (
+                   <button 
+                     onClick={() => removeScenario(idx)}
+                     className="absolute top-4 right-4 p-1.5 text-gray-500 hover:text-red-500 transition-colors bg-black/40 border border-transparent hover:border-red-500/30 rounded z-20"
+                     title="Eliminar escenario"
+                   >
+                     <Trash2 className="w-3 h-3" />
+                   </button>
+                 )}
+              </div>
+            ))}
+
+            {scenarios.length < 4 && (
+              <button 
+                onClick={addScenario}
+                className="w-full py-4 border-2 border-dashed border-gray-700 rounded-lg text-gray-500 hover:text-accent hover:border-accent hover:bg-accent/5 transition-all flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest"
+              >
+                <Plus className="w-4 h-4" /> Añadir Escenario
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Right Column: Results & Visualization (8 cols on large screens) */}
+        {/* Right Column: Results & Visualization */}
         <div className="xl:col-span-8 space-y-6">
           <ComparisonSummary 
             base={results.base} 
-            scenA={results.scenA} 
-            scenB={results.scenB} 
+            scenarios={results.scenarios} 
           />
 
           {/* Chart Placeholder - Phase 4 Pending */}

@@ -35,9 +35,9 @@ describe('App Component Navigation', () => {
     fireEvent.click(simulatorTab);
 
     // Expect Simulator content (which doesn't exist yet)
-    expect(screen.getByText(/Simulador de Amortización Anticipada/i)).toBeInTheDocument();
+    expect(screen.getByText(/Simulador de Amortización/i)).toBeInTheDocument();
     
-    // Expect Calculator content to be gone (optional, depending on implementation, but good for isolation)
-    expect(screen.queryByText(/Capital del Préstamo/i)).not.toBeInTheDocument();
+    // Expect Calculator content to be hidden (using toBeVisible because it's in the DOM but hidden via CSS)
+    expect(screen.getByText(/Capital del Préstamo/i)).not.toBeVisible();
   });
 });

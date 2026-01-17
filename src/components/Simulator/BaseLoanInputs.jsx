@@ -19,7 +19,7 @@ export function BaseLoanInputs({ data, onChange }) {
           <InputGroup
             label="Capital Pendiente"
             value={principal}
-            onChange={(v) => onChange('principal', Number(v))}
+            onChange={(v) => onChange('principal', v === '' ? '' : Number(v))}
             suffix="EUR"
             min={0}
             step={1000}
@@ -28,7 +28,7 @@ export function BaseLoanInputs({ data, onChange }) {
           <InputGroup
             label="Plazo Restante"
             value={years}
-            onChange={(v) => onChange('years', Number(v))}
+            onChange={(v) => onChange('years', v === '' ? '' : Number(v))}
             suffix="Años"
             min={0.5}
             max={50}
@@ -38,7 +38,7 @@ export function BaseLoanInputs({ data, onChange }) {
           <InputGroup
             label="Interés Actual (TIN)"
             value={annualTIN}
-            onChange={(v) => onChange('annualTIN', Number(v))}
+            onChange={(v) => onChange('annualTIN', v === '' ? '' : Number(v))}
             suffix="%"
             step={0.01}
             helpText="Tu tipo de interés actual."

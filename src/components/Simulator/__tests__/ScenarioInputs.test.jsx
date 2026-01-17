@@ -17,7 +17,6 @@ describe('ScenarioInputs Component', () => {
   it('renders standard inputs', () => {
     render(<ScenarioInputs scenario={mockScenario} onChange={mockOnChange} index={0} />);
     
-    expect(screen.getByRole('textbox', { name: /Nombre/i })).toBeInTheDocument();
     expect(screen.getByRole('spinbutton', { name: /Cantidad/i })).toBeInTheDocument();
     expect(screen.getByRole('spinbutton', { name: /Mes/i })).toBeInTheDocument();
   });

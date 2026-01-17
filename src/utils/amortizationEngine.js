@@ -5,9 +5,12 @@ export const calculateAmortizationWithInjection = ({
   annualTIN,
   years,
   injectionAmount = 0,
-  injectionMonth = 0, // 1-based index, e.g., Month 12
-  strategy = 'reduceTerm' // 'reduceTerm' or 'reduceInstallment'
+  injectionMonth = 0,
+  injectionFrequency = 'once', // 'once', 'monthly', 'yearly'
+  injectionCount = null, // number or null
+  strategy = 'reduceTerm'
 }) => {
+  const scenario = { injectionAmount, injectionMonth, injectionFrequency, injectionCount, strategy };
   // 1. Initial Setup
   const monthlyRate = annualTIN / 100 / 12;
   const totalMonths = years * 12;
@@ -16,6 +19,7 @@ export const calculateAmortizationWithInjection = ({
   
   const schedule = [];
   let totalInterest = 0;
+  let totalInjected = 0;
   
   // Base Scenario Calculation (to compare savings)
   // We can approximate this or run a shadow simulation.
@@ -37,22 +41,53 @@ export const calculateAmortizationWithInjection = ({
     const interestRaw = currentBalance * monthlyRate;
     const interest = roundToMoney(interestRaw);
     
-    // B. Handle Injection BEFORE amortization? Or AFTER?
-    // Usually "Capital Injection" is an extra payment. 
-    // Logic: 
-    // 1. Pay normal monthly installment (Interest + Principal).
-    // 2. IF injection month, pay EXTRA principal.
-    // 3. Recalculate future if needed.
-    
-    // However, some prefer: "At month X, I put 10k".
-    // Does that replace the monthly payment? No, it's usually on top.
-    
+    // B. Handle Injection Logic
     let extraPrincipal = 0;
     let didInject = false;
+    let shouldInject = false;
 
-    if (month === injectionMonth && injectionAmount > 0) {
+    // Check if within start period
+    if (month >= injectionMonth) {
+      // Logic based on frequency
+      if (scenario.injectionFrequency === 'monthly') {
+        shouldInject = true;
+      } else if (scenario.injectionFrequency === 'yearly') {
+        // Inject if it's the start month OR exactly N years after
+        if ((month - injectionMonth) % 12 === 0) {
+          shouldInject = true;
+        }
+      } else {
+        // Default: 'once' (Puntual)
+        if (month === injectionMonth) {
+          shouldInject = true;
+        }
+      }
+
+      // Check max occurrences (count) if specified
+      if (shouldInject && scenario.injectionCount && scenario.injectionCount > 0) {
+        // Calculate how many times we have injected so far
+        // For monthly: (month - start) + 1
+        // For yearly: ((month - start) / 12) + 1
+        // For once: 1
+        let injectionsSoFar = 0;
+        if (scenario.injectionFrequency === 'monthly') {
+            injectionsSoFar = (month - injectionMonth) + 1;
+        } else if (scenario.injectionFrequency === 'yearly') {
+            injectionsSoFar = ((month - injectionMonth) / 12) + 1;
+        } else {
+            injectionsSoFar = 1;
+        }
+
+        if (injectionsSoFar > scenario.injectionCount) {
+            shouldInject = false;
+        }
+      }
+    }
+
+    if (shouldInject && injectionAmount > 0) {
       extraPrincipal = injectionAmount;
       didInject = true;
+      totalInjected += extraPrincipal;
     }
 
     // C. Standard Payment Logic
@@ -120,20 +155,27 @@ export const calculateAmortizationWithInjection = ({
     month++;
   }
 
-  const totalSavings = injectionAmount > 0 ? Math.max(0, baseTotalInterest - totalInterest) : 0;
-  const roi = injectionAmount > 0 ? (totalSavings / injectionAmount) * 100 : 0;
+  const totalSavings = totalInjected > 0 ? Math.max(0, baseTotalInterest - totalInterest) : 0;
+  const roi = totalInjected > 0 ? (totalSavings / totalInjected) * 100 : 0;
   
   // Format new term
   const finalMonths = schedule.length;
   const yearsSaved = Math.floor((totalMonths - finalMonths) / 12);
   const monthsSaved = (totalMonths - finalMonths) % 12;
 
+  // Initial Monthly Payment (calculated at start)
+  const initialMonthlyPayment = calculateMonthlyPayment(principal, annualTIN, years);
+
   return {
     schedule,
     totalInterest,
     totalSavings,
+    totalInjected,
     roi,
-    newTerm: `${Math.floor(finalMonths / 12)}y ${finalMonths % 12}m`
+    newTerm: `${Math.floor(finalMonths / 12)}y ${finalMonths % 12}m`,
+    initialMonthlyPayment,
+    finalMonthlyPayment: currentPayment,
+    finalMonths // Return raw number for diff calculations
   };
 };
 

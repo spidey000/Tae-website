@@ -15,8 +15,9 @@ describe('AmortizationSimulatorTab Component', () => {
     
     // Check Scenarios
     // Note: The ScenarioInputs component renders "[ ESCENARIO X ]" with uppercase styling
-    // and input labels like "Nombre del Escenario"
-    expect(screen.getAllByText(/Nombre del Escenario/i)).toHaveLength(2);
+    // We expect two scenarios to be rendered (Input Header + Result Header)
+    expect(screen.getAllByText(/ESCENARIO 1/i).length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByText(/ESCENARIO 2/i).length).toBeGreaterThanOrEqual(2);
     
     // Check Summary Section
     expect(screen.getByText(/Escenario Base/i)).toBeInTheDocument();

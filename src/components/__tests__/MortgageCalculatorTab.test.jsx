@@ -33,7 +33,7 @@ describe('MortgageCalculatorTab', () => {
     // Find the capital input (using the label or surrounding context)
     // InputGroup uses "Capital del Préstamo" as label. 
     // Note: React Testing Library might need to find by LabelText.
-    const capitalInput = screen.getByLabelText(/Capital del Préstamo/i);
+    const capitalInput = screen.getByRole('spinbutton', { name: /Capital del Préstamo/i });
     
     fireEvent.change(capitalInput, { target: { value: '200000' } });
     expect(capitalInput.value).toBe('200000');

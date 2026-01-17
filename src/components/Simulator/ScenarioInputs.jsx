@@ -3,7 +3,7 @@ import { InputGroup } from '../InputGroup';
 import { Layers } from 'lucide-react';
 
 export function ScenarioInputs({ scenario, onChange, index }) {
-  const { name, injectionAmount, injectionMonth, strategy } = scenario;
+  const { injectionAmount, injectionMonth, strategy, injectionFrequency, injectionCount } = scenario;
   const isTerm = strategy === 'reduceTerm';
 
   return (
@@ -13,33 +13,68 @@ export function ScenarioInputs({ scenario, onChange, index }) {
         [ ESCENARIO {index + 1} ]
       </div>
       <div className="relative p-6 pt-8">
-        <InputGroup
-          label="Nombre del Escenario"
-          value={name}
-          onChange={(v) => onChange('name', v)}
-          type="text"
-          prefix=" "
-          helpText="Etiqueta para identificar esta simulación."
-        />
+        
+        {/* Frequency Selector */}
+        <div className="mb-4">
+          <label className="text-xs font-bold text-accent uppercase tracking-[0.2em] mb-2 block">
+            Periodicidad
+          </label>
+          <div className="flex bg-black/40 border border-border rounded p-1 gap-1">
+            {[
+              { id: 'once', label: 'Puntual' },
+              { id: 'monthly', label: 'Mensual' },
+              { id: 'yearly', label: 'Anual' }
+            ].map((opt) => (
+              <button
+                key={opt.id}
+                onClick={() => onChange('injectionFrequency', opt.id)}
+                className={`flex-1 py-2 text-[10px] sm:text-xs font-bold uppercase tracking-wider transition-all rounded ${
+                  injectionFrequency === opt.id 
+                    ? 'bg-accent/20 text-accent shadow-[0_0_10px_rgba(0,255,136,0.2)]' 
+                    : 'text-gray-500 hover:text-gray-300'
+                }`}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-2 gap-4 mt-4">
           <InputGroup
             label="Cantidad a Inyectar"
             value={injectionAmount}
-            onChange={(v) => onChange('injectionAmount', Number(v))}
+            onChange={(v) => onChange('injectionAmount', v === '' ? '' : Number(v))}
             suffix="EUR"
             step={1000}
-            helpText="Dinero extra que pagas de golpe."
+            helpText="Dinero extra a aportar."
           />
           <InputGroup
-            label="Mes de Inyección"
+            label={injectionFrequency === 'once' ? "Mes de Inyección" : "Mes de Inicio"}
             value={injectionMonth}
-            onChange={(v) => onChange('injectionMonth', Number(v))}
+            onChange={(v) => onChange('injectionMonth', v === '' ? '' : Number(v))}
             suffix="Mes"
             step={1}
             min={1}
-            helpText="Cuándo realizas el pago (Mes 1 = primer pago)."
+            helpText="Cuándo realizas el primer pago."
           />
         </div>
+
+        {/* Repetitions (Only if not 'once') */}
+        {injectionFrequency !== 'once' && (
+           <div className="mt-4 animate-in fade-in slide-in-from-top-2">
+             <InputGroup
+                label="Repeticiones"
+                value={injectionCount || ''}
+                onChange={(v) => onChange('injectionCount', v === '' ? null : Number(v))}
+                type="number"
+                placeholder="∞"
+                suffix="Veces"
+                min={1}
+                helpText="Dejar vacío para repetir hasta el final del préstamo."
+              />
+           </div>
+        )}
 
         {/* Strategy Selector */}
         <div className="mt-6">
