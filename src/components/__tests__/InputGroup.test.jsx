@@ -24,6 +24,12 @@ describe('InputGroup Component', () => {
     expect(screen.getByText('EUR')).toBeInTheDocument();
   });
 
+  it('renders a tooltip if helpText is provided', () => {
+    render(<InputGroup label="Test" value={100} onChange={() => {}} helpText="Help info" />);
+    // The tooltip is rendered as a button
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
+
   // RED PHASE: Feature to implement
   it('displays error styles when error prop is present', () => {
     const { container } = render(

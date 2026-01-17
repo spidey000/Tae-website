@@ -1,12 +1,14 @@
 import React from 'react';
+import { Tooltip } from './Tooltip';
 
-export const InputGroup = ({ label, value, onChange, type = 'number', suffix, prefix, min, max, step, error }) => {
+export const InputGroup = ({ label, value, onChange, type = 'number', suffix, prefix, min, max, step, error, helpText }) => {
   return (
     <div className="flex flex-col gap-1 group">
       <div className="flex justify-between items-center mb-1">
         <label className="text-xs font-bold text-accent uppercase tracking-[0.2em] flex items-center gap-2">
           <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${error ? 'bg-red-500' : 'bg-accent'}`} />
           {label}
+          {helpText && <Tooltip content={helpText} />}
         </label>
         {error && <span className="text-[10px] text-red-500 font-bold uppercase tracking-wider animate-pulse">{error}</span>}
       </div>
