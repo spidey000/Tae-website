@@ -1,10 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { InputGroup } from './components/InputGroup';
 import { Toggle } from './components/Toggle';
+import { Tooltip } from './components/Tooltip';
 import { ResultsSummary } from './components/ResultsSummary';
 import { AmortizationTable } from './components/AmortizationTable';
 import { AmortizationChart } from './components/AmortizationChart';
 import { EducationalSection } from './components/EducationalSection';
+import { CoreConceptAnalysis } from './components/CoreConceptAnalysis';
 import { calculateMonthlyPayment, calculateTAE, generateAmortizationSchedule } from './utils/mortgageCalculations';
 import { Calculator, FileText, ShieldCheck, Briefcase, BarChart2, List } from 'lucide-react';
 
@@ -16,11 +18,11 @@ function App() {
   const [viewMode, setViewMode] = useState('table'); // 'table' or 'chart'
 
   const [initialExpenses, setInitialExpenses] = useState([
-    { id: 'appraisal', name: 'Tasación', cost: 350, enabled: true },
-    { id: 'opening', name: 'Comisión Apertura', cost: 500, enabled: false },
-    { id: 'notary', name: 'Notaría', cost: 800, enabled: true },
-    { id: 'registry', name: 'Registro', cost: 400, enabled: true },
-    { id: 'tax', name: 'IAJD', cost: 1500, enabled: false },
+    { id: 'appraisal', name: 'Tasación', cost: 350, enabled: true, description: "Coste de valorar la vivienda. Obligatorio si pides hipoteca." },
+    { id: 'opening', name: 'Comisión Apertura', cost: 500, enabled: false, description: "Lo que cobra el banco por 'abrir' el préstamo. Intenta negociarla a cero." },
+    { id: 'notary', name: 'Notaría', cost: 800, enabled: true, description: "Honorarios del notario. Lo suele pagar el banco (Ley 2019), pero verifica." },
+    { id: 'registry', name: 'Registro', cost: 400, enabled: true, description: "Inscripción en el Registro de la Propiedad. Lo suele pagar el banco." },
+    { id: 'tax', name: 'IAJD', cost: 1500, enabled: false, description: "Impuesto de Actos Jurídicos Documentados. Lo paga el banco desde 2018." },
   ]);
 
   const [linkedProducts, setLinkedProducts] = useState([
@@ -146,6 +148,9 @@ function App() {
 
       <main className="max-w-7xl mx-auto mt-12 px-6 grid grid-cols-1 lg:grid-cols-12 gap-10">
         
+        {/* Core Concept Analysis (Top Full Width) */}
+        <CoreConceptAnalysis />
+
         {/* Left Column: Data Input Terminals */}
         <div className="lg:col-span-4 space-y-12 pt-4">
           
@@ -167,6 +172,7 @@ function App() {
                   suffix="EUR" 
                   min={1000} 
                   step={1000}
+                  helpText="La cantidad de dinero que solicitas al banco (deuda inicial)."
                 />
                 <InputGroup 
                   label="Ciclo de Vida (Años)" 
@@ -175,6 +181,7 @@ function App() {
                   suffix="YEARS" 
                   min={1} 
                   max={50} 
+                  helpText="Tiempo para devolver el préstamo. A más años, cuota más baja pero más intereses pagados en total."
                 />
                 <InputGroup 
                   label="TIN Base (Nominal)" 
@@ -182,6 +189,7 @@ function App() {
                   onChange={(v) => setBaseTIN(Number(v))} 
                   suffix="%" 
                   step={0.01} 
+                  helpText="Interés ofertado por el banco SIN restar bonificaciones."
                 />
               </div>
             </div>
@@ -215,6 +223,7 @@ function App() {
                           value={product.cost} 
                           onChange={(v) => handleProductChange(product.id, 'cost', Number(v))} 
                           suffix="€" 
+                          helpText="Precio mensual del servicio (seguro, alarma, etc)."
                         />
                         <InputGroup 
                           label="Impacto TIN" 
@@ -222,6 +231,7 @@ function App() {
                           onChange={(v) => handleProductChange(product.id, 'bonus', Number(v))} 
                           suffix="%" 
                           step={0.01}
+                          helpText="Porcentaje que el banco reduce tu interés si contratas esto."
                         />
                       </div>
                     )}
@@ -246,7 +256,10 @@ function App() {
                   <div key={expense.id} className="flex items-center justify-between py-2 border-b border-border/20 last:border-0 group/row">
                     <div className="flex items-center gap-3">
                       <Toggle enabled={expense.enabled} onChange={(v) => handleExpenseChange(expense.id, 'enabled', v)} />
-                      <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${expense.enabled ? 'text-gray-200' : 'text-gray-600'}`}>{expense.name}</span>
+                      <span className={`text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center gap-1 ${expense.enabled ? 'text-gray-200' : 'text-gray-600'}`}>
+                        {expense.name}
+                        {expense.enabled && <Tooltip content={expense.description} />}
+                      </span>
                     </div>
                     {expense.enabled && (
                       <div className="w-24">

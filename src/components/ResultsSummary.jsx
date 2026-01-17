@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Layers, FileText, PieChart, Activity, Zap, Terminal } from 'lucide-react';
+import { Tooltip } from './Tooltip';
 
 export const ResultsSummary = ({ 
   monthlyPayment, 
@@ -63,7 +64,9 @@ export const ResultsSummary = ({
             
             {/* SAVINGS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent">
-              <span className="text-[10px] font-bold text-accent/60 uppercase">Intereses Evitados</span>
+              <span className="text-[10px] font-bold text-accent/60 uppercase flex items-center gap-1">
+                Intereses Evitados <Tooltip content="Dinero que dejas de pagar al banco gracias a la bajada del tipo de interés." />
+              </span>
               <div className="text-3xl font-numbers font-bold text-accent mt-1 tracking-tighter tabular-nums">
                 {interestSavings.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
@@ -73,7 +76,9 @@ export const ResultsSummary = ({
 
             {/* COSTS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent-secondary">
-              <span className="text-[10px] font-bold text-accent-secondary/60 uppercase">Carga de Vinculación</span>
+              <span className="text-[10px] font-bold text-accent-secondary/60 uppercase flex items-center gap-1">
+                Carga de Vinculación <Tooltip content="Coste total de los seguros y productos contratados durante toda la vida del préstamo." />
+              </span>
               <div className="text-3xl font-numbers font-bold text-accent-secondary mt-1 tracking-tighter tabular-nums">
                 -{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </div>
@@ -83,8 +88,9 @@ export const ResultsSummary = ({
 
             {/* NET RESULT */}
             <div className={`flex-1 p-4 border-2 shadow-neon ${isBenefitNegative ? 'bg-red-950/40 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'bg-accent/10 border-accent'}`}>
-              <span className={`text-[10px] font-bold uppercase ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
+              <span className={`text-[10px] font-bold uppercase flex items-center gap-1 ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
                 {isBenefitNegative ? 'DÉFICIT_NETO' : 'CRÉDITO_LIMPIO'}
+                <Tooltip content="El resultado final. Si es positivo, ganas dinero contratando los productos. Si es negativo, pierdes dinero." />
               </span>
               <div className={`text-4xl font-numbers font-bold mt-1 tracking-tighter tabular-nums ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
                 {Math.abs(netBenefit).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
