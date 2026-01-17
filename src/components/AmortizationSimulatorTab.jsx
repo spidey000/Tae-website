@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BaseLoanInputs } from './Simulator/BaseLoanInputs';
 import { ScenarioInputs } from './Simulator/ScenarioInputs';
 import { ComparisonSummary } from './Simulator/ComparisonSummary';
+import { ComparisonCharts } from './Simulator/ComparisonCharts';
 import { calculateAmortizationWithInjection } from '../utils/amortizationEngine';
 import { Plus, Trash2 } from 'lucide-react';
 
@@ -147,15 +148,11 @@ export function AmortizationSimulatorTab() {
             scenarios={results.scenarios} 
           />
 
-          {/* Chart Placeholder - Phase 4 Pending */}
-          <div className="p-8 border border-dashed border-gray-700 rounded-lg bg-black/20 text-center min-h-[300px] flex flex-col items-center justify-center">
-             <div className="text-gray-500 font-display uppercase tracking-widest text-sm mb-2">
-               Gráficos Comparativos
-             </div>
-             <p className="text-xs text-gray-600">
-               (Visualización detallada disponible en la próxima actualización)
-             </p>
-          </div>
+          <ComparisonCharts 
+            base={results.base} 
+            scenarios={results.scenarios} 
+            principal={baseData.principal}
+          />
         </div>
       </div>
     </div>
