@@ -1,6 +1,6 @@
 # Implementation Plan - Track: Amortization Simulator
 
-## Phase 1: Architecture & Navigation
+## Phase 1: Architecture & Navigation [checkpoint: 1bbe155]
 Establish the tabbed interface and isolate the existing calculator functionality.
 
 - [x] Task: Create Tabbed Layout Structure 7216e78
@@ -9,18 +9,18 @@ Establish the tabbed interface and isolate the existing calculator functionality
     - [ ] Move existing Calculator content into `components/MortgageCalculatorTab.jsx`.
     - [ ] Create placeholder `components/AmortizationSimulatorTab.jsx`.
     - [ ] **Test:** Verify tab switching renders correct components without losing state (if applicable) or crashing.
-- [ ] Task: Conductor - User Manual Verification 'Architecture & Navigation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Architecture & Navigation' (Protocol in workflow.md) 1bbe155
 
 ## Phase 2: Core Calculation Logic (The Engine)
 Implement the mathematical logic for amortization with capital injections.
 
-- [ ] Task: Implement `calculateAmortizationWithInjection`
+- [x] Task: Implement `calculateAmortizationWithInjection` 18a3dd5
     - [ ] Create/Update `utils/amortizationEngine.js` (or extend existing utils).
     - [ ] Implement logic for "Reduce Term" (keep installment, reduce N).
     - [ ] Implement logic for "Reduce Installment" (keep N, reduce installment).
     - [ ] Ensure calculation of "Total Interest", "Total Savings", and "ROI".
     - [ ] **Test:** Unit tests validating the math against known scenarios (e.g., the User's CSV examples).
-- [ ] Task: Implement Data Merging for Visualization
+- [x] Task: Implement Data Merging for Visualization 18a3dd5
     - [ ] Create utility to merge 3 schedules (Base, Scen A, Scen B) into a single array for Recharts `[{ month: 1, baseBalance: X, scenABalance: Y, ... }]`.
     - [ ] **Test:** Verify data alignment (e.g., Scenario A might end earlier than Base).
 - [ ] Task: Conductor - User Manual Verification 'Core Calculation Logic' (Protocol in workflow.md)
