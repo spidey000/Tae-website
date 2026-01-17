@@ -61,10 +61,10 @@ Connect inputs to logic and render the comparative charts.
 ## Phase 5: Polish & Edge Cases
 Refinement and responsive design.
 
-- [ ] Task: UI/UX Polish
-    - [ ] Ensure mobile responsiveness (stacking charts/inputs).
-    - [ ] Add "Break-even" text/markers if feasible.
-    - [ ] Add Help Tooltips explaining "Reduce Term" vs "Reduce Installment".
+- [x] Task: UI/UX Polish 204745e
+    - [x] Ensure mobile responsiveness (stacking charts/inputs).
+    - [x] Add "Break-even" text/markers if feasible.
+    - [x] Add Help Tooltips explaining "Reduce Term" vs "Reduce Installment".
 - [ ] Task: Final Code Quality Check
     - [ ] Run Linting/Formatting.
     - [ ] Ensure 80% Coverage on new utils.
