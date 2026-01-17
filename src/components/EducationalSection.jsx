@@ -9,11 +9,11 @@ export const EducationalSection = () => {
       <div className="relative group">
         <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
         <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent uppercase tracking-widest z-10">
-          [ KNOWLEDGE_BASE_01 ]
+          [ GLOSARIO ]
         </div>
         <div className="relative p-6 pt-8">
           <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent uppercase tracking-widest">
-            <BookOpen className="h-4 w-4" /> Glosario para Dummies
+            <BookOpen className="h-4 w-4" /> Diccionario Financiero Básico
           </h2>
           
           <div className="space-y-6 h-96 overflow-y-auto custom-scrollbar pr-4">
@@ -71,11 +71,11 @@ export const EducationalSection = () => {
       <div className="relative group">
         <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
         <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-secondary uppercase tracking-widest z-10">
-          [ MATH_CORE_02 ]
+          [ MATEMÁTICAS ]
         </div>
         <div className="relative p-6 pt-8">
           <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-secondary uppercase tracking-widest">
-            <Divide className="h-4 w-4" /> Matemáticas Explicadas (Sin Dolor)
+            <Divide className="h-4 w-4" /> ¿Cómo se calculan los números?
           </h2>
           
           <div className="space-y-6 h-96 overflow-y-auto custom-scrollbar pr-4">
@@ -119,7 +119,7 @@ export const EducationalSection = () => {
                 Para calcular la TAE real, el simulador hace una "ingeniería inversa". Pregunta: "¿Si tengo en cuenta que pagas 300€ de tasación hoy, y 20€ de seguro cada mes durante 25 años... cuál es el interés REAL equivalente?".
               </p>
               <p className="text-[10px] text-gray-500 mt-2 leading-relaxed">
-                Usa un algoritmo llamado <strong>Newton-Raphson</strong> que prueba millones de combinaciones por segundo hasta encontrar el porcentaje exacto que hace que las cuentas cuadren. Es la única forma de no mentirte.
+                Usa un <strong>Cálculo matemático complejo</strong> que prueba millones de combinaciones por segundo hasta encontrar el porcentaje exacto que hace que las cuentas cuadren. Es la única forma de no mentirte.
               </p>
             </div>
 
