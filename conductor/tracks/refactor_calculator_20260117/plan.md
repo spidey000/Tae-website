@@ -23,11 +23,11 @@
 - [x] Task: Conductor - User Manual Verification 'UI/UX Overhaul (Cyberpunk)' (Protocol in workflow.md) [dc7d819]
 
 ## Phase 3: Advanced Features & Integration
-- [ ] Task: Implement Visualization
-    - [ ] Sub-task: Choose and install a charting library (e.g., Recharts or Chart.js) compatible with React 19
-    - [ ] Sub-task: Create `AmortizationChart` component
-    - [ ] Sub-task: Integrate chart into main view with toggle
-- [ ] Task: Final Integration & Polish
-    - [ ] Sub-task: Ensure real-time updates between inputs and all outputs (chart, table, summary)
-    - [ ] Sub-task: Verify mobile responsiveness
-- [ ] Task: Conductor - User Manual Verification 'Advanced Features & Integration' (Protocol in workflow.md)
+- [x] Task: Implement Visualization [898d6e1]
+    - [x] Sub-task: Choose and install a charting library (e.g., Recharts or Chart.js) compatible with React 19
+    - [x] Sub-task: Create `AmortizationChart` component
+    - [x] Sub-task: Integrate chart into main view with toggle
+- [x] Task: Final Integration & Polish [dd55a50]
+    - [x] Sub-task: Ensure real-time updates between inputs and all outputs (chart, table, summary)
+    - [x] Sub-task: Verify mobile responsiveness
+- [~] Task: Conductor - User Manual Verification 'Advanced Features & Integration' (Protocol in workflow.md)
