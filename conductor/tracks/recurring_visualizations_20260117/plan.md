@@ -1,6 +1,6 @@
 # Plan: Recurring Injection Visualizations & Dynamic Summaries
 
-## Phase 1: Engine & Data Preparation
+## Phase 1: Engine & Data Preparation [checkpoint: 71d75c4]
 - [x] Task: Verify Amortization Engine Export [96b6c4a]
     - [x] Sub-task: Ensure `calculateAmortizationWithInjection` exports sufficient data (payment history, interest accumulated per month) for the new charts.
     - [x] Sub-task: Add unit tests to verify the `schedule` array contains correct changing payment values for "reduceInstallment" strategy.
