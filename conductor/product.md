@@ -8,7 +8,8 @@ A standalone mortgage calculator tool and financial educational platform.
 
 ## Key Features
 - Mortgage calculator with amortization schedule.
-- Comparison tool for different loan scenarios.
+- Comparison tool for different loan scenarios (Bonified vs Standard).
+- Interactive Visualization: Area chart for amortization projection.
 - Detailed explanations of calculations and financial terms displayed on the page.
 
 ## Success Metrics

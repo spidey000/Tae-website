@@ -15,3 +15,4 @@
 
 ## Libraries
 - **Icons:** lucide-react
+- **Charts:** recharts
