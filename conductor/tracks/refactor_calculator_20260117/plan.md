@@ -13,14 +13,14 @@
 - [x] Task: Setup Styling Foundation [9d93787]
     - [x] Sub-task: Configure Tailwind theme for Cyberpunk colors (neon, dark backgrounds)
     - [x] Sub-task: Update `index.css` / global styles
-- [~] Task: Component Refactoring
-    - [ ] Sub-task: Write tests for `InputGroup` component
-    - [ ] Sub-task: Style `InputGroup` component
-    - [ ] Sub-task: Write tests for `ResultsSummary` component
-    - [ ] Sub-task: Style `ResultsSummary` component
-    - [ ] Sub-task: Write tests for `AmortizationTable` component
-    - [ ] Sub-task: Style `AmortizationTable` component
-- [ ] Task: Conductor - User Manual Verification 'UI/UX Overhaul (Cyberpunk)' (Protocol in workflow.md)
+- [x] Task: Component Refactoring [36a1ef8, 44a542d]
+    - [x] Sub-task: Write tests for `InputGroup` component
+    - [x] Sub-task: Style `InputGroup` component
+    - [x] Sub-task: Write tests for `ResultsSummary` component
+    - [x] Sub-task: Style `ResultsSummary` component
+    - [x] Sub-task: Write tests for `AmortizationTable` component
+    - [x] Sub-task: Style `AmortizationTable` component
+- [~] Task: Conductor - User Manual Verification 'UI/UX Overhaul (Cyberpunk)' (Protocol in workflow.md)
 
 ## Phase 3: Advanced Features & Integration
 - [ ] Task: Implement Visualization
