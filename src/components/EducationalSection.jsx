@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, Divide, Lightbulb, GraduationCap } from 'lucide-react';
+import { BookOpen, Divide, Lightbulb, GraduationCap, Activity } from 'lucide-react';
 
 export const EducationalSection = () => {
   return (
