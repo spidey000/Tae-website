@@ -39,11 +39,12 @@ function App() {
       <main className="max-w-7xl mx-auto mt-12 px-6">
         <Tabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
-        {activeTab === 'calculator' ? (
+        <div style={{ display: activeTab === 'calculator' ? 'block' : 'none' }}>
           <MortgageCalculatorTab />
-        ) : (
+        </div>
+        <div style={{ display: activeTab === 'simulator' ? 'block' : 'none' }}>
           <AmortizationSimulatorTab />
-        )}
+        </div>
       </main>
     </div>
   );
