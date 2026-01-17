@@ -20,7 +20,7 @@ Focus on the primary data visualization and the application shell.
 ## Phase 2: Results Summary & Dashboard Components
 Simplify the analysis dashboard and summary metrics.
 
-- [ ] Task: Update `ResultsSummary.jsx` terminology
+- [~] Task: Update `ResultsSummary.jsx` terminology
     - [ ] Rename `Flujo de Crédito vs Coste de Vida` to `Comparativa de Ahorro`
     - [ ] Rename `Carga de Vinculación` to `Coste de los Seguros`
     - [ ] Rename `DÉFICIT_NETO` -> `Pérdida Total`, `CRÉDITO_LIMPIO` -> `Ahorro Total`
