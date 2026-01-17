@@ -46,16 +46,16 @@ Connect inputs to logic and render the comparative charts.
     - [ ] Create `components/Simulator/ComparisonSummary.jsx`.
     - [ ] Display Savings, Time Reduction, and ROI for Scen A & B.
     - [ ] **Test:** Verify formatting and conditional rendering (e.g., show "Time Saved" only if Term Reduced).
-- [ ] Task: Build Comparative Charts
-    - [ ] Create `components/Simulator/ComparisonCharts.jsx`.
-    - [ ] Implement Recharts Line Chart (Balance over time).
-    - [ ] Implement Interactive Tooltip (custom content showing 3 scenarios).
-    - [ ] Implement Bar Chart (Total Interest/Principal breakdown).
-    - [ ] **Test:** Verify chart renders with mock data.
-- [~] Task: Integrate Simulator Tab
+- [x] Task: Build Comparative Charts 750424b
+    - [x] Create `components/Simulator/ComparisonCharts.jsx`.
+    - [x] Implement Recharts Line Chart (Balance over time).
+    - [x] Implement Interactive Tooltip (custom content showing 3 scenarios).
+    - [x] Implement Bar Chart (Total Interest/Principal breakdown).
+    - [x] **Test:** Verify chart renders with mock data.
+- [x] Task: Integrate Simulator Tab 750424b
     - [x] Wire `AmortizationSimulatorTab.jsx` to use Inputs, Engine, and Results.
-    - [ ] Implement Real-time recalculation (or "Calculate" button).
-    - [ ] **Test:** Full flow - Input Data -> Charts Update.
+    - [x] Implement Real-time recalculation (or "Calculate" button).
+    - [x] **Test:** Full flow - Input Data -> Charts Update.
 - [ ] Task: Conductor - User Manual Verification 'Visualization & Integration' (Protocol in workflow.md)
 
 ## Phase 5: Polish & Edge Cases
