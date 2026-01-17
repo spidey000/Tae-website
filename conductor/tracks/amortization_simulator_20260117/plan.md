@@ -39,7 +39,7 @@ Build the input forms for the independent simulator tab.
     - [ ] **Test:** Verify toggle switches logic and inputs capture data correctly.
 - [x] Task: Conductor - User Manual Verification 'Simulator UI - Inputs' (Protocol in workflow.md) edb58a2
 
-## Phase 4: Visualization & Integration
+## Phase 4: Visualization & Integration [checkpoint: 14e29ca]
 Connect inputs to logic and render the comparative charts.
 
 - [x] Task: Build Summary Cards
