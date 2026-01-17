@@ -158,11 +158,11 @@ function App() {
           <section className="relative group">
             <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
             <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent uppercase tracking-widest z-10">
-              [ PARAM_INPUT_01 ]
+              [ DATOS DEL PRÉSTAMO ]
             </div>
             <div className="relative p-6 pt-8">
               <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
-                <FileText className="h-4 w-4" /> Configuración de Crédito
+                <FileText className="h-4 w-4" /> Datos de tu Hipoteca
               </h2>
               <div className="space-y-5">
                 <InputGroup 
@@ -175,16 +175,16 @@ function App() {
                   helpText="La cantidad de dinero que solicitas al banco (deuda inicial)."
                 />
                 <InputGroup 
-                  label="Ciclo de Vida (Años)" 
+                  label="Plazo (Años)" 
                   value={years} 
                   onChange={(v) => setYears(Number(v))} 
-                  suffix="YEARS" 
+                  suffix="Años" 
                   min={1} 
                   max={50} 
                   helpText="Tiempo para devolver el préstamo. A más años, cuota más baja pero más intereses pagados en total."
                 />
                 <InputGroup 
-                  label="TIN Base (Nominal)" 
+                  label="Interés Base (TIN)" 
                   value={baseTIN} 
                   onChange={(v) => setBaseTIN(Number(v))} 
                   suffix="%" 
@@ -199,7 +199,7 @@ function App() {
           <section className="relative group">
             <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
             <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-secondary uppercase tracking-widest z-10">
-              [ BONIF_NODES_02 ]
+              [ BONIFICACIONES ]
             </div>
             <div className="relative p-6 pt-8">
               <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-secondary uppercase tracking-widest">
@@ -226,7 +226,7 @@ function App() {
                           helpText="Precio mensual del servicio (seguro, alarma, etc)."
                         />
                         <InputGroup 
-                          label="Impacto TIN" 
+                          label="Bajada de Interés" 
                           value={product.bonus} 
                           onChange={(v) => handleProductChange(product.id, 'bonus', Number(v))} 
                           suffix="%" 
@@ -245,11 +245,11 @@ function App() {
           <section className="relative group">
             <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
             <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent-tertiary uppercase tracking-widest z-10">
-              [ INITIAL_BURN_03 ]
+              [ GASTOS INICIALES ]
             </div>
             <div className="relative p-6 pt-8">
               <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent-tertiary uppercase tracking-widest">
-                <Briefcase className="h-4 w-4" /> Gastos de Constitución
+                <Briefcase className="h-4 w-4" /> Gastos al Firmar
               </h2>
               <div className="space-y-4">
                 {initialExpenses.map((expense) => (
@@ -274,7 +274,7 @@ function App() {
                   </div>
                 ))}
                 <div className="pt-4 flex justify-between items-center border-t border-border">
-                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Inyección Requerida:</span>
+                  <span className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Total Gastos:</span>
                   <span className="text-sm font-bold text-red-500">{activeInitialExpenses.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</span>
                 </div>
               </div>

@@ -36,9 +36,9 @@ describe('AmortizationTable Component', () => {
 
   it('renders empty state message when schedule is null or empty', () => {
     const { rerender } = render(<AmortizationTable schedule={[]} />);
-    expect(screen.getByText(/NO_DATA_STREAM/i)).toBeInTheDocument();
+    expect(screen.getByText(/No hay datos/i)).toBeInTheDocument();
 
     rerender(<AmortizationTable schedule={null} />);
-    expect(screen.getByText(/NO_DATA_STREAM/i)).toBeInTheDocument();
+    expect(screen.getByText(/No hay datos/i)).toBeInTheDocument();
   });
 });

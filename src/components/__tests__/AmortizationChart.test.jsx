@@ -30,6 +30,6 @@ describe('AmortizationChart Component', () => {
 
   it('renders "NO DATA" message when schedule is empty', () => {
     render(<AmortizationChart schedule={[]} />);
-    expect(screen.getByText(/NO_VISUAL_DATA/i)).toBeInTheDocument();
+    expect(screen.getByText(/No hay datos/i)).toBeInTheDocument();
   });
 });

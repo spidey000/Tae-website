@@ -3,7 +3,7 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 export const AmortizationChart = ({ schedule }) => {
   if (!schedule || schedule.length === 0) {
-    return <div className="h-64 flex items-center justify-center text-accent/50 font-bold uppercase tracking-widest">[ NO_VISUAL_DATA ]</div>;
+    return <div className="h-64 flex items-center justify-center text-accent/50 font-bold uppercase tracking-widest">[ No hay datos ]</div>;
   }
 
   // Optimize data: Filter to show roughly 1 point per year or every 6 months for large datasets to avoid clutter

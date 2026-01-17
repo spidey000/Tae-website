@@ -2,7 +2,7 @@ import React from 'react';
 
 export const AmortizationTable = ({ schedule }) => {
   if (!schedule || schedule.length === 0) {
-    return <div className="p-4 text-center text-accent animate-pulse font-mono tracking-widest uppercase">[ NO_DATA_STREAM ]</div>;
+    return <div className="p-4 text-center text-accent animate-pulse font-mono tracking-widest uppercase">[ No hay datos ]</div>;
   }
 
   return (
