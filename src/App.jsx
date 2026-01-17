@@ -270,6 +270,7 @@ function App() {
         <div className="lg:col-span-8 space-y-10">
           <ResultsSummary 
             monthlyPayment={monthlyPayment} 
+            nonBonifiedPayment={nonBonifiedPayment}
             tae={tae} 
             totalCost={totalCost}
             nonBonifiedTAE={nonBonifiedTAE}

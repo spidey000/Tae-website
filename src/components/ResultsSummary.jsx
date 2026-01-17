@@ -3,6 +3,7 @@ import { TrendingUp, PiggyBank, AlertTriangle, CheckCircle, Wallet, Shield, Laye
 
 export const ResultsSummary = ({ 
   monthlyPayment, 
+  nonBonifiedPayment,
   totalCost, 
   interestSavings, 
   totalProductCost, 
@@ -16,6 +17,7 @@ export const ResultsSummary = ({
 }) => {
 
   const isBenefitNegative = netBenefit < 0;
+  const monthlyBonusSavings = nonBonifiedPayment - monthlyPayment;
 
   // Texto dinámico para Dummies (Refined Logic)
   const analysisText = isBenefitNegative
@@ -115,14 +117,20 @@ export const ResultsSummary = ({
           </h3>
           
           <div className="space-y-4">
+            <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-gray-700">
+              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Base (Sin Bonificar)</span>
+              <span className="font-bold text-gray-300 font-numbers tabular-nums">
+                {nonBonifiedPayment.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+              </span>
+            </div>
             <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-accent/30">
-              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Base Hipotecaria</span>
-              <span className="font-bold text-foreground font-numbers tabular-nums">
-                {monthlyPayment.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
+              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Bonificación TIN</span>
+              <span className="font-bold text-accent font-numbers tabular-nums">
+                -{monthlyBonusSavings.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
             </div>
             <div className="flex justify-between items-center p-3 bg-black/20 border-l-2 border-accent-secondary/30">
-              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Suscripciones Vinc.</span>
+              <span className="text-xs text-gray-400 font-mono tracking-widest uppercase">Coste Servicios</span>
               <span className="font-bold text-accent-secondary font-numbers tabular-nums">
                 +{activeProductsMonthlyCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
               </span>
