@@ -11,6 +11,7 @@ A standalone mortgage calculator tool and financial educational platform.
 - Comparison tool for different loan scenarios (Bonified vs Standard).
 - Interactive Visualization: Area chart for amortization projection.
 - Financial Literacy Module: Dedicated "TIN vs TAE" deep dive and contextual tooltips explaining every cost and term.
+- Accessibility: Uses simplified, non-technical terminology to ensure clarity for non-expert users.
 
 ## Success Metrics
 - Educational value: Users understand the breakdown of their mortgage payments.
