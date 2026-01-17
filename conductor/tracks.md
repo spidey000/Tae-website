@@ -10,7 +10,7 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Simulador de Impacto de Amortización Anticipada (Capital Injection ROI)**
+- [x] **Track: Simulador de Impacto de Amortización Anticipada (Capital Injection ROI)**
 *Link: [./tracks/amortization_simulator_20260117/](./tracks/amortization_simulator_20260117/)*
 
 ---
