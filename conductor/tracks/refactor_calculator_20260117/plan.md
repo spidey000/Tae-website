@@ -22,7 +22,7 @@
     - [x] Sub-task: Style `AmortizationTable` component
 - [x] Task: Conductor - User Manual Verification 'UI/UX Overhaul (Cyberpunk)' (Protocol in workflow.md) [dc7d819]
 
-## Phase 3: Advanced Features & Integration
+## Phase 3: Advanced Features & Integration [checkpoint: f68569a]
 - [x] Task: Implement Visualization [898d6e1]
     - [x] Sub-task: Choose and install a charting library (e.g., Recharts or Chart.js) compatible with React 19
     - [x] Sub-task: Create `AmortizationChart` component
@@ -30,4 +30,4 @@
 - [x] Task: Final Integration & Polish [dd55a50]
     - [x] Sub-task: Ensure real-time updates between inputs and all outputs (chart, table, summary)
     - [x] Sub-task: Verify mobile responsiveness
-- [~] Task: Conductor - User Manual Verification 'Advanced Features & Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Advanced Features & Integration' (Protocol in workflow.md) [f68569a]
