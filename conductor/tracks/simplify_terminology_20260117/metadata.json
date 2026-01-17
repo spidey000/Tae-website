@@ -1,0 +1,8 @@
+{
+  "track_id": "simplify_terminology_20260117",
+  "type": "chore",
+  "status": "new",
+  "created_at": "2026-01-17T12:00:00Z",
+  "updated_at": "2026-01-17T12:00:00Z",
+  "description": "Simplify terminology and rename fields to common names for dummies across the application components."
+}
