@@ -6,8 +6,9 @@
 - [x] Update `InputGroup` to accept `helpText` or similar prop and render the info icon. f8ee1a3
 
 ## Phase 2: Educational Content
-- [ ] Create/Update `EducationalSection.jsx` (or a new `ExplanationCard.jsx`) with the provided text about TIN/TAE.
-- [ ] Ensure it is responsive and matches the visual style.
+- [x] Create/Update `EducationalSection.jsx` (or a new `ExplanationCard.jsx`) with the provided text about TIN/TAE. a637923
+    - *Refactor:* Extract `CoreConceptAnalysis` and move to top of view per user request.
+- [x] Ensure it is responsive and matches the visual style. a637923
 
 ## Phase 3: Integration
 - [ ] Add tooltips to all inputs in `App.jsx` (Capital, Years, TIN, etc.).
