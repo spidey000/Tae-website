@@ -8,11 +8,11 @@ Focus on the primary data visualization and the application shell.
 - [x] Task: Update `AmortizationTable.jsx` headers and title 2c65534
     - [x] Rename component title "Proyección Temporal" to "Tabla de Amortización" in `App.jsx`
     - [x] Rename table headers: `#_MONTH` -> `Mes`, `CUOTA_NET` -> `Cuota`, `INT_FLOW` -> `Intereses`, `AMORT_VAL` -> `Capital / Amortización`, `REMAINING` -> `Pendiente`
-- [ ] Task: Update `App.jsx` header and layout text
-    - [ ] Rename `MORTGAGE_CORE_v2.0` to `CALCULADORA HIPOTECARIA`
-    - [ ] Rename `Financial_Infiltration_System` to `Simulador Avanzado`
-    - [ ] Rename `SYSTEM_ONLINE` to `SISTEMA ONLINE`
-    - [ ] Rename `ENCRYPTION_AES256` to `CONEXIÓN SEGURA`
+- [x] Task: Update `App.jsx` header and layout text 1836bbc
+    - [x] Rename `MORTGAGE_CORE_v2.0` to `CALCULADORA HIPOTECARIA`
+    - [x] Rename `Financial_Infiltration_System` to `Simulador Avanzado`
+    - [x] Rename `SYSTEM_ONLINE` to `SISTEMA ONLINE`
+    - [x] Rename `ENCRYPTION_AES256` to `CONEXIÓN SEGURA`
 - [x] Task: Update AmortizationTable tests 2c65534
     - [x] Update `src/components/__tests__/AmortizationTable.test.jsx` to match new header text
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
