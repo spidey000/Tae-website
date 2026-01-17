@@ -5,7 +5,7 @@ import { CoreConceptAnalysis } from '../CoreConceptAnalysis';
 describe('CoreConceptAnalysis Component', () => {
   it('renders the main heading', () => {
     render(<CoreConceptAnalysis />);
-    expect(screen.getByText(/La Verdad sobre TIN vs TAE/i)).toBeInTheDocument();
+    expect(screen.getByText(/¿Cuál es la diferencia entre TIN y TAE?/i)).toBeInTheDocument();
   });
 
   it('renders key concepts', () => {

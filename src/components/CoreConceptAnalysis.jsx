@@ -6,11 +6,11 @@ export const CoreConceptAnalysis = () => {
     <div className="col-span-1 lg:col-span-12 relative group mb-10">
       <div className="absolute inset-0 bg-card border border-border cyber-chamfer pointer-events-none"></div>
       <div className="absolute top-0 left-6 -translate-y-1/2 bg-background px-2 text-[10px] font-bold text-accent uppercase tracking-widest z-10">
-        [ CORE_CONCEPT_ANALYSIS ]
+        [ GUÍA RÁPIDA ]
       </div>
       <div className="relative p-6 pt-8">
         <h2 className="text-sm font-bold mb-6 flex items-center gap-2 text-accent uppercase tracking-widest">
-          <Info className="h-4 w-4" /> La Verdad sobre TIN vs TAE
+          <Info className="h-4 w-4" /> ¿Cuál es la diferencia entre TIN y TAE?
         </h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[11px] text-gray-400 font-mono leading-relaxed">
