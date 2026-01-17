@@ -3,15 +3,17 @@ import { InputGroup } from './components/InputGroup';
 import { Toggle } from './components/Toggle';
 import { ResultsSummary } from './components/ResultsSummary';
 import { AmortizationTable } from './components/AmortizationTable';
+import { AmortizationChart } from './components/AmortizationChart';
 import { EducationalSection } from './components/EducationalSection';
 import { calculateMonthlyPayment, calculateTAE, generateAmortizationSchedule } from './utils/mortgageCalculations';
-import { Calculator, FileText, ShieldCheck, Briefcase } from 'lucide-react';
+import { Calculator, FileText, ShieldCheck, Briefcase, BarChart2, List } from 'lucide-react';
 
 function App() {
   // --- State ---
   const [capital, setCapital] = useState(150000);
   const [years, setYears] = useState(25);
   const [baseTIN, setBaseTIN] = useState(2.99);
+  const [viewMode, setViewMode] = useState('table'); // 'table' or 'chart'
 
   const [initialExpenses, setInitialExpenses] = useState([
     { id: 'appraisal', name: 'Tasación', cost: 350, enabled: true },
@@ -290,11 +292,33 @@ function App() {
           <div className="space-y-4">
             <div className="flex items-center justify-between px-2">
               <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent" /> Matriz de Amortización Mensual
+                <div className="w-2 h-2 bg-accent" /> Proyección Temporal
               </h3>
-              <span className="text-[9px] text-accent/30 font-mono tracking-tighter">DATA_STREAM_OUTPUT_v4.1</span>
+              
+              {/* View Toggle */}
+              <div className="flex bg-black/40 border border-border rounded p-1 gap-1">
+                <button 
+                  onClick={() => setViewMode('table')}
+                  className={`p-1.5 rounded transition-colors ${viewMode === 'table' ? 'bg-accent/20 text-accent' : 'text-gray-500 hover:text-gray-300'}`}
+                  title="Vista Tabla"
+                >
+                  <List className="w-4 h-4" />
+                </button>
+                <button 
+                  onClick={() => setViewMode('chart')}
+                  className={`p-1.5 rounded transition-colors ${viewMode === 'chart' ? 'bg-accent/20 text-accent' : 'text-gray-500 hover:text-gray-300'}`}
+                  title="Vista Gráfica"
+                >
+                  <BarChart2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-            <AmortizationTable schedule={schedule} />
+            
+            {viewMode === 'table' ? (
+              <AmortizationTable schedule={schedule} />
+            ) : (
+              <AmortizationChart schedule={schedule} />
+            )}
           </div>
         </div>
 
