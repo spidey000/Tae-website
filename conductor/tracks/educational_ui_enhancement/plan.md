@@ -11,10 +11,10 @@
 - [x] Ensure it is responsive and matches the visual style. a637923
 
 ## Phase 3: Integration
-- [ ] Add tooltips to all inputs in `App.jsx` (Capital, Years, TIN, etc.).
-- [ ] Add tooltips to `ResultsSummary` items where appropriate.
-- [ ] Add tooltips to `InitialExpenses` and `LinkedProducts`.
+- [x] Add tooltips to all inputs in `App.jsx` (Capital, Years, TIN, etc.). a637923
+- [x] Add tooltips to `ResultsSummary` items where appropriate. a637923
+- [x] Add tooltips to `InitialExpenses` and `LinkedProducts`. a637923
 
 ## Phase 4: Verification
-- [ ] Verify mobile responsiveness of tooltips and the new card.
-- [ ] Check text legibility and theme consistency.
+- [x] Verify mobile responsiveness of tooltips and the new card. a637923
+- [x] Check text legibility and theme consistency. a637923
