@@ -1,8 +1,15 @@
 import { describe, it, expect } from 'vitest';
-import { calculateTAE, generateAmortizationSchedule, calculateMonthlyPayment } from '../mortgageCalculations';
+import { calculateTAE, generateAmortizationSchedule, calculateMonthlyPayment, roundToMoney } from '../mortgageCalculations';
 
 describe('Motor Financiero - Auditoría de Precisión', () => {
   
+  it('Helper: roundToMoney debe redondear correctamente', () => {
+    expect(roundToMoney(10.555)).toBe(10.56);
+    expect(roundToMoney(10.554)).toBe(10.55);
+    expect(roundToMoney(0)).toBe(0);
+    expect(roundToMoney(-10.555)).toBe(-10.56);
+  });
+
   // Caso de prueba estándar
   const TEST_CASE = {
     principal: 150000,

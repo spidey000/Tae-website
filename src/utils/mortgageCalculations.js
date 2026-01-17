@@ -1,3 +1,7 @@
+export const roundToMoney = (value) => {
+  return Math.sign(value) * Math.round(Math.abs(value) * 100) / 100;
+};
+
 export const calculateMonthlyPayment = (principal, annualTIN, years) => {
   if (isNaN(principal) || isNaN(annualTIN) || isNaN(years)) return 0;
   if (principal <= 0 || years <= 0) return 0;
@@ -66,7 +70,7 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
   const monthlyPaymentRaw = calculateMonthlyPayment(principal, annualTIN, years);
   
   // Banking standard: Payment is usually rounded to 2 decimals for the transaction.
-  const monthlyPayment = Math.round(monthlyPaymentRaw * 100) / 100;
+  const monthlyPayment = roundToMoney(monthlyPaymentRaw);
   
   let balance = principal;
   const schedule = [];
@@ -74,7 +78,7 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
   for (let month = 1; month <= numberOfPayments; month++) {
     // 1. Calculate Interest part (Bank rounds this to 2 decimals usually)
     const interestRaw = balance * monthlyRate;
-    const interest = Math.round(interestRaw * 100) / 100;
+    const interest = roundToMoney(interestRaw);
     
     // 2. Calculate Amortization part
     let amortization = monthlyPayment - interest;
