@@ -6,7 +6,7 @@
     - [x] Sub-task: Add unit tests to verify the `schedule` array contains correct changing payment values for "reduceInstallment" strategy.
 - [ ] Task: Conductor - User Manual Verification 'Engine & Data Preparation' (Protocol in workflow.md)
 
-## Phase 2: Dynamic Summary Updates
+## Phase 2: Dynamic Summary Updates [checkpoint: 6147dec]
 - [x] Task: Update ComparisonSummary Component [049709c]
     - [x] Sub-task: Update `MetricCard` or `renderScenarioMetrics` to handle payment ranges (Start -> End) when strategy is "reduceInstallment".
     - [x] Sub-task: Add logic to detect if `initialMonthlyPayment` differs significantly from `finalMonthlyPayment`.
