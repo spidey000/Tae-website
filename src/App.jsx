@@ -133,15 +133,15 @@ function App() {
               <Calculator className="h-6 w-6 text-accent" />
             </div>
             <div>
-              <h1 className="text-xl font-display font-black tracking-[0.2em] uppercase cyber-glitch" data-text="MORTGAGE_CORE_v2.0">
-                MORTGAGE_CORE_v2.0
+              <h1 className="text-xl font-display font-black tracking-[0.2em] uppercase cyber-glitch" data-text="CALCULADORA HIPOTECARIA">
+                CALCULADORA HIPOTECARIA
               </h1>
-              <p className="text-[10px] text-accent/50 font-bold uppercase tracking-widest">Financial_Infiltration_System</p>
+              <p className="text-[10px] text-accent/50 font-bold uppercase tracking-widest">Simulador Avanzado</p>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-6 text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
-            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" /> SYSTEM_ONLINE</span>
-            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent-secondary rounded-full" /> ENCRYPTION_AES256</span>
+            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" /> SISTEMA ONLINE</span>
+            <span className="flex items-center gap-2"><span className="w-1.5 h-1.5 bg-accent-secondary rounded-full" /> CONEXIÓN SEGURA</span>
           </div>
         </div>
       </header>
