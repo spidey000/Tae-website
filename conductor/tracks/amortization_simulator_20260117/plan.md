@@ -25,7 +25,7 @@ Implement the mathematical logic for amortization with capital injections.
     - [ ] **Test:** Verify data alignment (e.g., Scenario A might end earlier than Base).
 - [x] Task: Conductor - User Manual Verification 'Core Calculation Logic' (Protocol in workflow.md) 5c1e7d5
 
-## Phase 3: Simulator UI - Inputs
+## Phase 3: Simulator UI - Inputs [checkpoint: edb58a2]
 Build the input forms for the independent simulator tab.
 
 - [x] Task: Build Base Loan Input Section 2335ed9
@@ -37,12 +37,12 @@ Build the input forms for the independent simulator tab.
     - [ ] Implement fields: Amount, Timing (Month/Year), Name.
     - [ ] Implement Strategy Toggle (Reduce Term vs Installment).
     - [ ] **Test:** Verify toggle switches logic and inputs capture data correctly.
-- [ ] Task: Conductor - User Manual Verification 'Simulator UI - Inputs' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Simulator UI - Inputs' (Protocol in workflow.md) edb58a2
 
 ## Phase 4: Visualization & Integration
 Connect inputs to logic and render the comparative charts.
 
-- [ ] Task: Build Summary Cards
+- [x] Task: Build Summary Cards
     - [ ] Create `components/Simulator/ComparisonSummary.jsx`.
     - [ ] Display Savings, Time Reduction, and ROI for Scen A & B.
     - [ ] **Test:** Verify formatting and conditional rendering (e.g., show "Time Saved" only if Term Reduced).
@@ -52,8 +52,8 @@ Connect inputs to logic and render the comparative charts.
     - [ ] Implement Interactive Tooltip (custom content showing 3 scenarios).
     - [ ] Implement Bar Chart (Total Interest/Principal breakdown).
     - [ ] **Test:** Verify chart renders with mock data.
-- [ ] Task: Integrate Simulator Tab
-    - [ ] Wire `AmortizationSimulatorTab.jsx` to use Inputs, Engine, and Results.
+- [~] Task: Integrate Simulator Tab
+    - [x] Wire `AmortizationSimulatorTab.jsx` to use Inputs, Engine, and Results.
     - [ ] Implement Real-time recalculation (or "Calculate" button).
     - [ ] **Test:** Full flow - Input Data -> Charts Update.
 - [ ] Task: Conductor - User Manual Verification 'Visualization & Integration' (Protocol in workflow.md)
