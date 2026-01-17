@@ -3,6 +3,7 @@ import { InputGroup } from './components/InputGroup';
 import { Toggle } from './components/Toggle';
 import { ResultsSummary } from './components/ResultsSummary';
 import { AmortizationTable } from './components/AmortizationTable';
+import { EducationalSection } from './components/EducationalSection';
 import { calculateMonthlyPayment, calculateTAE, generateAmortizationSchedule } from './utils/mortgageCalculations';
 import { Calculator, FileText, ShieldCheck, Briefcase } from 'lucide-react';
 
@@ -296,6 +297,9 @@ function App() {
             <AmortizationTable schedule={schedule} />
           </div>
         </div>
+
+        {/* Educational Section */}
+        <EducationalSection />
 
       </main>
     </div>
