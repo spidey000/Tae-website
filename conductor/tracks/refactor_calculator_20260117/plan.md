@@ -9,7 +9,7 @@
     - [x] Sub-task: Optimize calculation functions for real-time performance
 - [x] Task: Conductor - User Manual Verification 'Audit and Logic Refactor' (Protocol in workflow.md) [f8cc056]
 
-## Phase 2: UI/UX Overhaul (Cyberpunk)
+## Phase 2: UI/UX Overhaul (Cyberpunk) [checkpoint: dc7d819]
 - [x] Task: Setup Styling Foundation [9d93787]
     - [x] Sub-task: Configure Tailwind theme for Cyberpunk colors (neon, dark backgrounds)
     - [x] Sub-task: Update `index.css` / global styles
@@ -20,7 +20,7 @@
     - [x] Sub-task: Style `ResultsSummary` component
     - [x] Sub-task: Write tests for `AmortizationTable` component
     - [x] Sub-task: Style `AmortizationTable` component
-- [~] Task: Conductor - User Manual Verification 'UI/UX Overhaul (Cyberpunk)' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'UI/UX Overhaul (Cyberpunk)' (Protocol in workflow.md) [dc7d819]
 
 ## Phase 3: Advanced Features & Integration
 - [ ] Task: Implement Visualization
