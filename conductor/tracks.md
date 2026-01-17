@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [~] **Track: Simplify terminology and rename fields to common names for dummies.**
+- [x] **Track: Simplify terminology and rename fields to common names for dummies.**
 *Link: [./tracks/simplify_terminology_20260117/](./tracks/simplify_terminology_20260117/)*
