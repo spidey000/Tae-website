@@ -1,13 +1,13 @@
 # Implementation Plan - Refactor and Enhance Mortgage Calculator
 
 ## Phase 1: Audit and Logic Refactor
-- [x] Task: Audit existing calculation logic [67040fd]
+- [x] Task: Audit existing calculation logic [7414598]
     - [x] Sub-task: Analyze `src/utils/mortgageCalculations.js`
     - [x] Sub-task: Create/Update unit tests for `mortgageCalculations.js` to ensure baseline accuracy
-- [~] Task: Refactor calculation logic (if needed)
-    - [ ] Sub-task: Write tests for any new helper functions
-    - [ ] Sub-task: Optimize calculation functions for real-time performance
-- [ ] Task: Conductor - User Manual Verification 'Audit and Logic Refactor' (Protocol in workflow.md)
+- [x] Task: Refactor calculation logic (if needed) [6a2aaad]
+    - [x] Sub-task: Write tests for any new helper functions
+    - [x] Sub-task: Optimize calculation functions for real-time performance
+- [~] Task: Conductor - User Manual Verification 'Audit and Logic Refactor' (Protocol in workflow.md)
 
 ## Phase 2: UI/UX Overhaul (Cyberpunk)
 - [ ] Task: Setup Styling Foundation
