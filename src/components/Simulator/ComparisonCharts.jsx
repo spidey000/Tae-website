@@ -53,14 +53,20 @@ export function ComparisonCharts({ base, scenarios, principal }) {
       name: 'Escenario B',
       Principal: loanPrincipal,
       Intereses: scenB.totalInterest,
+      totalCost: loanPrincipal + scenB.totalInterest
     });
   }
+
+  // Find the cheapest scenario to highlight it
+  const cheapest = [...barData].sort((a, b) => (a.Intereses || 0) - (b.Intereses || 0))[0];
 
   // Colors
   const colors = {
     base: '#9ca3af', // gray-400
     scenA: '#10b981', // emerald-500
     scenB: '#3b82f6', // blue-500
+    principal: '#4b5563', // gray-600
+    interest: '#f59e0b', // amber-500
   };
 
   const CustomTooltip = ({ active, payload, label }) => {
@@ -158,11 +164,16 @@ export function ComparisonCharts({ base, scenarios, principal }) {
                 formatter={(value) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)}
               />
               <Legend wrapperStyle={{ paddingTop: '20px' }} />
-              <Bar dataKey="Principal" stackId="a" fill="#4b5563" name="Principal Devuelto" />
-              <Bar dataKey="Intereses" stackId="a" fill="#f59e0b" name="Intereses Totales" />
+              <Bar dataKey="Principal" stackId="a" fill={colors.principal} name="Principal Devuelto" />
+              <Bar dataKey="Intereses" stackId="a" fill={colors.interest} name="Intereses Totales" />
             </BarChart>
           </ResponsiveContainer>
         </div>
+        <p className="text-[10px] text-gray-500 mt-4 text-center">
+          {cheapest && cheapest.name !== 'Base' 
+            ? `💡 El ${cheapest.name} es la opción más económica, ahorrando ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(base.totalInterest - (cheapest.Intereses || 0))} en intereses.`
+            : "Compara los escenarios para ver el ahorro potencial en intereses."}
+        </p>
       </div>
 
     </div>
