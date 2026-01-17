@@ -11,7 +11,7 @@ Establish the tabbed interface and isolate the existing calculator functionality
     - [ ] **Test:** Verify tab switching renders correct components without losing state (if applicable) or crashing.
 - [x] Task: Conductor - User Manual Verification 'Architecture & Navigation' (Protocol in workflow.md) 1bbe155
 
-## Phase 2: Core Calculation Logic (The Engine)
+## Phase 2: Core Calculation Logic (The Engine) [checkpoint: 5c1e7d5]
 Implement the mathematical logic for amortization with capital injections.
 
 - [x] Task: Implement `calculateAmortizationWithInjection` 18a3dd5
@@ -23,16 +23,16 @@ Implement the mathematical logic for amortization with capital injections.
 - [x] Task: Implement Data Merging for Visualization 18a3dd5
     - [ ] Create utility to merge 3 schedules (Base, Scen A, Scen B) into a single array for Recharts `[{ month: 1, baseBalance: X, scenABalance: Y, ... }]`.
     - [ ] **Test:** Verify data alignment (e.g., Scenario A might end earlier than Base).
-- [ ] Task: Conductor - User Manual Verification 'Core Calculation Logic' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Core Calculation Logic' (Protocol in workflow.md) 5c1e7d5
 
 ## Phase 3: Simulator UI - Inputs
 Build the input forms for the independent simulator tab.
 
-- [ ] Task: Build Base Loan Input Section
+- [x] Task: Build Base Loan Input Section 2335ed9
     - [ ] Create `components/Simulator/BaseLoanInputs.jsx`.
     - [ ] Reuse `InputGroup` where possible.
     - [ ] **Test:** Verify input state management.
-- [ ] Task: Build Scenario Input Section
+- [x] Task: Build Scenario Input Section 2335ed9
     - [ ] Create `components/Simulator/ScenarioInputs.jsx`.
     - [ ] Implement fields: Amount, Timing (Month/Year), Name.
     - [ ] Implement Strategy Toggle (Reduce Term vs Installment).
