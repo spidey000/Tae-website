@@ -71,6 +71,46 @@ describe('Amortization Engine', () => {
     expect(result.totalSavings).toBeGreaterThan(0);
   });
 
+  it('should handle recurring monthly injections and update payments correctly', () => {
+    const result = calculateAmortizationWithInjection({
+      ...BASE_LOAN,
+      injectionAmount: 100,
+      injectionMonth: 1,
+      injectionFrequency: 'monthly',
+      strategy: 'reduceInstallment'
+    });
+
+    // Payment should decrease every month
+    expect(result.schedule[0].payment).toBeGreaterThan(result.schedule[1].payment);
+    expect(result.schedule[1].payment).toBeGreaterThan(result.schedule[2].payment);
+    
+    // Check that totalInjected matches roughly 240 * 100
+    // Actually it might be slightly less if it finishes earlier or depending on exact months
+    expect(result.totalInjected).toBeGreaterThan(20000); 
+    
+    // finalMonthlyPayment should be significantly lower than initial
+    expect(result.finalMonthlyPayment).toBeLessThan(result.initialMonthlyPayment / 2);
+  });
+
+  it('should handle yearly injections correctly', () => {
+    const result = calculateAmortizationWithInjection({
+      ...BASE_LOAN,
+      injectionAmount: 1000,
+      injectionMonth: 12,
+      injectionFrequency: 'yearly',
+      strategy: 'reduceTerm'
+    });
+
+    // Injections should happen at month 12, 24, 36...
+    const injectedMonths = result.schedule
+      .filter(item => item.didInject)
+      .map(item => item.month);
+
+    expect(injectedMonths[0]).toBe(12);
+    expect(injectedMonths[1]).toBe(24);
+    expect(injectedMonths[2]).toBe(36);
+  });
+
   it('should calculate ROI correctly', () => {
      const result = calculateAmortizationWithInjection({
       ...BASE_LOAN,
