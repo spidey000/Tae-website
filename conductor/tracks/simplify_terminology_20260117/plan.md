@@ -15,7 +15,7 @@ Focus on the primary data visualization and the application shell.
     - [x] Rename `ENCRYPTION_AES256` to `CONEXIÓN SEGURA`
 - [x] Task: Update AmortizationTable tests 2c65534
     - [x] Update `src/components/__tests__/AmortizationTable.test.jsx` to match new header text
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md) [checkpoint: 74cc7e0]
 
 ## Phase 2: Results Summary & Dashboard Components
 Simplify the analysis dashboard and summary metrics.
