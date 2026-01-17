@@ -10,8 +10,11 @@ describe('AmortizationTable Component', () => {
 
   it('renders table headers', () => {
     render(<AmortizationTable schedule={mockSchedule} />);
-    expect(screen.getByText(/#_MONTH/i)).toBeInTheDocument();
-    expect(screen.getByText(/CUOTA_NET/i)).toBeInTheDocument();
+    expect(screen.getByText(/Mes/i)).toBeInTheDocument();
+    expect(screen.getByText(/Cuota/i)).toBeInTheDocument();
+    expect(screen.getByText(/Intereses/i)).toBeInTheDocument();
+    expect(screen.getByText(/Capital/i)).toBeInTheDocument();
+    expect(screen.getByText(/Pendiente/i)).toBeInTheDocument();
   });
 
   it('renders all rows', () => {

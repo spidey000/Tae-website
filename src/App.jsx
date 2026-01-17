@@ -305,7 +305,7 @@ function App() {
           <div className="space-y-4">
             <div className="flex items-center justify-between px-2">
               <h3 className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.4em] flex items-center gap-2">
-                <div className="w-2 h-2 bg-accent" /> Proyección Temporal
+                <div className="w-2 h-2 bg-accent" /> Tabla de Amortización
               </h3>
               
               {/* View Toggle */}

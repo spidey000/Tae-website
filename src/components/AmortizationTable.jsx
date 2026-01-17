@@ -12,19 +12,19 @@ export const AmortizationTable = ({ schedule }) => {
           <thead className="bg-muted/50 sticky top-0 z-10">
             <tr className="border-b border-accent/20">
               <th scope="col" className="px-4 py-4 text-center text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] w-20">
-                #_MONTH
+                Mes
               </th>
               <th scope="col" className="px-4 py-4 text-right text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
-                CUOTA_NET
+                Cuota
               </th>
               <th scope="col" className="px-4 py-4 text-right text-[10px] font-bold text-accent/60 uppercase tracking-[0.2em]">
-                INT_FLOW
+                Intereses
               </th>
               <th scope="col" className="px-4 py-4 text-right text-[10px] font-bold text-accent-secondary/60 uppercase tracking-[0.2em]">
-                AMORT_VAL
+                Capital
               </th>
               <th scope="col" className="px-4 py-4 text-right text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
-                REMAINING
+                Pendiente
               </th>
             </tr>
           </thead>
