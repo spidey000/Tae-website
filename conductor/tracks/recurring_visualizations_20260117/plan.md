@@ -7,10 +7,10 @@
 - [ ] Task: Conductor - User Manual Verification 'Engine & Data Preparation' (Protocol in workflow.md)
 
 ## Phase 2: Dynamic Summary Updates
-- [ ] Task: Update ComparisonSummary Component
-    - [ ] Sub-task: Update `MetricCard` or `renderScenarioMetrics` to handle payment ranges (Start -> End) when strategy is "reduceInstallment".
-    - [ ] Sub-task: Add logic to detect if `initialMonthlyPayment` differs significantly from `finalMonthlyPayment`.
-    - [ ] Sub-task: Unit tests for `ComparisonSummary` verifying the range display.
+- [x] Task: Update ComparisonSummary Component [049709c]
+    - [x] Sub-task: Update `MetricCard` or `renderScenarioMetrics` to handle payment ranges (Start -> End) when strategy is "reduceInstallment".
+    - [x] Sub-task: Add logic to detect if `initialMonthlyPayment` differs significantly from `finalMonthlyPayment`.
+    - [x] Sub-task: Unit tests for `ComparisonSummary` verifying the range display.
 - [ ] Task: Conductor - User Manual Verification 'Dynamic Summary Updates' (Protocol in workflow.md)
 
 ## Phase 3: Chart Implementation
