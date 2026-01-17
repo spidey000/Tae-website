@@ -38,13 +38,13 @@ export const ResultsSummary = ({
         
         <div className="flex items-center justify-between relative z-10">
           <div>
-            <h2 className={`text-2xl md:text-4xl font-black font-display tracking-tighter uppercase cyber-glitch ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`} data-text={isBenefitNegative ? 'LINK_CORRUPTED' : 'OPTIMAL_FLUX'}>
-              {isBenefitNegative ? 'SISTEMA_NO_RENTABLE' : 'AHORRO_CONFIRMADO'}
+            <h2 className={`text-2xl md:text-4xl font-black font-display tracking-tighter uppercase cyber-glitch ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`} data-text={isBenefitNegative ? 'NO COMPENSA' : 'COMPENSA'}>
+              {isBenefitNegative ? 'NO RENTABLE' : 'AHORRO CONFIRMADO'}
             </h2>
             <div className="flex items-center gap-2 mt-2">
               <span className={`w-2 h-2 rounded-full animate-ping ${isBenefitNegative ? 'bg-red-500' : 'bg-accent'}`} />
               <p className={`text-sm opacity-70 uppercase tracking-widest md:tracking-[0.3em]`}>
-                {isBenefitNegative ? 'BONIFICACIÓN_RECHAZADA' : 'INFILTRACIÓN_BANCARIA_ÉXITO'}
+                {isBenefitNegative ? 'BONIFICACIÓN NO RENTABLE' : 'AHORRO CONFIRMADO'}
               </p>
             </div>
           </div>
@@ -57,7 +57,7 @@ export const ResultsSummary = ({
         {/* BLOQUE DE ANÁLISIS DE DATOS */}
         <div className="col-span-1 md:col-span-2 bg-card p-6 border border-border cyber-chamfer">
           <h3 className="text-sm font-bold text-accent-tertiary mb-6 flex items-center gap-2 uppercase tracking-[0.2em]">
-            <Activity className="w-4 h-4" /> Flujo de Crédito vs Coste de Vida
+            <Activity className="w-4 h-4" /> Comparativa de Ahorro
           </h3>
 
           <div className="flex flex-col lg:flex-row items-stretch justify-between gap-4 mb-6">
@@ -77,7 +77,7 @@ export const ResultsSummary = ({
             {/* COSTS */}
             <div className="flex-1 bg-black/40 p-4 border-l-4 border-accent-secondary">
               <span className="text-[10px] font-bold text-accent-secondary/60 uppercase flex items-center gap-1">
-                Carga de Vinculación <Tooltip content="Coste total de los seguros y productos contratados durante toda la vida del préstamo." />
+                Coste de los Seguros <Tooltip content="Coste total de los seguros y productos contratados durante toda la vida del préstamo." />
               </span>
               <div className="text-3xl font-numbers font-bold text-accent-secondary mt-1 tracking-tighter tabular-nums">
                 -{totalProductCost.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}
@@ -89,7 +89,7 @@ export const ResultsSummary = ({
             {/* NET RESULT */}
             <div className={`flex-1 p-4 border-2 shadow-neon ${isBenefitNegative ? 'bg-red-950/40 border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)]' : 'bg-accent/10 border-accent'}`}>
               <span className={`text-[10px] font-bold uppercase flex items-center gap-1 ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
-                {isBenefitNegative ? 'DÉFICIT_NETO' : 'CRÉDITO_LIMPIO'}
+                {isBenefitNegative ? 'Pérdida Total' : 'Ahorro Total'}
                 <Tooltip content="El resultado final. Si es positivo, ganas dinero contratando los productos. Si es negativo, pierdes dinero." />
               </span>
               <div className={`text-4xl font-numbers font-bold mt-1 tracking-tighter tabular-nums ${isBenefitNegative ? 'text-red-500' : 'text-accent'}`}>
@@ -119,7 +119,7 @@ export const ResultsSummary = ({
             <Layers className="w-16 h-16" />
           </div>
           <h3 className="text-xs font-bold text-gray-500 mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
-            <Wallet className="w-4 h-4 text-accent" /> Desembolso Mensual Real
+            <Wallet className="w-4 h-4 text-accent" /> Tu Cuota Mensual Real
           </h3>
           
           <div className="space-y-4">
@@ -156,7 +156,7 @@ export const ResultsSummary = ({
         {/* COLUMNA DERECHA: AUDITORÍA DE GASTOS */}
         <div className="bg-card p-6 border border-border cyber-chamfer">
           <h3 className="text-xs font-bold text-gray-500 mb-6 uppercase tracking-[0.2em] flex items-center gap-2">
-            <FileText className="w-4 h-4 text-accent-tertiary" /> Reserva de Capital (Gastos)
+            <FileText className="w-4 h-4 text-accent-tertiary" /> Gastos Iniciales (Notaría, etc.)
           </h3>
           
           <div className="space-y-2 mb-6 h-32 overflow-y-auto custom-scrollbar pr-2">

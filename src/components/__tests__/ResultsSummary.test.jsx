@@ -18,25 +18,31 @@ describe('ResultsSummary Component', () => {
     totalInterestNonBonified: 50000
   };
 
-  it('renders "OPTIMAL_FLUX" state when net benefit is positive', () => {
+  it('renders "COMPENSA" state when net benefit is positive', () => {
     render(<ResultsSummary {...defaultProps} netBenefit={5000} />);
     
-    expect(screen.getByText(/AHORRO_CONFIRMADO/i)).toBeInTheDocument();
+    // Check for the header text (might be multiple elements, we check at least one is a heading)
+    const elements = screen.getAllByText(/AHORRO CONFIRMADO/i);
+    expect(elements.length).toBeGreaterThan(0);
     expect(screen.getByText(/DECISIÓN: SÍ COMPENSA/i)).toBeInTheDocument();
     
-    // Verify positive styling (green/accent)
-    const header = screen.getByText(/AHORRO_CONFIRMADO/i);
+    // Verify positive styling on the main header (h2)
+    const header = elements.find(el => el.tagName === 'H2');
+    expect(header).toBeInTheDocument();
     expect(header).toHaveClass('text-accent');
   });
 
-  it('renders "LINK_CORRUPTED" state when net benefit is negative', () => {
+  it('renders "NO COMPENSA" state when net benefit is negative', () => {
     render(<ResultsSummary {...defaultProps} netBenefit={-1000} />);
     
-    expect(screen.getByText(/SISTEMA_NO_RENTABLE/i)).toBeInTheDocument();
+    // Check for the header text
+    const elements = screen.getAllByText(/NO RENTABLE/i);
+    expect(elements.length).toBeGreaterThan(0);
     expect(screen.getByText(/DECISIÓN: NO COMPENSA/i)).toBeInTheDocument();
     
-    // Verify negative styling (red)
-    const header = screen.getByText(/SISTEMA_NO_RENTABLE/i);
+    // Verify negative styling on the main header (h2)
+    const header = elements.find(el => el.tagName === 'H2');
+    expect(header).toBeInTheDocument();
     expect(header).toHaveClass('text-red-500');
   });
 
