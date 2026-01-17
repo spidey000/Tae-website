@@ -1,0 +1,8 @@
+{
+  "track_id": "recurring_visualizations_20260117",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-17T23:45:00Z",
+  "updated_at": "2026-01-17T23:45:00Z",
+  "description": "como hemos cambiado el tipo de depósito y ahora los hay periódicos hay que tener en cuenta que cuando se da la opción de reduce cuota la cuota del principio no es igual que la cuota del final así que en el resumen hay que poner un rango de la cuota del principio a la cuota del final y ya en la gráfica se verá reflejada que la cuota va reduciéndose durante el tiempo según se van haciendo aportaciones incluye la creacion de las;graficas para las;cuotas, tiempo, ahorro... todo lo necesario"
+}

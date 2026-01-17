@@ -34,14 +34,14 @@ describe('ScenarioInputs Component', () => {
     render(<ScenarioInputs scenario={mockScenario} onChange={mockOnChange} index={0} />);
     
     // Assuming buttons or radios for strategy
-    expect(screen.getByText(/Reducir Plazo/i)).toBeInTheDocument();
-    expect(screen.getByText(/Reducir Cuota/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Plazo/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Cuota/i })).toBeInTheDocument();
   });
 
   it('switches strategy', () => {
     render(<ScenarioInputs scenario={mockScenario} onChange={mockOnChange} index={0} />);
     
-    const installmentButton = screen.getByText(/Reducir Cuota/i);
+    const installmentButton = screen.getByRole('button', { name: /Cuota/i });
     fireEvent.click(installmentButton);
     
     expect(mockOnChange).toHaveBeenCalledWith('strategy', 'reduceInstallment');

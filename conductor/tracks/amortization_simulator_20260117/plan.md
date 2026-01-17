@@ -65,7 +65,7 @@ Refinement and responsive design.
     - [x] Ensure mobile responsiveness (stacking charts/inputs).
     - [x] Add "Break-even" text/markers if feasible.
     - [x] Add Help Tooltips explaining "Reduce Term" vs "Reduce Installment".
-- [ ] Task: Final Code Quality Check
+- [~] Task: Final Code Quality Check
     - [ ] Run Linting/Formatting.
     - [ ] Ensure 80% Coverage on new utils.
 - [ ] Task: Conductor - User Manual Verification 'Polish & Edge Cases' (Protocol in workflow.md)

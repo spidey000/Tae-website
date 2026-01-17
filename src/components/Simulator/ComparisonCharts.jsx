@@ -13,6 +13,23 @@ import {
 } from 'recharts';
 import { mergeSchedules } from '../../utils/amortizationEngine';
 
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-xl text-xs">
+        <p className="text-gray-400 mb-2">Mes {label}</p>
+        {payload.map((entry, index) => (
+          <div key={index} className="flex items-center gap-2 mb-1" style={{ color: entry.color }}>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></span>
+            <span>{entry.name}: {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(entry.value)}</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
+  return null;
+};
+
 export function ComparisonCharts({ base, scenarios, principal }) {
   if (!base) return null;
 
