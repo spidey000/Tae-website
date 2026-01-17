@@ -10,10 +10,10 @@
 - [x] Task: Conductor - User Manual Verification 'Audit and Logic Refactor' (Protocol in workflow.md) [f8cc056]
 
 ## Phase 2: UI/UX Overhaul (Cyberpunk)
-- [ ] Task: Setup Styling Foundation
-    - [ ] Sub-task: Configure Tailwind theme for Cyberpunk colors (neon, dark backgrounds)
-    - [ ] Sub-task: Update `index.css` / global styles
-- [ ] Task: Component Refactoring
+- [x] Task: Setup Styling Foundation [9d93787]
+    - [x] Sub-task: Configure Tailwind theme for Cyberpunk colors (neon, dark backgrounds)
+    - [x] Sub-task: Update `index.css` / global styles
+- [~] Task: Component Refactoring
     - [ ] Sub-task: Write tests for `InputGroup` component
     - [ ] Sub-task: Style `InputGroup` component
     - [ ] Sub-task: Write tests for `ResultsSummary` component
