@@ -65,12 +65,8 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
   const numberOfPayments = years * 12;
   const monthlyPaymentRaw = calculateMonthlyPayment(principal, annualTIN, years);
   
-  // Banking standard: Payment is usually rounded to 2 decimals for the transaction, 
-  // but internally the schedule might run on raw or rounded values depending on the bank.
-  // We will simulate "Real Cash Flow" -> Round payment to 2 decimals.
-  // NOTE: This might cause the final payment to differ slightly.
-  // Alternatively, we keep raw payment for calculation and round for display.
-  // Best hybrid approach for simulators: Keep raw payment for math, round interest/amortization.
+  // Banking standard: Payment is usually rounded to 2 decimals for the transaction.
+  const monthlyPayment = Math.round(monthlyPaymentRaw * 100) / 100;
   
   let balance = principal;
   const schedule = [];
@@ -81,7 +77,7 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
     const interest = Math.round(interestRaw * 100) / 100;
     
     // 2. Calculate Amortization part
-    let amortization = monthlyPaymentRaw - interest;
+    let amortization = monthlyPayment - interest;
     
     // 3. Last month adjustment: You pay exactly what's left
     if (month === numberOfPayments) {
