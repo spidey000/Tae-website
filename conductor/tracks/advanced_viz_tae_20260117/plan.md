@@ -10,7 +10,7 @@
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Engine & Logic' (Protocol in workflow.md)
 
 ## Phase 2: UI Components (Table & Layout)
-- [ ] Task: Update `ComparisonTable.jsx`
+- [x] Task: Update `ComparisonTable.jsx` 0306efd
     - [ ] Add the "Final Total TAE" row definition.
     - [ ] Configure it as `bestCriteria: 'min'` and `inverseDelta: true`.
     - [ ] Ensure formatting handles percentage display correctly.
