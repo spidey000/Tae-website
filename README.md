@@ -76,7 +76,10 @@ This module allows you to project the future of your loan and compare different 
 *   **Comparison Table:** View side-by-side metrics:
     *   **Total Savings:** How much interest you save in each scenario.
     *   **Time Saved:** How many months/years you shave off the mortgage.
-*   **Charts:** Visual graphs showing the loan balance decreasing over time for each scenario.
+*   **Charts:** Comprehensive visualization suite:
+    *   **Balance Path:** Multi-line chart comparing the outstanding debt over time for all scenarios.
+    *   **Payment Evolution:** Visualization of how the monthly quota decreases in "Reduce Installment" scenarios.
+    *   **Savings Analysis:** Bar chart comparing total capital injected vs. interest saved.
 
 ## 🛠️ Technical Stack
 
