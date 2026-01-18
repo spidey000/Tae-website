@@ -32,7 +32,7 @@ describe('ComparisonTable', () => {
     render(<ComparisonTable base={mockBase} scenarios={[mockScenario]} />);
 
     // Check for ROI label
-    expect(screen.getByText('ROI')).toBeInTheDocument();
+    expect(screen.getByText(/ROI Amortización/i)).toBeInTheDocument();
 
     // Check for Scenario ROI value (120,71 %)
     // Note: The formatPercent uses es-ES, so it might output "120,71 %" or "120.71%" depending on node/ICU version. 

@@ -1,24 +1,12 @@
-# Plan de Implementación: Comparador Inversión
+# Implementation Plan: Investment Comparison & Return Analysis
 
-## Pasos
-
-1.  **Actualizar `ScenarioInputs.jsx`**
-    -   Importar `Toggle` (si existe, o usar checkbox estilizado). *Nota: Check components folder.*
-    -   Añadir estado local o props para `investMode` y `investReturnRate`.
-    -   Renderizar sección condicional.
-
-2.  **Actualizar `AmortizationSimulatorTab.jsx`**
-    -   Añadir campos por defecto en `scenarios` state: `{ investMode: false, investReturnRate: 4.0 }`.
-    -   Pasar nuevos campos a `calculateAmortizationWithInjection`.
-
-3.  **Actualizar `amortizationEngine.js`**
-    -   Modificar `calculateAmortizationWithInjection`.
-    -   Calcular `investmentProfit` acumulado.
-    -   Devolver `investmentProfit` en el objeto de resultado.
-
-4.  **Actualizar `ComparisonTable.jsx`**
-    -   Añadir fila "Beneficio Inversión" (solo si `investMode` es true en algún escenario).
-    -   Añadir fila "Diferencia (Inv - Amort)" para veredicto claro.
-
-5.  **Verificación**
-    -   Probar con casos simples (ej. 10.000€ al 5% vs Hipoteca al 3% -> Debería salir mejor invertir).
+## Phase 1: Investment Return Logic
+- [x] Task: Implement `calculateInvestmentReturn` in `amortizationEngine.js`
+    - [x] Create a function that generates a cash flow difference stream between Base and Scenario.
+    - [x] Calculate IRR of this stream to get the Annualized Return of the Injection.
+    - [x] Add unit tests for this new calculation.
+- [~] Task: Update `AmortizationSimulatorTab.jsx`
+    - [x] Calculate the return metric for each scenario after the base simulation is done.
+    - [x] Pass the new metric to the results.
+- [x] Task: Update `ComparisonTable.jsx`
+    - [x] Replace or add to the TAE row to show "Rentabilidad Inyección (TAE)".

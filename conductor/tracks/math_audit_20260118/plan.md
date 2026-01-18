@@ -4,11 +4,11 @@ Este plan detalla los pasos para auditar, corregir y documentar la precisión ma
 
 ## Phase 1: Análisis y Diagnóstico
 
-- [ ] Task: Revisión teórica de fórmulas en `src/utils/mortgageCalculations.js` y `src/utils/amortizationEngine.js`
-- [ ] Task: Análisis de la implementación actual de redondeos y gestión de decimales
-- [ ] Task: Identificación de puntos de "drift" (error acumulado) en el motor de amortización
-- [ ] Task: Verificación de la transformación de datos para los gráficos en `src/components/AmortizationChart.jsx`
-- [ ] Task: Conductor - User Manual Verification 'Análisis y Diagnóstico' (Protocol in workflow.md)
+- [x] Task: Revisión teórica de fórmulas en `src/utils/mortgageCalculations.js` y `src/utils/amortizationEngine.js` [574ad10]
+- [x] Task: Análisis de la implementación actual de redondeos y gestión de decimales [574ad10]
+- [x] Task: Identificación de puntos de "drift" (error acumulado) en el motor de amortización [574ad10]
+- [x] Task: Verificación de la transformación de datos para los gráficos en `src/components/AmortizationChart.jsx` [574ad10]
+- [~] Task: Conductor - User Manual Verification 'Análisis y Diagnóstico' (Protocol in workflow.md)
 
 ## Phase 2: Fortalecimiento de la Suite de Tests
 
