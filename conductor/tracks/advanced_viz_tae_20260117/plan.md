@@ -14,7 +14,7 @@
     - [ ] Add the "Final Total TAE" row definition.
     - [ ] Configure it as `bestCriteria: 'min'` and `inverseDelta: true`.
     - [ ] Ensure formatting handles percentage display correctly.
-- [ ] Task: Create `AdvancedVisualizations` Section
+- [x] Task: Create `AdvancedVisualizations` Section d519091
     - [ ] Create `src/components/Simulator/AdvancedCharts.jsx` as a container for the new graphs.
     - [ ] Add it to `AmortizationSimulatorTab.jsx` below the summary table.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: UI Components' (Protocol in workflow.md)
