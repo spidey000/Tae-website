@@ -3,9 +3,9 @@
 ## Pasos Completados
 - [x] Entrevista de requisitos.
 - [x] Especificación técnica (`spec.md`).
+- [x] Implementación Componente (`ComparisonTable.jsx`).
+- [x] Integración (`AmortizationSimulatorTab.jsx`).
+- [x] Estilizado y UX (Scroll horizontal, sticky columns, dense mode).
 
-## Pasos Pendientes
-1.  **Implementación Componente**: Crear `ComparisonTable.jsx` con lógica de "Best Value" y Deltas.
-2.  **Integración**: Reemplazar `ComparisonSummary` en la vista principal.
-3.  **Estilizado**: Ajustar densidad y scroll horizontal para móvil.
-4.  **Validación**: Verificar que los cálculos de deltas son correctos.
+## Estado
+- **Completado:** La tabla reemplaza al resumen de tarjetas, ofreciendo una visión más detallada y comparativa.

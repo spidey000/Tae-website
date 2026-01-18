@@ -40,4 +40,22 @@ describe('App Component Navigation', () => {
     // Expect Calculator content to be hidden (using toBeVisible because it's in the DOM but hidden via CSS)
     expect(screen.getByText(/Capital del Préstamo/i)).not.toBeVisible();
   });
+
+  it('loads active tab from localStorage', () => {
+    localStorage.getItem.mockImplementation((key) => {
+        if (key === 'tae_activeTab') return 'simulator';
+        return null;
+    });
+    render(<App />);
+    expect(screen.getByText(/Simulador de Amortización/i)).toBeVisible();
+  });
+
+  it('saves active tab to localStorage', () => {
+    render(<App />);
+    
+    const simulatorTab = screen.getByRole('button', { name: /Simulador Amortización/i });
+    fireEvent.click(simulatorTab);
+
+    expect(localStorage.setItem).toHaveBeenCalledWith('tae_activeTab', 'simulator');
+  });
 });

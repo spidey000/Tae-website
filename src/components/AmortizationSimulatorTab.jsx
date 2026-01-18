@@ -1,40 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { BaseLoanInputs } from './Simulator/BaseLoanInputs';
 import { ScenarioInputs } from './Simulator/ScenarioInputs';
-import { ComparisonSummary } from './Simulator/ComparisonSummary';
+import { ComparisonTable } from './Simulator/ComparisonTable';
 import { ComparisonCharts } from './Simulator/ComparisonCharts';
 import { calculateAmortizationWithInjection } from '../utils/amortizationEngine';
 import { Plus, Trash2 } from 'lucide-react';
 
 export function AmortizationSimulatorTab() {
   // --- State ---
-  const [baseData, setBaseData] = useState({
-    principal: 200000,
-    years: 25,
-    annualTIN: 3.5,
+  const [baseData, setBaseData] = useState(() => {
+    const saved = localStorage.getItem('tae_sim_baseData');
+    return saved ? JSON.parse(saved) : {
+      principal: 200000,
+      years: 25,
+      annualTIN: 3.5,
+    };
   });
 
-  const [scenarios, setScenarios] = useState([
-    {
-      injectionAmount: 15000,
-      injectionMonth: 12,
-      injectionFrequency: 'once',
-      injectionCount: null,
-      strategy: 'reduceTerm',
-    },
-    {
-      injectionAmount: 15000,
-      injectionMonth: 12,
-      injectionFrequency: 'once',
-      injectionCount: null,
-      strategy: 'reduceInstallment',
-    }
-  ]);
+  const [scenarios, setScenarios] = useState(() => {
+    const saved = localStorage.getItem('tae_sim_scenarios');
+    return saved ? JSON.parse(saved) : [
+      {
+        injectionAmount: 15000,
+        injectionMonth: 12,
+        injectionFrequency: 'once',
+        injectionCount: null,
+        strategy: 'reduceTerm',
+      },
+      {
+        injectionAmount: 15000,
+        injectionMonth: 12,
+        injectionFrequency: 'once',
+        injectionCount: null,
+        strategy: 'reduceInstallment',
+      }
+    ];
+  });
 
   const [results, setResults] = useState({
     base: null,
     scenarios: [],
   });
+
+  // --- Persistence ---
+  useEffect(() => {
+    localStorage.setItem('tae_sim_baseData', JSON.stringify(baseData));
+  }, [baseData]);
+
+  useEffect(() => {
+    localStorage.setItem('tae_sim_scenarios', JSON.stringify(scenarios));
+  }, [scenarios]);
 
   // --- Handlers ---
   const handleBaseChange = (field, value) => {
@@ -143,7 +158,7 @@ export function AmortizationSimulatorTab() {
 
         {/* Right Column: Results & Visualization */}
         <div className="xl:col-span-8 space-y-6">
-          <ComparisonSummary 
+          <ComparisonTable 
             base={results.base} 
             scenarios={results.scenarios} 
           />

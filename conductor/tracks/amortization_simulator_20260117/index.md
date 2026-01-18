@@ -1,5 +1,1 @@
-# Track amortization_simulator_20260117 Context
-
-- [Specification](./spec.md)
-- [Implementation Plan](./plan.md)
-- [Metadata](./metadata.json)
+- [x] [Amortization Simulator] Replace scenario summary cards with a comparison table.

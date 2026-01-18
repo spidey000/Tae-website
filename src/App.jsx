@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calculator } from 'lucide-react';
 import { Tabs } from './components/Tabs';
 import { MortgageCalculatorTab } from './components/MortgageCalculatorTab';
 import { AmortizationSimulatorTab } from './components/AmortizationSimulatorTab';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('calculator');
+  const [activeTab, setActiveTab] = useState(() => {
+    return localStorage.getItem('tae_activeTab') || 'calculator';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('tae_activeTab', activeTab);
+  }, [activeTab]);
 
   const tabs = [
     { id: 'calculator', label: 'Calculadora Hipoteca' },

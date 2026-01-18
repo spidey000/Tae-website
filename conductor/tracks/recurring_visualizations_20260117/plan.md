@@ -28,13 +28,13 @@
 - [ ] Task: Conductor - User Manual Verification 'Chart Implementation' (Protocol in workflow.md)
 
 ## Phase 4: Integration & Polish
-- [ ] Task: Implement State Persistence
-    - [ ] Sub-task: Persist `baseData` and `scenarios` in `AmortizationSimulatorTab` to `localStorage`.
-    - [ ] Sub-task: Persist active tab in `App.jsx` to `localStorage`.
-- [ ] Task: Integrate Charts into Simulator Tab
+- [x] Task: Implement State Persistence [7285c4c]
+    - [x] Sub-task: Persist `baseData` and `scenarios` in `AmortizationSimulatorTab` to `localStorage`.
+    - [x] Sub-task: Persist active tab in `App.jsx` to `localStorage`.
+- [x] Task: Integrate Charts into Simulator Tab [7285c4c]
     - [x] Sub-task: Import and place `AmortizationCharts` in `AmortizationSimulatorTab.jsx`. (Already done in Phase 3)
     - [x] Sub-task: Pass `results` data to the charts. (Already done in Phase 3)
-- [ ] Task: Verify Edge Cases
-    - [ ] Sub-task: Manual verify with "0 repetitions" (infinite).
-    - [ ] Sub-task: Manual verify with "Injection > Balance".
+- [x] Task: Verify Edge Cases [7ef8a9e]
+    - [x] Sub-task: Manual verify with "0 repetitions" (infinite).
+    - [x] Sub-task: Manual verify with "Injection > Balance".
 - [ ] Task: Conductor - User Manual Verification 'Integration & Polish' (Protocol in workflow.md)

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { InputGroup } from './InputGroup';
 import { Toggle } from './Toggle';
 import { Tooltip } from './Tooltip';
@@ -12,24 +12,52 @@ import { FileText, ShieldCheck, Briefcase, BarChart2, List } from 'lucide-react'
 
 export function MortgageCalculatorTab() {
   // --- State ---
-  const [capital, setCapital] = useState(150000);
-  const [years, setYears] = useState(25);
-  const [baseTIN, setBaseTIN] = useState(2.99);
-  const [viewMode, setViewMode] = useState('table'); // 'table' or 'chart'
+  const [capital, setCapital] = useState(() => {
+    const saved = localStorage.getItem('tae_calc_capital');
+    return saved ? Number(saved) : 150000;
+  });
+  
+  const [years, setYears] = useState(() => {
+    const saved = localStorage.getItem('tae_calc_years');
+    return saved ? Number(saved) : 25;
+  });
 
-  const [initialExpenses, setInitialExpenses] = useState([
-    { id: 'appraisal', name: 'Tasación', cost: 350, enabled: true, description: "Coste de valorar la vivienda. Obligatorio si pides hipoteca." },
-    { id: 'opening', name: 'Comisión Apertura', cost: 500, enabled: false, description: "Lo que cobra el banco por 'abrir' el préstamo. Intenta negociarla a cero." },
-    { id: 'notary', name: 'Notaría', cost: 800, enabled: true, description: "Honorarios del notario. Lo suele pagar el banco (Ley 2019), pero verifica." },
-    { id: 'registry', name: 'Registro', cost: 400, enabled: true, description: "Inscripción en el Registro de la Propiedad. Lo suele pagar el banco." },
-    { id: 'tax', name: 'IAJD', cost: 1500, enabled: false, description: "Impuesto de Actos Jurídicos Documentados. Lo paga el banco desde 2018." },
-  ]);
+  const [baseTIN, setBaseTIN] = useState(() => {
+    const saved = localStorage.getItem('tae_calc_baseTIN');
+    return saved ? Number(saved) : 2.99;
+  });
 
-  const [linkedProducts, setLinkedProducts] = useState([
-    { id: 'life', name: 'Seguro de Vida', cost: 25, bonus: 0.15, enabled: true },
-    { id: 'home', name: 'Seguro de Hogar', cost: 15, bonus: 0.10, enabled: true },
-    { id: 'payroll', name: 'Nómina', cost: 0, bonus: 0.50, enabled: true },
-  ]);
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem('tae_calc_viewMode') || 'table';
+  });
+
+  const [initialExpenses, setInitialExpenses] = useState(() => {
+    const saved = localStorage.getItem('tae_calc_initialExpenses');
+    return saved ? JSON.parse(saved) : [
+      { id: 'appraisal', name: 'Tasación', cost: 350, enabled: true, description: "Coste de valorar la vivienda. Obligatorio si pides hipoteca." },
+      { id: 'opening', name: 'Comisión Apertura', cost: 500, enabled: false, description: "Lo que cobra el banco por 'abrir' el préstamo. Intenta negociarla a cero." },
+      { id: 'notary', name: 'Notaría', cost: 800, enabled: true, description: "Honorarios del notario. Lo suele pagar el banco (Ley 2019), pero verifica." },
+      { id: 'registry', name: 'Registro', cost: 400, enabled: true, description: "Inscripción en el Registro de la Propiedad. Lo suele pagar el banco." },
+      { id: 'tax', name: 'IAJD', cost: 1500, enabled: false, description: "Impuesto de Actos Jurídicos Documentados. Lo paga el banco desde 2018." },
+    ];
+  });
+
+  const [linkedProducts, setLinkedProducts] = useState(() => {
+    const saved = localStorage.getItem('tae_calc_linkedProducts');
+    return saved ? JSON.parse(saved) : [
+      { id: 'life', name: 'Seguro de Vida', cost: 25, bonus: 0.15, enabled: true },
+      { id: 'home', name: 'Seguro de Hogar', cost: 15, bonus: 0.10, enabled: true },
+      { id: 'payroll', name: 'Nómina', cost: 0, bonus: 0.50, enabled: true },
+    ];
+  });
+
+  // --- Persistence ---
+  useEffect(() => { localStorage.setItem('tae_calc_capital', String(capital)); }, [capital]);
+  useEffect(() => { localStorage.setItem('tae_calc_years', String(years)); }, [years]);
+  useEffect(() => { localStorage.setItem('tae_calc_baseTIN', String(baseTIN)); }, [baseTIN]);
+  useEffect(() => { localStorage.setItem('tae_calc_viewMode', viewMode); }, [viewMode]);
+  useEffect(() => { localStorage.setItem('tae_calc_initialExpenses', JSON.stringify(initialExpenses)); }, [initialExpenses]);
+  useEffect(() => { localStorage.setItem('tae_calc_linkedProducts', JSON.stringify(linkedProducts)); }, [linkedProducts]);
 
   // --- Handlers ---
   const handleExpenseChange = (id, field, value) => {

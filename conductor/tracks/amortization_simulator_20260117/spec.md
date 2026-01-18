@@ -1,70 +1,62 @@
-# Specification: Simulador de Impacto de Amortización Anticipada
+# Especificación: Tabla Comparativa de Escenarios
 
-## 1. Overview
-A new dedicated "Tab" within the application allowing users to simulate and visualize the financial impact of making extra mortgage payments (capital injections). The core goal is to educate users on the exponential savings of early amortization and the "Term vs. Installment" reduction trade-off.
+## 1. Visión General
+Reemplazar el componente de tarjetas `ComparisonSummary` por una tabla densa (`ComparisonTable`) que permita comparar métricas financieras clave entre el Escenario Base y múltiples Escenarios Simulados horizontalmente.
 
-The module enables a 3-way comparison:
-1.  **Base Scenario:** The original loan without extra payments.
-2.  **Scenario A:** Custom amortization (Amount + Timing + Strategy).
-3.  **Scenario B:** A second custom amortization for comparison (e.g., investing the same amount at a later date).
+## 2. Estructura de Datos
 
-## 2. Functional Requirements
+### 2.1. Filas (Métricas)
+La tabla mostrará las siguientes métricas en filas:
+1.  **Inyección Total:** Cantidad total aportada extra.
+2.  **Intereses Totales:** Coste total del préstamo.
+3.  **Ahorro Total:** Diferencia de intereses respecto a la base (solo relevante para escenarios).
+4.  **Plazo Total:** Tiempo restante hasta finalizar.
+5.  **Cuota Mensual:** Rango de cuota (Inicial -> Final).
+6.  **ROI:** Retorno de la inversión (%).
 
-### 2.1. Navigation & Architecture
-*   **Global Navigation:** The application will transition to a Tabbed interface.
-    *   **Tab 1: Calculadora Hipoteca:** The existing functionality (TAE, Bonifications).
-    *   **Tab 2: Simulador Amortización:** The new feature.
-*   **Independent Context:** The "Simulador Amortización" tab is standalone. It **does not** share state with Tab 1. Users must input their base loan details specifically for this simulation.
+### 2.2. Columnas (Escenarios)
+-   **Columna 1:** Etiquetas de métricas (Sticky en móvil si es posible, o simplemente primera columna).
+-   **Columna 2:** Escenario Base (Referencia, sin deltas).
+-   **Columnas 3+:** Escenarios Simulados (1, 2, 3...).
 
-### 2.2. Inputs (Panel de Control)
-The input section is divided into "Base Loan" and "Simulation Scenarios".
+## 3. Comportamiento y Lógica
 
-**A. Base Loan Details (Required)**
-*   Principal Amount (€)
-*   Annual Interest Rate (%)
-*   Total Term (Years)
-*   Start Date (Month/Year) - *Defaults to current date if unspecified*
+### 3.1. Visualización de Deltas
+Para cada escenario simulado, mostrar el valor absoluto y la diferencia (delta) respecto al Base:
+-   *Ejemplo Intereses:* `45.000 € (-12.000 €)`
+-   Colores semánticos:
+    -   Verde: Mejor que la base (menos intereses, menos tiempo, mayor ROI).
+    -   Rojo/Neutro: Peor o igual.
 
-**B. Scenario Inputs (A & B)**
-Two independent forms for Scenario A and Scenario B. Each includes:
-*   **Scenario Name:** (e.g., "Invertir Hoy" vs "Esperar 5 años") - *Optional, with defaults*.
-*   **Extra Payment Amount (€):** The capital to inject.
-*   **Timing:** When the payment is made (e.g., Month 12, Year 5).
-*   **Reduction Strategy (Toggle):**
-    *   **Reduce Term (Plazo):** Maintain monthly payment, finish loan earlier. (Flagged as "Recommended").
-    *   **Reduce Installment (Cuota):** Maintain end date, lower monthly payment.
+### 3.2. Rango de Cuotas
+Dado que existen estrategias de "Reducción de Cuota":
+-   Formato: `Min - Max` o `Inicio -> Fin`.
+-   Si la cuota es constante: Mostrar un solo valor.
 
-### 2.3. Calculation Logic
-*   **Engine:** Generate three independent amortization schedules (Base, Scen A, Scen B).
-*   **Injection Logic:** For Scenarios A/B, at the specified `Timing` month:
-    *   `New_Principal = Current_Principal - Extra_Payment`.
-    *   **If Reduce Term:** Recalculate the number of remaining months keeping the installment constant (or as close as possible).
-    *   **If Reduce Installment:** Recalculate the monthly installment keeping the remaining months constant.
-*   **Outputs:**
-    *   Total Interest Paid.
-    *   Total Duration (Years/Months).
-    *   Total Savings (Base Interest - Scenario Interest).
-    *   ROI (Return on Investment) %: `(Total Savings / Extra Payment Amount) * 100`.
+### 3.3. "Best Value" Highlight
+El sistema calculará automáticamente cuál es el "ganador" en cada fila (entre todos los escenarios, incluido el base) y lo resaltará (ej. borde dorado, fondo sutil, o icono de trofeo).
+-   *Criterios:*
+    -   Intereses: Mínimo.
+    -   Plazo: Mínimo.
+    -   ROI: Máximo.
+    -   Ahorro: Máximo.
 
-### 2.4. Visualization & Results
-*   **Summary Cards:** Display Key Metrics for Base, Scen A, and Scen B side-by-side.
-    *   Total Saved (€).
-    *   Time Saved (e.g., "3 years, 2 months").
-    *   ROI %.
-*   **Primary Chart (Line):** "Remaining Balance over Time".
-    *   Three lines: Base (Gray), Scenario A (Color 1), Scenario B (Color 2).
-    *   Visual "Drop" in lines A/B at the moment of injection.
-    *   **Interactive Tooltip:** Hovering shows Balance, Interest Paid, and Principal Paid for all 3 scenarios at that month.
-*   **Secondary Chart (Bar):** "Total Cost Comparison".
-    *   Three bars showing Total Principal + Total Interest.
-*   **Break-even Marker:** Visual indicator on the charts or text highlighting when the savings exceed the investment cost.
+## 4. Diseño y UX
 
-## 3. Non-Functional Requirements
-*   **Performance:** Recalculation of 3 schedules must be near-instant (< 200ms) on mobile.
-*   **Responsiveness:** Inputs and Charts must stack gracefully on mobile screens.
-*   **Tech Stack:** Use `recharts` for visualization, matching the project's library choices.
+### 4.1. Layout
+-   **Contenedor:** Scroll horizontal (`overflow-x-auto`) para acomodar múltiples columnas.
+-   **Densidad:** Alta. Padding reducido (`py-2` o `py-1` en móvil).
+-   **Estilo:**
+    -   Bordes sutiles.
+    -   Fondo oscuro/transparente (`bg-black/20`).
+    -   Tipografía monoespaciada para números (`tabular-nums`).
 
-## 4. Out of Scope
-*   Recurring extra payments (e.g., "pay €100 extra every month"). This is for *one-off* injections only.
-*   Inflation adjustments.
-*   Tax implications (deductions).
+### 4.2. Responsive (Móvil)
+-   Compresión máxima de texto (ej. "Int. Totales" en vez de "Intereses Totales" si es necesario, o reducir tamaño de fuente).
+-   Scroll horizontal obligatorio.
+
+## 5. Plan de Implementación Técnica
+1.  Crear `src/components/Simulator/ComparisonTable.jsx`.
+2.  Implementar función `findBestInRow(rowKey, values)`.
+3.  Implementar renderizado de celdas con lógica de Deltas.
+4.  Reemplazar la importación en `AmortizationSimulatorTab.jsx`.

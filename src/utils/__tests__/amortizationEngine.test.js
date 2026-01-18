@@ -127,15 +127,25 @@ describe('Amortization Engine', () => {
 
 describe('mergeSchedules', () => {
   it('should merge multiple schedules correctly', () => {
-    const base = [{ month: 1, balance: 100, payment: 10 }, { month: 2, balance: 50, payment: 10 }, { month: 3, balance: 0, payment: 10 }];
-    const scenA = [{ month: 1, balance: 0, payment: 15 }];
-    const scenB = [{ month: 1, balance: 95, payment: 12 }, { month: 2, balance: 40, payment: 12 }, { month: 3, balance: 0, payment: 12 }];
+    const base = [{ month: 1, balance: 100, payment: 10, installment: 10 }, { month: 2, balance: 50, payment: 10, installment: 10 }, { month: 3, balance: 0, payment: 10, installment: 10 }];
+    const scenA = [{ month: 1, balance: 0, payment: 15, installment: 5 }]; // Payment > Installment implies injection
+    const scenB = [{ month: 1, balance: 95, payment: 12, installment: 12 }, { month: 2, balance: 40, payment: 12, installment: 12 }, { month: 3, balance: 0, payment: 12, installment: 12 }];
 
     const merged = mergeSchedules(base, [scenA, scenB]);
 
     expect(merged).toHaveLength(3);
-    expect(merged[0]).toEqual({ month: 1, base: 100, basePayment: 10, scen0: 0, scen0Payment: 15, scen1: 95, scen1Payment: 12 });
-    expect(merged[1]).toEqual({ month: 2, base: 50, basePayment: 10, scen0: 0, scen0Payment: 0, scen1: 40, scen1Payment: 12 });
+    expect(merged[0]).toEqual({ 
+      month: 1, 
+      base: 100, basePayment: 10, baseInstallment: 10,
+      scen0: 0, scen0Payment: 15, scen0Installment: 5,
+      scen1: 95, scen1Payment: 12, scen1Installment: 12
+    });
+    expect(merged[1]).toEqual({ 
+      month: 2, 
+      base: 50, basePayment: 10, baseInstallment: 10,
+      scen0: 0, scen0Payment: 0, scen0Installment: 0,
+      scen1: 40, scen1Payment: 12, scen1Installment: 12
+    });
     // For scenA which ended early, balance should be 0
     expect(merged[2].scen0).toBe(0);
     expect(merged[2].scen1).toBe(0);

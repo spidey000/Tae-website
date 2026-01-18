@@ -139,7 +139,7 @@ export function ComparisonCharts({ base, scenarios, principal }) {
         
         <Area 
           type="stepAfter" 
-          dataKey="basePayment" 
+          dataKey="baseInstallment" 
           name="Base" 
           stroke={BASE_COLOR} 
           fillOpacity={1} 
@@ -152,7 +152,7 @@ export function ComparisonCharts({ base, scenarios, principal }) {
           <Area 
             key={idx}
             type="stepAfter" 
-            dataKey={`scen${idx}Payment`} 
+            dataKey={`scen${idx}Installment`} 
             name={`Escenario ${idx + 1}`} 
             stroke={COLORS[idx % COLORS.length]} 
             fillOpacity={1} 
