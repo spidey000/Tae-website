@@ -4,7 +4,10 @@ export const roundInternal = (value) => {
 };
 
 export const roundToMoney = (value) => {
-  return Math.sign(value) * Math.round(Math.abs(value) * 100) / 100;
+  if (typeof value !== 'number') return 0;
+  // Use a small epsilon to handle floating point errors before rounding
+  // e.g. 1.005 * 100 = 100.49999999999999 -> + 1e-9 -> 100.5 -> round -> 101 -> 1.01
+  return Math.sign(value) * Math.round(Math.abs(value) * 100 + 1e-9) / 100;
 };
 
 export const calculateMonthlyPayment = (principal, annualTIN, years) => {

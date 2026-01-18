@@ -12,7 +12,7 @@ Este plan detalla los pasos para auditar, corregir y documentar la precisión ma
 
 ## Phase 2: Fortalecimiento de la Suite de Tests
 
-- [ ] Task: Crear tests de estrés para el motor de amortización (plazos largos, tipos de interés extremos)
+- [~] Task: Crear tests de estrés para el motor de amortización (plazos largos, tipos de interés extremos)
 - [ ] Task: Implementar tests específicos de redondeo financiero (casos de borde .005) en `src/utils/__tests__/`
 - [ ] Task: Validar la consistencia entre el motor de amortización y el resumen de resultados
 - [ ] Task: Conductor - User Manual Verification 'Fortalecimiento de la Suite de Tests' (Protocol in workflow.md)
