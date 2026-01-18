@@ -17,12 +17,12 @@ Este plan detalla los pasos para auditar, corregir y documentar la precisión ma
 - [x] Task: Validar la consistencia entre el motor de amortización y el resumen de resultados [e82143e]
 - [x] Task: Conductor - User Manual Verification 'Fortalecimiento de la Suite de Tests' (Protocol in workflow.md) [f40f003]
 
-## Phase 3: Implementación de Correcciones y Refactorización
+## Phase 3: Implementación de Correcciones y Refactorización [checkpoint: bae28b7]
 
 - [x] Task: Corregir errores de precisión identificados en las fórmulas base [960cd1b]
 - [x] Task: Refactorizar el motor de amortización para minimizar el error acumulado [d6f2aa4]
 - [x] Task: Sincronizar la lógica de redondeo entre tablas y visualizaciones [d6f2aa4]
-- [~] Task: Conductor - User Manual Verification 'Implementación de Correcciones y Refactorización' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Implementación de Correcciones y Refactorización' (Protocol in workflow.md) [bae28b7]
 
 ## Phase 4: Documentación e Informe Final
 
