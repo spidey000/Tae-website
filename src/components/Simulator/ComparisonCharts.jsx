@@ -168,6 +168,11 @@ export function ComparisonCharts({ base, scenarios, principal }) {
   const renderSavingsChart = () => (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart data={barData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <defs>
+          <pattern id="striped" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="4" height="8" transform="translate(0,0)" fill="#4b5563" opacity="0.6" />
+          </pattern>
+        </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} horizontal={true} vertical={false} />
         <XAxis dataKey="name" stroke="#6b7280" tick={{ fontSize: 10 }} />
         <YAxis stroke="#6b7280" tick={{ fontSize: 10 }} tickFormatter={(val) => `${(val/1000).toFixed(0)}k`} />
@@ -176,7 +181,7 @@ export function ComparisonCharts({ base, scenarios, principal }) {
           content={<CustomTooltip />}
         />
         <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }} />
-        <Bar dataKey="Inyectado" name="Inversión" fill="#4b5563" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Inyectado" name="Inversión" fill="url(#striped)" stroke="#4b5563" radius={[4, 4, 0, 0]} />
         <Bar dataKey="Ahorro" name="Ahorro Intereses" radius={[4, 4, 0, 0]}>
            {barData.map((entry, index) => (
              <Cell key={`cell-${index}`} fill={entry.fill} />
