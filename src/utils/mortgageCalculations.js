@@ -91,7 +91,8 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
 
     schedule.push({
       month,
-      payment: roundInternal(interest + amortization), 
+      payment: roundInternal(interest + amortization),
+      installment: roundInternal(interest + amortization),
       interest,
       amortization,
       balance: balance

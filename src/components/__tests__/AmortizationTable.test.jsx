@@ -4,8 +4,8 @@ import { AmortizationTable } from '../AmortizationTable';
 
 describe('AmortizationTable Component', () => {
   const mockSchedule = [
-    { month: 1, payment: 700.00, interest: 300.00, amortization: 400.00, balance: 149600.00 },
-    { month: 2, payment: 700.00, interest: 299.00, amortization: 401.00, balance: 149199.00 }
+    { month: 1, payment: 700.00, installment: 700.00, interest: 300.00, amortization: 400.00, balance: 149600.00 },
+    { month: 2, payment: 700.00, installment: 700.00, interest: 299.00, amortization: 401.00, balance: 149199.00 }
   ];
 
   it('renders table headers', () => {
