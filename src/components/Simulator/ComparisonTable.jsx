@@ -76,15 +76,6 @@ const ComparisonTable = ({ base, scenarios }) => {
       deltaType: 'multiplier',
       inverseDelta: false 
     },
-    {
-      id: 'investmentReturn',
-      label: 'Rentabilidad Inyección (TAE)',
-      getValue: (d) => d.investmentReturn || 0,
-      format: (v) => formatPercent(v / 100),
-      bestCriteria: 'max',
-      highlightBest: true,
-      showDelta: false
-    },
     ...(hasInvestment ? [
         {
             id: 'investmentProfit',
