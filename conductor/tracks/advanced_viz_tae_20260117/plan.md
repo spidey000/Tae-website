@@ -4,7 +4,7 @@
 - [x] Task: Implement IRR (Internal Rate of Return) utility 6df32f1
     - [ ] Create `src/utils/financialCalculations.js` with an iterative IRR function (Newton-Raphson or Secant method).
     - [ ] Create `src/utils/__tests__/financialCalculations.test.js` with test cases for standard loans and loans with extra injections.
-- [ ] Task: Integrate TAE calculation into the Amortization Engine
+- [x] Task: Integrate TAE calculation into the Amortization Engine 8573727
     - [ ] Update `src/utils/amortizationEngine.js` to collect cash flow arrays (month, amount) for each simulation.
     - [ ] Call the IRR utility at the end of `calculateAmortizationWithInjection` to return the `tae`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Engine & Logic' (Protocol in workflow.md)
