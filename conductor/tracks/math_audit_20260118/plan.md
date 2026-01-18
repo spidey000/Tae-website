@@ -19,8 +19,8 @@ Este plan detalla los pasos para auditar, corregir y documentar la precisión ma
 
 ## Phase 3: Implementación de Correcciones y Refactorización
 
-- [ ] Task: Corregir errores de precisión identificados en las fórmulas base
-- [ ] Task: Refactorizar el motor de amortización para minimizar el error acumulado
+- [x] Task: Corregir errores de precisión identificados en las fórmulas base [960cd1b]
+- [~] Task: Refactorizar el motor de amortización para minimizar el error acumulado
 - [ ] Task: Sincronizar la lógica de redondeo entre tablas y visualizaciones
 - [ ] Task: Conductor - User Manual Verification 'Implementación de Correcciones y Refactorización' (Protocol in workflow.md)
 

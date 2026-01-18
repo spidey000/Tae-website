@@ -87,7 +87,7 @@ export const generateAmortizationSchedule = (principal, annualTIN, years) => {
     
     balance = roundInternal(balance - amortization);
     
-    if (Math.abs(balance) < 1e-10) balance = 0;
+    if (balance < 0 || Math.abs(balance) < 1e-10) balance = 0;
 
     schedule.push({
       month,
