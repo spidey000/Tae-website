@@ -2,7 +2,7 @@ import React from 'react';
 import { Trophy, TrendingDown, TrendingUp, Minus } from 'lucide-react';
 import { Tooltip } from '../Tooltip';
 
-const formatMoney = (val) => val.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+const formatMoney = (val) => val.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const formatCurrency = (val) => val.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const formatPercent = (val) => val.toLocaleString('es-ES', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -71,6 +71,7 @@ const ComparisonTable = ({ base, scenarios }) => {
       bestCriteria: 'max',
       highlightBest: true,
       showDelta: true,
+      deltaType: 'multiplier',
       inverseDelta: false // Positive delta is Good
     },
     {
@@ -163,6 +164,14 @@ const ComparisonTable = ({ base, scenarios }) => {
                             const sign = delta > 0 ? '+' : '-';
                             const color = delta < 0 ? 'text-accent' : 'text-red-400'; // Less time is good
                             deltaDisplay = <span className={`text-[9px] font-bold ${color}`}>{sign}{years}a {months}m</span>;
+                          }
+                       } else if (row.deltaType === 'multiplier') {
+                          if (Math.abs(delta) > 0.01) {
+                             const multiplier = delta / 100;
+                             const sign = multiplier > 0 ? '+' : '';
+                             const isGood = row.inverseDelta ? delta < 0 : delta > 0;
+                             const color = isGood ? 'text-accent' : 'text-red-400';
+                             deltaDisplay = <span className={`text-[9px] font-bold ${color}`}>{sign}{multiplier.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}x</span>;
                           }
                        } else {
                           // Numeric Delta

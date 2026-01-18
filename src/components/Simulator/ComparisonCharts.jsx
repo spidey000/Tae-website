@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   LineChart,
   Line,
@@ -32,14 +32,27 @@ const CustomTooltip = ({ active, payload, label, unit = '€' }) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-gray-900/95 border border-white/10 p-3 rounded shadow-2xl text-xs backdrop-blur-md">
-        <p className="text-gray-400 mb-2 font-bold uppercase tracking-wider">Mes {label}</p>
-        {payload.map((entry, index) => (
-          <div key={index} className="flex items-center gap-2 mb-1" style={{ color: entry.color }}>
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></span>
-            <span className="font-medium text-gray-200">{entry.name}:</span>
-            <span className="font-numbers ml-auto">{formatCurrencyFull(entry.value)}</span>
-          </div>
-        ))}
+        <p className="text-gray-400 mb-2 font-bold uppercase tracking-wider">{isNaN(label) ? label : `Mes ${label}`}</p>
+        {payload.map((entry, index) => {
+          const isAhorro = entry.dataKey === 'Ahorro';
+          const injected = entry.payload?.Inyectado || 0;
+          const roi = isAhorro && injected > 0 ? (entry.value / injected) * 100 : 0;
+
+          return (
+            <div key={index} className="flex flex-col mb-2 last:mb-0">
+              <div className="flex items-center gap-2" style={{ color: entry.color?.startsWith && entry.color.startsWith('url') ? '#fff' : (entry.color || '#ccc') }}>
+                <span className="w-2 h-2 rounded-full" style={{ background: entry.color }}></span>
+                <span className="font-medium text-gray-200">{entry.name}:</span>
+                <span className="font-numbers ml-auto">{formatCurrencyFull(entry.value)}</span>
+              </div>
+              {isAhorro && injected > 0 && (
+                <div className="ml-4 mt-0.5 text-[9px] text-accent font-bold">
+                  ROI: {roi.toFixed(1)}% ({((entry.value / injected)).toFixed(2)}x retorno)
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -56,12 +69,16 @@ export function ComparisonCharts({ base, scenarios, principal }) {
     scenarios.map(s => s.schedule)
   );
 
-  const barData = scenarios.map((scen, idx) => ({
-    name: `Escenario ${idx + 1}`,
-    Ahorro: scen.totalSavings || 0,
-    Inyectado: scen.totalInjected || 0,
-    fill: COLORS[idx % COLORS.length]
-  }));
+  const barData = scenarios.map((scen, idx) => {
+    const savings = scen.totalSavings || 0;
+    const injected = scen.totalInjected || 0;
+    return {
+      name: `Escenario ${idx + 1}`,
+      Ahorro: savings,
+      Inyectado: injected,
+      fill: COLORS[idx % COLORS.length]
+    };
+  });
 
   const renderBalanceChart = () => (
     <ResponsiveContainer width="100%" height="100%">
@@ -172,6 +189,16 @@ export function ComparisonCharts({ base, scenarios, principal }) {
           <pattern id="striped" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <line x1="0" y1="0" x2="0" y2="10" stroke="#9ca3af" strokeWidth="2" />
           </pattern>
+           {/* Generate unique patterns for each scenario color - UNIFIED STYLE (Striped) */}
+           {COLORS.map((color, idx) => {
+             const id = `pattern-scen-${idx}`;
+             return (
+               <pattern key={id} id={id} width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <rect width="100%" height="100%" fill={color} />
+                  <line x1="0" y1="0" x2="0" y2="10" stroke="rgba(255,255,255,0.2)" strokeWidth="4" />
+               </pattern>
+             );
+           })}
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} horizontal={true} vertical={false} />
         <XAxis dataKey="name" stroke="#6b7280" tick={{ fontSize: 10 }} />
@@ -182,9 +209,13 @@ export function ComparisonCharts({ base, scenarios, principal }) {
         />
         <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }} />
         <Bar dataKey="Inyectado" name="Inversión" fill="url(#striped)" stroke="#9ca3af" strokeWidth={1} radius={[4, 4, 0, 0]} />
-        <Bar dataKey="Ahorro" name="Ahorro Intereses" radius={[4, 4, 0, 0]}>
+        <Bar 
+           dataKey="Ahorro" 
+           name="Ahorro Intereses" 
+           radius={[4, 4, 0, 0]}
+        >
            {barData.map((entry, index) => (
-             <Cell key={`cell-${index}`} fill={entry.fill} />
+             <Cell key={`cell-${index}`} fill={`url(#pattern-scen-${index % COLORS.length})`} />
            ))}
         </Bar>
       </BarChart>

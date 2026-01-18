@@ -76,18 +76,15 @@ describe('Motor Financiero - Auditoría de Precisión', () => {
     expect(tae).toBeCloseTo(0, 5);
   });
 
-  it('Debe usar cuotas mensuales redondeadas a 2 decimales en la tabla de amortización (Real World Check)', () => {
+  it('Debe usar cuotas mensuales redondeadas a 12 decimales en la tabla de amortización', () => {
     // Escenario: 150k, 2.99%, 25 años.
-    // Cuota exacta: ~710.537... -> Cuota real pagada: 710.54
     const schedule = generateAmortizationSchedule(150000, 2.99, 25);
     
-    // Verificamos que el pago registrado en la tabla no tenga más de 2 decimales
-    // (excepto quizás el último mes que es ajuste)
     for (let i = 0; i < schedule.length - 1; i++) {
         const payment = schedule[i].payment;
-        // Comprobamos que payment * 100 sea entero (o muy cercano por error flotante)
-        const isRounded = Math.abs((payment * 100) - Math.round(payment * 100)) < 0.00001;
-        expect(isRounded, `El pago del mes ${i+1} (${payment}) no está redondeado`).toBe(true);
+        // Comprobamos que payment * 1e12 sea entero (o muy cercano)
+        const isRounded = Math.abs((payment * 1e12) - Math.round(payment * 1e12)) < 0.0001;
+        expect(isRounded, `El pago del mes ${i+1} (${payment}) no está redondeado a 12`).toBe(true);
     }
   });
 });

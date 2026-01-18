@@ -1,7 +1,7 @@
 import React from 'react';
 import { PiggyBank, Clock, TrendingUp, AlertCircle, DollarSign, Calendar } from 'lucide-react';
 
-const formatMoney = (val) => val.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+const formatMoney = (val) => val.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const formatCurrency = (val) => val.toLocaleString('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 const formatPercent = (val) => val.toLocaleString('es-ES', { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 });

@@ -22,6 +22,11 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 
 
-- [ ] **Track: Advanced Visualizations & TAE Analysis**
+- [~] **Track: Advanced Visualizations & TAE Analysis**
 
 *Link: [./tracks/advanced_viz_tae_20260117/](./tracks/advanced_viz_tae_20260117/)*
+
+---
+
+- [ ] **Track: Auditoría Matemática y Financiera**
+*Link: [./tracks/math_audit_20260118/](./tracks/math_audit_20260118/)*
