@@ -37,8 +37,17 @@ export const AmortizationTable = ({ schedule }) => {
                 <td className="px-4 py-2 whitespace-nowrap text-[11px] text-center text-gray-600 font-bold group-hover:text-accent">
                   {row.month.toString().padStart(3, '0')}
                 </td>
-                <td className="px-4 py-2 whitespace-nowrap text-sm text-right text-foreground font-bold">
-                  {row.payment.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                <td className="px-4 py-2 whitespace-nowrap text-right font-bold">
+                  <div className="flex flex-col items-end">
+                    <span className="text-foreground text-sm">
+                      {row.installment.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </span>
+                    {(row.payment - row.installment) > 0.01 && (
+                      <span className="text-[10px] text-accent font-mono mt-0.5 animate-pulse">
+                        +{ (row.payment - row.installment).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-4 py-2 whitespace-nowrap text-sm text-right text-accent/80 font-medium">
                   {row.interest.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}

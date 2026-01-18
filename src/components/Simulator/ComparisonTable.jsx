@@ -83,7 +83,7 @@ const ComparisonTable = ({ base, scenarios }) => {
             getValue: (d) => d.investMode ? (d.investmentProfit || 0) : 0,
             getDisplay: (d) => d.investMode ? formatMoney(d.investmentProfit) : <span className="text-gray-600">-</span>,
             bestCriteria: 'max',
-            highlightBest: true,
+            highlightBest: false,
             showDelta: false
         },
         {
@@ -93,11 +93,6 @@ const ComparisonTable = ({ base, scenarios }) => {
             getDisplay: (d) => {
                  if (!d.investMode) return <span className="text-gray-600">-</span>;
                  const val = d.investmentProfit - d.totalSavings;
-                 const isInvestBetter = val > 0;
-                 // const color = isInvestBetter ? 'text-accent' : 'text-red-400';
-                 // If Invest is better, Green. If Amort is better (negative val), Red? 
-                 // Wait, Red usually means "Bad". Here negative means "Don't Invest, Amortize". 
-                 // So displaying it as Red is fine ("Loss compared to amortizing").
                  return (
                      <div className="flex flex-col text-[10px] leading-tight">
                         <span className={`font-bold ${val > 0 ? 'text-accent' : 'text-red-400'}`}>
@@ -110,7 +105,7 @@ const ComparisonTable = ({ base, scenarios }) => {
                  );
             },
             bestCriteria: 'max',
-            highlightBest: true,
+            highlightBest: false,
             showDelta: false
         }
     ] : []),
@@ -124,8 +119,7 @@ const ComparisonTable = ({ base, scenarios }) => {
         if (Math.abs(start - end) < 1) return formatCurrency(start);
         return (
           <div className="flex flex-col text-[10px] leading-tight">
-            <span className="opacity-70 line-through">{formatCurrency(start)}</span>
-            <span className="font-bold">{formatCurrency(end)}</span>
+             <span className="font-bold">{formatCurrency(start)} - {formatCurrency(end)}</span>
           </div>
         );
       },
