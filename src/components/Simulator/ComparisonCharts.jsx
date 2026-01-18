@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   LineChart,
   Line,
@@ -9,19 +9,34 @@ import {
   Legend,
   ResponsiveContainer,
   BarChart,
-  Bar
+  Bar,
+  AreaChart,
+  Area
 } from 'recharts';
 import { mergeSchedules } from '../../utils/amortizationEngine';
 
-const CustomTooltip = ({ active, payload, label }) => {
+const COLORS = [
+  '#10b981', // emerald-500 (scen0)
+  '#3b82f6', // blue-500 (scen1)
+  '#a855f7', // purple-500 (scen2)
+  '#f59e0b', // amber-500 (scen3)
+];
+
+const BASE_COLOR = '#9ca3af'; // gray-400
+
+const formatCurrency = (val) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(val);
+const formatCurrencyFull = (val) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 }).format(val);
+
+const CustomTooltip = ({ active, payload, label, unit = '€' }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-xl text-xs">
-        <p className="text-gray-400 mb-2">Mes {label}</p>
+      <div className="bg-gray-900/95 border border-white/10 p-3 rounded shadow-2xl text-xs backdrop-blur-md">
+        <p className="text-gray-400 mb-2 font-bold uppercase tracking-wider">Mes {label}</p>
         {payload.map((entry, index) => (
           <div key={index} className="flex items-center gap-2 mb-1" style={{ color: entry.color }}>
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></span>
-            <span>{entry.name}: {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(entry.value)}</span>
+            <span className="font-medium text-gray-200">{entry.name}:</span>
+            <span className="font-numbers ml-auto">{formatCurrencyFull(entry.value)}</span>
           </div>
         ))}
       </div>
@@ -31,166 +46,193 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export function ComparisonCharts({ base, scenarios, principal }) {
-  if (!base) return null;
+  const [activeTab, setActiveTab] = useState('balance');
 
-  // 1. Prepare Line Chart Data (Balance over time)
-  // Scenarios might be empty, or have 1 or 2 items.
-  const scenA = scenarios[0];
-  const scenB = scenarios[1];
+  if (!base) return null;
 
   const chartData = mergeSchedules(
     base.schedule, 
-    scenA?.schedule, 
-    scenB?.schedule
+    scenarios.map(s => s.schedule)
   );
 
-  // 2. Prepare Bar Chart Data (Total Cost)
-  // Data structure: { name: 'Escenario', interest: 1000, principal: 20000 }
-  // Use the passed principal prop, or fallback to 0 if missing (though it should be passed)
-  const loanPrincipal = principal || 0;
+  const barData = scenarios.map((scen, idx) => ({
+    name: `Escenario ${idx + 1}`,
+    Ahorro: scen.totalSavings,
+    Inyectado: scen.totalInjected,
+    fill: COLORS[idx % COLORS.length]
+  }));
 
-  const barData = [
-    {
-      name: 'Base',
-      Principal: loanPrincipal,
-      Intereses: base.totalInterest,
-    }
-  ];
+  const renderBalanceChart = () => (
+    <ResponsiveContainer width="100%" height="100%">
+      <LineChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} vertical={false} />
+        <XAxis 
+          dataKey="month" 
+          stroke="#6b7280" 
+          tick={{ fontSize: 10 }}
+          tickFormatter={(val) => `A${Math.floor(val/12)}`}
+          minTickGap={30}
+        />
+        <YAxis 
+          stroke="#6b7280" 
+          tick={{ fontSize: 10 }}
+          tickFormatter={(val) => `${(val/1000).toFixed(0)}k`}
+        />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }} />
+        
+        <Line 
+          type="monotone" 
+          dataKey="base" 
+          name="Base" 
+          stroke={BASE_COLOR} 
+          strokeWidth={2}
+          dot={false}
+          strokeDasharray="5 5"
+        />
+        
+        {scenarios.map((_, idx) => (
+          <Line 
+            key={idx}
+            type="monotone" 
+            dataKey={`scen${idx}`} 
+            name={`Escenario ${idx + 1}`} 
+            stroke={COLORS[idx % COLORS.length]} 
+            strokeWidth={3}
+            dot={false}
+            animationDuration={1500}
+          />
+        ))}
+      </LineChart>
+    </ResponsiveContainer>
+  );
 
-  if (scenA) {
-    barData.push({
-      name: 'Escenario A',
-      Principal: loanPrincipal,
-      Intereses: scenA.totalInterest,
-    });
-  }
-
-  if (scenB) {
-    barData.push({
-      name: 'Escenario B',
-      Principal: loanPrincipal,
-      Intereses: scenB.totalInterest,
-      totalCost: loanPrincipal + scenB.totalInterest
-    });
-  }
-
-  // Find the cheapest scenario to highlight it
-  const cheapest = [...barData].sort((a, b) => (a.Intereses || 0) - (b.Intereses || 0))[0];
-
-  // Colors
-  const colors = {
-    base: '#9ca3af', // gray-400
-    scenA: '#10b981', // emerald-500
-    scenB: '#3b82f6', // blue-500
-    principal: '#4b5563', // gray-600
-    interest: '#f59e0b', // amber-500
-  };
-
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="bg-gray-900 border border-gray-700 p-3 rounded shadow-xl text-xs">
-          <p className="text-gray-400 mb-2">Mes {label}</p>
-          {payload.map((entry, index) => (
-            <div key={index} className="flex items-center gap-2 mb-1" style={{ color: entry.color }}>
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }}></span>
-              <span>{entry.name}: {new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(entry.value)}</span>
-            </div>
+  const renderPaymentChart = () => (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
+        <defs>
+          <linearGradient id="colorBase" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor={BASE_COLOR} stopOpacity={0.3}/>
+            <stop offset="95%" stopColor={BASE_COLOR} stopOpacity={0}/>
+          </linearGradient>
+          {scenarios.map((_, idx) => (
+            <linearGradient key={idx} id={`colorScen${idx}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor={COLORS[idx % COLORS.length]} stopOpacity={0.3}/>
+              <stop offset="95%" stopColor={COLORS[idx % COLORS.length]} stopOpacity={0}/>
+            </linearGradient>
           ))}
-        </div>
-      );
-    }
-    return null;
-  };
+        </defs>
+        <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} vertical={false} />
+        <XAxis 
+          dataKey="month" 
+          stroke="#6b7280" 
+          tick={{ fontSize: 10 }}
+          tickFormatter={(val) => `A${Math.floor(val/12)}`}
+          minTickGap={30}
+        />
+        <YAxis 
+          stroke="#6b7280" 
+          tick={{ fontSize: 10 }}
+        />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }} />
+        
+        <Area 
+          type="stepAfter" 
+          dataKey="basePayment" 
+          name="Base" 
+          stroke={BASE_COLOR} 
+          fillOpacity={1} 
+          fill="url(#colorBase)" 
+          strokeWidth={1}
+          strokeDasharray="3 3"
+        />
+
+        {scenarios.map((_, idx) => (
+          <Area 
+            key={idx}
+            type="stepAfter" 
+            dataKey={`scen${idx}Payment`} 
+            name={`Escenario ${idx + 1}`} 
+            stroke={COLORS[idx % COLORS.length]} 
+            fillOpacity={1} 
+            fill={`url(#colorScen${idx})`} 
+            strokeWidth={2}
+          />
+        ))}
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+
+  const renderSavingsChart = () => (
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart data={barData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+        <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.3} horizontal={true} vertical={false} />
+        <XAxis dataKey="name" stroke="#6b7280" tick={{ fontSize: 10 }} />
+        <YAxis stroke="#6b7280" tick={{ fontSize: 10 }} tickFormatter={(val) => `${(val/1000).toFixed(0)}k`} />
+        <Tooltip 
+          cursor={{ fill: 'rgba(255,255,255,0.05)' }}
+          content={<CustomTooltip />}
+        />
+        <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }} />
+        <Bar dataKey="Inyectado" name="Inversión" stackId="a" fill="#4b5563" radius={[0, 0, 0, 0]} />
+        <Bar dataKey="Ahorro" name="Ahorro Intereses" stackId="a" radius={[4, 4, 0, 0]}>
+           {barData.map((entry, index) => (
+             <Area key={`cell-${index}`} fill={entry.fill} />
+           ))}
+        </Bar>
+      </BarChart>
+    </ResponsiveContainer>
+  );
+
+  const TabButton = ({ id, label }) => (
+    <button
+      onClick={() => setActiveTab(id)}
+      className={`px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-300 border-b-2 ${
+        activeTab === id 
+          ? 'text-white border-accent bg-accent/10' 
+          : 'text-gray-500 border-transparent hover:text-gray-300 hover:bg-white/5'
+      }`}
+    >
+      {label}
+    </button>
+  );
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-150">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      {/* Line Chart: Balance */}
-      <div className="bg-black/20 border border-white/5 rounded-xl p-6">
-        <h3 className="text-lg font-display font-bold uppercase tracking-wider text-gray-200 mb-6">
-          Evolución del Saldo Pendiente
-        </h3>
-        <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.5} />
-              <XAxis 
-                dataKey="month" 
-                stroke="#6b7280" 
-                tick={{ fontSize: 12 }}
-                tickFormatter={(val) => `A${Math.floor(val/12)}`} // Show years approx
-              />
-              <YAxis 
-                stroke="#6b7280" 
-                tick={{ fontSize: 12 }}
-                tickFormatter={(val) => `${(val/1000).toFixed(0)}k`}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend wrapperStyle={{ paddingTop: '20px' }} />
-              
-              <Line 
-                type="monotone" 
-                dataKey="base" 
-                name="Base (Sin cambios)" 
-                stroke={colors.base} 
-                strokeWidth={2}
-                dot={false}
-              />
-              
-              {scenA && (
-                <Line 
-                  type="monotone" 
-                  dataKey="scenA" 
-                  name="Escenario A" 
-                  stroke={colors.scenA} 
-                  strokeWidth={2}
-                  dot={false}
-                />
-              )}
-              
-              {scenB && (
-                <Line 
-                  type="monotone" 
-                  dataKey="scenB" 
-                  name="Escenario B" 
-                  stroke={colors.scenB} 
-                  strokeWidth={2}
-                  dot={false}
-                />
-              )}
-            </LineChart>
-          </ResponsiveContainer>
+      {/* Chart Header & Navigation */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/5 bg-black/20 p-1">
+        <div className="flex w-full sm:w-auto">
+          <TabButton id="balance" label="Saldo" />
+          <TabButton id="payment" label="Cuota" />
+          <TabButton id="savings" label="Ahorro" />
+        </div>
+        <div className="hidden sm:block text-[10px] text-gray-500 uppercase tracking-widest px-4 italic">
+          Análisis Visual Proyectado
         </div>
       </div>
 
-      {/* Bar Chart: Total Cost */}
-      <div className="bg-black/20 border border-white/5 rounded-xl p-6">
-        <h3 className="text-lg font-display font-bold uppercase tracking-wider text-gray-200 mb-6">
-          Coste Total del Préstamo
-        </h3>
-        <div className="h-[300px] w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={barData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" opacity={0.5} horizontal={false} />
-              <XAxis type="number" stroke="#6b7280" tickFormatter={(val) => `${(val/1000).toFixed(0)}k`} />
-              <YAxis type="category" dataKey="name" stroke="#6b7280" width={100} tick={{ fontSize: 12 }} />
-              <Tooltip 
-                cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-                contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#f3f4f6' }}
-                formatter={(value) => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(value)}
-              />
-              <Legend wrapperStyle={{ paddingTop: '20px' }} />
-              <Bar dataKey="Principal" stackId="a" fill={colors.principal} name="Principal Devuelto" />
-              <Bar dataKey="Intereses" stackId="a" fill={colors.interest} name="Intereses Totales" />
-            </BarChart>
-          </ResponsiveContainer>
+      {/* Main Chart Container */}
+      <div className="bg-black/20 border border-white/5 rounded-xl p-4 sm:p-6 min-h-[400px]">
+        <div className="h-[350px] w-full">
+           {activeTab === 'balance' && renderBalanceChart()}
+           {activeTab === 'payment' && renderPaymentChart()}
+           {activeTab === 'savings' && renderSavingsChart()}
         </div>
-        <p className="text-[10px] text-gray-500 mt-4 text-center">
-          {cheapest && cheapest.name !== 'Base' 
-            ? `💡 El ${cheapest.name} es la opción más económica, ahorrando ${new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(base.totalInterest - (cheapest.Intereses || 0))} en intereses.`
-            : "Compara los escenarios para ver el ahorro potencial en intereses."}
-        </p>
+      </div>
+
+      {/* Insight Footer */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+         <div className="p-4 border border-white/5 bg-card/30 cyber-chamfer text-[10px] text-gray-400 leading-relaxed">
+            <span className="text-accent font-bold uppercase mr-2">Proyección:</span>
+            Los gráficos muestran la evolución teórica basada en tipos de interés constantes. 
+            La estrategia de <span className="text-white">Reducción de Cuota</span> se visualiza como un escalonado descendente en el gráfico de Cuota.
+         </div>
+         <div className="p-4 border border-white/5 bg-card/30 cyber-chamfer text-[10px] text-gray-400 leading-relaxed">
+            <span className="text-accent-secondary font-bold uppercase mr-2">Nota:</span>
+            El ahorro acumulado incluye la diferencia de intereses pagados entre el escenario base y el proyectado con amortizaciones.
+         </div>
       </div>
 
     </div>

@@ -179,32 +179,33 @@ export const calculateAmortizationWithInjection = ({
   };
 };
 
-export const mergeSchedules = (baseSchedule, scenASchedule, scenBSchedule) => {
+export const mergeSchedules = (baseSchedule, scenariosSchedules = []) => {
   const maxLength = Math.max(
     baseSchedule?.length || 0,
-    scenASchedule?.length || 0,
-    scenBSchedule?.length || 0
+    ...scenariosSchedules.map(s => s?.length || 0)
   );
 
   const merged = [];
   
   for (let i = 0; i < maxLength; i++) {
-    // Schedules are 0-indexed arrays, but represent Month 1, 2, 3...
-    // If schedule[i] exists, use its balance. Else 0.
-    
-    // Safety check: sometimes schedules might start at month 0? 
-    // My engine starts at month 1, so index 0 is month 1. Correct.
-    
     const baseItem = baseSchedule?.[i];
-    const scenAItem = scenASchedule?.[i];
-    const scenBItem = scenBSchedule?.[i];
-
-    merged.push({
+    
+    const entry = {
       month: i + 1,
-      base: baseItem ? baseItem.balance : 0,
-      scenA: scenAItem ? scenAItem.balance : 0,
-      scenB: scenBItem ? scenBItem.balance : 0
+      base: baseItem ? baseItem.balance : 0
+    };
+
+    scenariosSchedules.forEach((sched, idx) => {
+      const item = sched?.[i];
+      entry[`scen${idx}`] = item ? item.balance : 0;
+      // Also include payment if we want to chart it
+      entry[`scen${idx}Payment`] = item ? item.payment : 0;
     });
+
+    // Also include base payment
+    entry.basePayment = baseItem ? baseItem.payment : 0;
+
+    merged.push(entry);
   }
 
   return merged;
