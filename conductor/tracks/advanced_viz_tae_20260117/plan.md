@@ -1,6 +1,6 @@
 # Implementation Plan: Advanced Visualizations & TAE Analysis
 
-## Phase 1: Engine & Logic (TAE/IRR)
+## Phase 1: Engine & Logic (TAE/IRR) [checkpoint: 0a8815a]
 - [x] Task: Implement IRR (Internal Rate of Return) utility 6df32f1
     - [ ] Create `src/utils/financialCalculations.js` with an iterative IRR function (Newton-Raphson or Secant method).
     - [ ] Create `src/utils/__tests__/financialCalculations.test.js` with test cases for standard loans and loans with extra injections.
