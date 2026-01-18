@@ -13,7 +13,7 @@
     - [x] Sub-task: Unit tests for `ComparisonSummary` verifying the range display.
 - [ ] Task: Conductor - User Manual Verification 'Dynamic Summary Updates' (Protocol in workflow.md)
 
-## Phase 3: Chart Implementation [checkpoint: a2ccc2a]
+## Phase 3: Chart Implementation [checkpoint: 2deae20]
 - [x] Task: Create Chart Container & Tabs [a2ccc2a]
     - [x] Sub-task: Implement a new `AmortizationCharts` container component at the bottom of the simulator.
     - [x] Sub-task: Add tabs/toggles for "Balance Path", "Payment Evolution", and "Savings Analysis".
@@ -28,9 +28,12 @@
 - [ ] Task: Conductor - User Manual Verification 'Chart Implementation' (Protocol in workflow.md)
 
 ## Phase 4: Integration & Polish
+- [ ] Task: Implement State Persistence
+    - [ ] Sub-task: Persist `baseData` and `scenarios` in `AmortizationSimulatorTab` to `localStorage`.
+    - [ ] Sub-task: Persist active tab in `App.jsx` to `localStorage`.
 - [ ] Task: Integrate Charts into Simulator Tab
-    - [ ] Sub-task: Import and place `AmortizationCharts` in `AmortizationSimulatorTab.jsx`.
-    - [ ] Sub-task: Pass `results` data to the charts.
+    - [x] Sub-task: Import and place `AmortizationCharts` in `AmortizationSimulatorTab.jsx`. (Already done in Phase 3)
+    - [x] Sub-task: Pass `results` data to the charts. (Already done in Phase 3)
 - [ ] Task: Verify Edge Cases
     - [ ] Sub-task: Manual verify with "0 repetitions" (infinite).
     - [ ] Sub-task: Manual verify with "Injection > Balance".
