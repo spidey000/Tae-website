@@ -10,6 +10,7 @@ import {
   ResponsiveContainer,
   BarChart,
   Bar,
+  Cell,
   AreaChart,
   Area
 } from 'recharts';
@@ -57,8 +58,8 @@ export function ComparisonCharts({ base, scenarios, principal }) {
 
   const barData = scenarios.map((scen, idx) => ({
     name: `Escenario ${idx + 1}`,
-    Ahorro: scen.totalSavings,
-    Inyectado: scen.totalInjected,
+    Ahorro: scen.totalSavings || 0,
+    Inyectado: scen.totalInjected || 0,
     fill: COLORS[idx % COLORS.length]
   }));
 
@@ -175,10 +176,10 @@ export function ComparisonCharts({ base, scenarios, principal }) {
           content={<CustomTooltip />}
         />
         <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }} />
-        <Bar dataKey="Inyectado" name="Inversión" stackId="a" fill="#4b5563" radius={[0, 0, 0, 0]} />
-        <Bar dataKey="Ahorro" name="Ahorro Intereses" stackId="a" radius={[4, 4, 0, 0]}>
+        <Bar dataKey="Inyectado" name="Inversión" fill="#4b5563" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="Ahorro" name="Ahorro Intereses" radius={[4, 4, 0, 0]}>
            {barData.map((entry, index) => (
-             <Area key={`cell-${index}`} fill={entry.fill} />
+             <Cell key={`cell-${index}`} fill={entry.fill} />
            ))}
         </Bar>
       </BarChart>
