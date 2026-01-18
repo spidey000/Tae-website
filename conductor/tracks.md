@@ -20,5 +20,10 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
+- [x] **Track: Auditoría Matemática y Financiera**
+*Link: [./tracks/math_audit_20260118/](./tracks/math_audit_20260118/)*
+
+---
+
 - [ ] **Track: Advanced Investment Comparison with selectable compounding and tax logic.**
 *Link: [./tracks/investment_comparison_v2_20260118/](./tracks/investment_comparison_v2_20260118/)*
