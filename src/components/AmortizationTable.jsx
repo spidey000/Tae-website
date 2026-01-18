@@ -9,7 +9,7 @@ export const AmortizationTable = ({ schedule }) => {
     <div className="bg-card border border-border cyber-chamfer overflow-hidden flex flex-col h-[500px]">
       <div className="overflow-auto flex-1 custom-scrollbar">
         <table className="min-w-full divide-y divide-border">
-          <thead className="bg-muted/50 sticky top-0 z-10">
+          <thead className="bg-card sticky top-0 z-10">
             <tr className="border-b border-accent/20">
               <th scope="col" className="px-4 py-4 text-center text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] w-20">
                 Mes
