@@ -20,28 +20,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-
-
-- [x] **Track: Advanced Visualizations & TAE Analysis**
-
-*Link: [./tracks/advanced_viz_tae_20260117/](./tracks/advanced_viz_tae_20260117/)*
-
----
-
-- [x] **Track: Investment Comparison & Return Analysis**
-*Link: [./tracks/investment_comparison_20260118/](./tracks/investment_comparison_20260118/)*
-
----
-
-- [x] **Track: Auditoría Matemática y Financiera**
-*Link: [./tracks/math_audit_20260118/](./tracks/math_audit_20260118/)*
-
----
-
-- [x] **Track: Comparativa Inversión vs Amortización**
-*Link: [./tracks/investment_comparison_20260118/](./tracks/investment_comparison_20260118/)*
-
----
-
 - [ ] **Track: Advanced Investment Comparison with selectable compounding and tax logic.**
 *Link: [./tracks/investment_comparison_v2_20260118/](./tracks/investment_comparison_v2_20260118/)*
