@@ -30,3 +30,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 - [ ] **Track: Auditoría Matemática y Financiera**
 *Link: [./tracks/math_audit_20260118/](./tracks/math_audit_20260118/)*
+
+---
+
+- [x] **Track: Comparativa Inversión vs Amortización**
+*Link: [./tracks/investment_comparison_20260118/](./tracks/investment_comparison_20260118/)*

@@ -14,7 +14,8 @@ vi.mock('recharts', () => ({
   Tooltip: () => null,
   Legend: () => null,
   BarChart: () => <div>BarChart</div>,
-  Bar: () => null,
+  Bar: ({ children }) => <div>{children}</div>,
+  Cell: () => null,
 }));
 
 describe('AmortizationSimulatorTab Component', () => {

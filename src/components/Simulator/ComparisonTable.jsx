@@ -24,6 +24,8 @@ const ComparisonTable = ({ base, scenarios }) => {
   ];
 
   // 2. Define Rows & Logic
+  const hasInvestment = scenarios.some(s => s.investMode);
+  
   const rows = [
     {
       id: 'totalInjected',
@@ -31,7 +33,7 @@ const ComparisonTable = ({ base, scenarios }) => {
       icon: null,
       getValue: (d) => d.totalInjected || 0,
       format: (v) => formatMoney(v),
-      bestCriteria: 'min', // Less investment is technically "better" for wallet, but context dependent. Let's say 'min' cost is good, but here it's input. Let's ignore "best" for injection amount usually, or treat 0 as best? Actually users want to see the effect. Let's not highlight "best" injection, just display it.
+      bestCriteria: 'min', 
       highlightBest: false
     },
     {
@@ -42,7 +44,7 @@ const ComparisonTable = ({ base, scenarios }) => {
       bestCriteria: 'min',
       highlightBest: true,
       showDelta: true,
-      inverseDelta: true // Negative delta (savings) is Good (Green)
+      inverseDelta: true 
     },
     {
       id: 'totalSavings',
@@ -51,33 +53,71 @@ const ComparisonTable = ({ base, scenarios }) => {
       format: (v) => formatMoney(v),
       bestCriteria: 'max',
       highlightBest: true,
-      showDelta: false // Absolute value is already the delta vs base
+      showDelta: false 
     },
     {
       id: 'newTerm',
       label: 'Plazo Total',
-      getValue: (d) => d.finalMonths || 0, // value for comparison
-      getDisplay: (d) => d.newTerm || "0y 0m", // value for display
+      getValue: (d) => d.finalMonths || 0, 
+      getDisplay: (d) => d.newTerm || "0y 0m", 
       bestCriteria: 'min',
       highlightBest: true,
-      showDelta: true, // We will calculate delta in months/years
+      showDelta: true, 
       deltaType: 'term'
     },
     {
       id: 'roi',
-      label: 'ROI',
+      label: 'ROI Amortización',
       getValue: (d) => d.roi || 0,
       format: (v) => formatPercent(v / 100),
       bestCriteria: 'max',
       highlightBest: true,
       showDelta: true,
       deltaType: 'multiplier',
-      inverseDelta: false // Positive delta is Good
+      inverseDelta: false 
     },
+    ...(hasInvestment ? [
+        {
+            id: 'investmentProfit',
+            label: 'Retorno Inversión',
+            getValue: (d) => d.investMode ? (d.investmentProfit || 0) : 0,
+            getDisplay: (d) => d.investMode ? formatMoney(d.investmentProfit) : <span className="text-gray-600">-</span>,
+            bestCriteria: 'max',
+            highlightBest: true,
+            showDelta: false
+        },
+        {
+            id: 'netVsAmort',
+            label: 'Inversión vs Amort.',
+            getValue: (d) => d.investMode ? (d.investmentProfit - d.totalSavings) : -Infinity, // compare against infinity to avoid highlighting non-invest scenarios as best? or just 0.
+            getDisplay: (d) => {
+                 if (!d.investMode) return <span className="text-gray-600">-</span>;
+                 const val = d.investmentProfit - d.totalSavings;
+                 const isInvestBetter = val > 0;
+                 // const color = isInvestBetter ? 'text-accent' : 'text-red-400';
+                 // If Invest is better, Green. If Amort is better (negative val), Red? 
+                 // Wait, Red usually means "Bad". Here negative means "Don't Invest, Amortize". 
+                 // So displaying it as Red is fine ("Loss compared to amortizing").
+                 return (
+                     <div className="flex flex-col text-[10px] leading-tight">
+                        <span className={`font-bold ${val > 0 ? 'text-accent' : 'text-red-400'}`}>
+                            {val > 0 ? '+' : ''}{formatMoney(val)}
+                        </span>
+                        <span className="opacity-60 text-[9px]">
+                            {val > 0 ? 'Mejor Invertir' : 'Mejor Amortizar'}
+                        </span>
+                     </div>
+                 );
+            },
+            bestCriteria: 'max',
+            highlightBest: true,
+            showDelta: false
+        }
+    ] : []),
     {
       id: 'monthlyPayment',
       label: 'Cuota Mensual',
-      getValue: (d) => d.finalMonthlyPayment || 0, // Compare final payment?
+      getValue: (d) => d.finalMonthlyPayment || 0, 
       getDisplay: (d) => {
         const start = d.initialMonthlyPayment;
         const end = d.finalMonthlyPayment;
@@ -89,19 +129,9 @@ const ComparisonTable = ({ base, scenarios }) => {
           </div>
         );
       },
-      bestCriteria: 'min', // Usually lower monthly payment is "better" for cashflow
+      bestCriteria: 'min', 
       highlightBest: true,
       showDelta: false 
-    },
-    {
-      id: 'tae',
-      label: 'Final Total TAE',
-      getValue: (d) => d.tae || 0,
-      format: (v) => formatPercent(v / 100),
-      bestCriteria: 'min',
-      highlightBest: true,
-      showDelta: true,
-      inverseDelta: true // Lower TAE is better
     }
   ];
 

@@ -2,9 +2,10 @@ import React from 'react';
 import { InputGroup } from '../InputGroup';
 import { Layers } from 'lucide-react';
 import { Tooltip } from '../Tooltip';
+import { Toggle } from '../Toggle';
 
 export function ScenarioInputs({ scenario, onChange, index }) {
-  const { injectionAmount, injectionMonth, strategy, injectionFrequency, injectionCount } = scenario;
+  const { injectionAmount, injectionMonth, strategy, injectionFrequency, injectionCount, investMode, investReturnRate } = scenario;
   const isTerm = strategy === 'reduceTerm';
 
   return (
@@ -107,6 +108,34 @@ export function ScenarioInputs({ scenario, onChange, index }) {
               ? "Mantienes la cuota mensual, pero terminas de pagar antes." 
               : "Mantienes la fecha fin, pero pagas menos cada mes."}
           </p>
+        </div>
+
+        {/* Investment Comparison */}
+        <div className="mt-6 border-t border-white/5 pt-4">
+            <div className="flex items-center justify-between mb-4">
+                <label className="text-xs font-bold text-accent uppercase tracking-[0.2em] flex items-center gap-2">
+                    Comparar Inversión
+                    <Tooltip content="Calcula cuánto ganarías si invirtieras este capital en lugar de amortizar." />
+                </label>
+                <Toggle 
+                    enabled={investMode || false} 
+                    onChange={(val) => onChange('investMode', val)} 
+                />
+            </div>
+
+            {investMode && (
+                <div className="animate-in fade-in slide-in-from-top-2">
+                     <InputGroup
+                        label="Retorno Anual Esperado"
+                        value={investReturnRate ?? 4}
+                        onChange={(v) => onChange('investReturnRate', v === '' ? '' : Number(v))}
+                        suffix="%"
+                        step={0.1}
+                        placeholder="4.0"
+                        helpText="Rentabilidad media anual (ej. Depósito 3%, Bolsa 7%)."
+                      />
+                </div>
+            )}
         </div>
       </div>
     </section>

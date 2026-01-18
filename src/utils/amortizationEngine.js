@@ -9,11 +9,14 @@ export const calculateAmortizationWithInjection = ({
   injectionMonth = 0,
   injectionFrequency = 'once', // 'once', 'monthly', 'yearly'
   injectionCount = null, // number or null
-  strategy = 'reduceTerm'
+  strategy = 'reduceTerm',
+  investReturnRate = 0,
+  investMode = false
 }) => {
   const scenario = { injectionAmount, injectionMonth, injectionFrequency, injectionCount, strategy };
   // 1. Initial Setup
   const monthlyRate = annualTIN / 100 / 12;
+  const investmentMonthlyRate = investMode ? (investReturnRate / 100 / 12) : 0;
   const totalMonths = years * 12;
   let currentBalance = principal;
   let currentPayment = calculateMonthlyPayment(principal, annualTIN, years);
@@ -21,6 +24,7 @@ export const calculateAmortizationWithInjection = ({
   const schedule = [];
   let totalInterest = 0;
   let totalInjected = 0;
+  let totalInvestmentFV = 0;
   
   const baseMonthlyPayment = calculateMonthlyPayment(principal, annualTIN, years);
   const baseTotalInterest = roundInternal((baseMonthlyPayment * totalMonths) - principal);
@@ -90,6 +94,15 @@ export const calculateAmortizationWithInjection = ({
       currentBalance = roundInternal(currentBalance - extraPrincipal);
       totalInjected = roundInternal(totalInjected + extraPrincipal);
 
+      // Investment Calculation (Opportunity Cost)
+      // We calculate what this extraPrincipal would have earned if invested
+      // until the end of the original loan term.
+      if (investMode) {
+         const monthsToGrow = Math.max(0, totalMonths - month);
+         const fv = extraPrincipal * Math.pow(1 + investmentMonthlyRate, monthsToGrow);
+         totalInvestmentFV += fv;
+      }
+
       if (currentBalance > 0) {
         if (strategy === 'reduceInstallment') {
            const remainingMonths = totalMonths - month;
@@ -123,7 +136,8 @@ export const calculateAmortizationWithInjection = ({
 
   const totalSavings = totalInjected > 0 ? Math.max(0, roundInternal(baseTotalInterest - totalInterest)) : 0;
   const roi = totalInjected > 0 ? roundInternal((totalSavings / totalInjected) * 100) : 0;
-  
+  const investmentProfit = investMode ? Math.max(0, roundInternal(totalInvestmentFV - totalInjected)) : 0;
+
   const finalMonths = schedule.length;
   const initialMonthlyPayment = calculateMonthlyPayment(principal, annualTIN, years);
 
@@ -144,7 +158,9 @@ export const calculateAmortizationWithInjection = ({
     newTerm: `${Math.floor(finalMonths / 12)}y ${finalMonths % 12}m`,
     initialMonthlyPayment,
     finalMonthlyPayment: currentPayment,
-    finalMonths 
+    finalMonths,
+    investmentProfit,
+    investMode
   };
 };
 
