@@ -15,7 +15,7 @@ export const calculateAmortizationWithInjection = ({
   const monthlyRate = annualTIN / 100 / 12;
   const totalMonths = years * 12;
   let currentBalance = principal;
-  let currentPayment = calculateMonthlyPayment(principal, annualTIN, years);
+  let currentPayment = roundToMoney(calculateMonthlyPayment(principal, annualTIN, years));
   
   const schedule = [];
   let totalInterest = 0;
@@ -125,11 +125,11 @@ export const calculateAmortizationWithInjection = ({
            if (remainingMonths > 0) {
              // We use the NEW balance to calculate NEW payment for REMAINING time
              // Note: calculateMonthlyPayment expects "Years".
-             currentPayment = calculateMonthlyPayment(
+             currentPayment = roundToMoney(calculateMonthlyPayment(
                currentBalance, 
                annualTIN, 
                remainingMonths / 12
-             );
+             ));
            }
         }
         // If strategy === 'reduceTerm', we simply do nothing. 
