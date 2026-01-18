@@ -15,13 +15,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-
-
 - [x] **Track: Visualización de Inyecciones Recurrentes y Resumen Dinámico**
-
-*Link: [./tracks/recurring_visualizations_20260117/](./tracks/recurring_visualizations_20260117/)*
-
-
+*Link: [./archive/recurring_visualizations_20260117/](./archive/recurring_visualizations_20260117/)*
 
 ---
 
