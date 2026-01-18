@@ -14,20 +14,10 @@
     - [ ] Add the "Final Total TAE" row definition.
     - [ ] Configure it as `bestCriteria: 'min'` and `inverseDelta: true`.
     - [ ] Ensure formatting handles percentage display correctly.
-- [x] Task: Create `AdvancedVisualizations` Section d519091
-    - [ ] Create `src/components/Simulator/AdvancedCharts.jsx` as a container for the new graphs.
-    - [ ] Add it to `AmortizationSimulatorTab.jsx` below the summary table.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: UI Components' (Protocol in workflow.md)
 
-## Phase 3: Detailed Charts Implementation
-- [ ] Task: Implement Cumulative Interest Chart
-    - [ ] Create a Recharts line chart comparing cumulative interest over time for all scenarios.
-    - [ ] Implement the "Drop to zero" logic for scenarios that end early.
-- [ ] Task: Implement Annual Interest & Quota Evolution Charts
-    - [ ] Create the bar chart for annual interest distribution.
-    - [ ] Create the line/step chart for monthly payment history.
-- [ ] Task: Implement TAE Comparison Bar Chart
-    - [ ] Create a simple bar chart comparing the final calculated TAE across all scenarios.
+## Phase 3: (Phase Canceled - Visualizations removed)
+- [ ] Task: (Canceled)
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Detailed Charts' (Protocol in workflow.md)
 
 ## Phase 4: Refinement & Validation
