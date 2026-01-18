@@ -1,8 +1,0 @@
-{
-  "track_id": "advanced_viz_tae_20260117",
-  "type": "feature",
-  "status": "new",
-  "created_at": "2026-01-17T12:00:00Z",
-  "updated_at": "2026-01-17T12:00:00Z",
-  "description": "the new scensrios wont appear automsgically in the charts. i want charts with total inteterests , monthly quotas, amd final total TAE calculated. add the final total TAE to the summary table"
-}
