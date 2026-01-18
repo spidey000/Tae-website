@@ -1,0 +1,8 @@
+{
+  "track_id": "math_audit_20260118",
+  "type": "chore",
+  "status": "new",
+  "created_at": "2026-01-18T12:00:00Z",
+  "updated_at": "2026-01-18T12:00:00Z",
+  "description": "check the soundness of all the mathmatics and write a report. check the maths of both tabs, calculations, charts.. rounding errors and drifting acumulating errors. any aeeror asociates with calcularions and finacials"
+}
