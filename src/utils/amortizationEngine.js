@@ -1,6 +1,60 @@
 import { calculateMonthlyPayment, roundInternal } from './mortgageCalculations';
 import { calculateIRR } from './financialCalculations';
 
+/**
+ * Calculates the Annualized Return (TAE) of the injection by comparing
+ * the cash flows of the base scenario vs. the injection scenario.
+ * 
+ * @param {Array} baseSchedule - The full schedule of the base loan (no injection).
+ * @param {Array} scenarioSchedule - The full schedule of the scenario (with injection).
+ * @returns {number} The annualized return percentage (TAE).
+ */
+export const calculateInvestmentReturn = (baseSchedule, scenarioSchedule) => {
+    if (!baseSchedule || !scenarioSchedule || baseSchedule.length === 0 || scenarioSchedule.length === 0) {
+        return 0;
+    }
+
+    const cashFlows = [];
+    const maxMonth = Math.max(baseSchedule.length, scenarioSchedule.length);
+
+    // 1. Identify Injection Cash Flows (Negative)
+    // We assume the injection is the difference in payment when payment > installment?
+    // Or better: rely on the 'payment' field difference?
+    // Warning: 'payment' field in scenario includes the injection amount.
+    // 'payment' field in base is just the regular payment.
+    // Difference = Base - Scenario.
+    // If Scenario has injection of 10k: Payment is (Regular + 10k).
+    // Difference = Regular - (Regular + 10k) = -10k. (Investment/Outflow).
+    // Later months:
+    // Base: 500. Scenario: 400.
+    // Difference = 500 - 400 = +100. (Return/Inflow).
+    // Base: 500. Scenario: 0 (Finished).
+    // Difference = 500 - 0 = +500. (Return/Inflow).
+
+    for (let i = 0; i < maxMonth; i++) {
+        const baseItem = baseSchedule[i];
+        const scenItem = scenarioSchedule[i];
+
+        const basePayment = baseItem ? baseItem.payment : 0;
+        const scenPayment = scenItem ? scenItem.payment : 0;
+
+        const diff = basePayment - scenPayment;
+
+        if (Math.abs(diff) > 0.01) {
+            cashFlows.push({
+                month: i + 1, // Month 1 is the first payment
+                amount: diff
+            });
+        }
+    }
+
+    // If no cash flows (identical schedules), return 0
+    if (cashFlows.length === 0) return 0;
+
+    // Calculate IRR
+    return calculateIRR(cashFlows);
+};
+
 export const calculateAmortizationWithInjection = ({
   principal,
   annualTIN,

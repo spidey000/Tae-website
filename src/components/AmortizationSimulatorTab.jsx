@@ -4,7 +4,7 @@ import { ScenarioInputs } from './Simulator/ScenarioInputs';
 import { ComparisonTable } from './Simulator/ComparisonTable';
 import { ComparisonCharts } from './Simulator/ComparisonCharts';
 import { AmortizationTable } from './AmortizationTable';
-import { calculateAmortizationWithInjection } from '../utils/amortizationEngine';
+import { calculateAmortizationWithInjection, calculateInvestmentReturn } from '../utils/amortizationEngine';
 import { Plus, Trash2, Table as TableIcon } from 'lucide-react';
 
 export function AmortizationSimulatorTab() {
@@ -101,7 +101,8 @@ export function AmortizationSimulatorTab() {
           ...baseData,
           ...scen,
         });
-        return { ...res, strategy: scen.strategy };
+        const investmentReturn = calculateInvestmentReturn(baseResult.schedule, res.schedule);
+        return { ...res, strategy: scen.strategy, investmentReturn };
     });
 
     setResults({
