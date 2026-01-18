@@ -13,18 +13,18 @@
     - [x] Sub-task: Unit tests for `ComparisonSummary` verifying the range display.
 - [ ] Task: Conductor - User Manual Verification 'Dynamic Summary Updates' (Protocol in workflow.md)
 
-## Phase 3: Chart Implementation
-- [ ] Task: Create Chart Container & Tabs
-    - [ ] Sub-task: Implement a new `AmortizationCharts` container component at the bottom of the simulator.
-    - [ ] Sub-task: Add tabs/toggles for "Balance Path", "Payment Evolution", and "Savings Analysis".
-- [ ] Task: Implement Multi-Line Balance Chart
-    - [ ] Sub-task: Use Recharts `LineChart` to plot `balance` for Base, Scenario A, and Scenario B over time.
-    - [ ] Sub-task: Handle different series lengths (scenarios ending earlier).
-- [ ] Task: Implement Payment Evolution Area Chart
-    - [ ] Sub-task: Use Recharts `AreaChart` to show `payment` value over time.
-    - [ ] Sub-task: Verify visual distinction between constant payment (Base/ReduceTerm) and decreasing payment (ReduceInstallment).
-- [ ] Task: Implement Savings Bar Chart
-    - [ ] Sub-task: Use Recharts `BarChart` to compare Total Injected vs Total Interest Saved.
+## Phase 3: Chart Implementation [checkpoint: a2ccc2a]
+- [x] Task: Create Chart Container & Tabs [a2ccc2a]
+    - [x] Sub-task: Implement a new `AmortizationCharts` container component at the bottom of the simulator.
+    - [x] Sub-task: Add tabs/toggles for "Balance Path", "Payment Evolution", and "Savings Analysis".
+- [x] Task: Implement Multi-Line Balance Chart [a2ccc2a]
+    - [x] Sub-task: Use Recharts `LineChart` to plot `balance` for Base, Scenario A, and Scenario B over time.
+    - [x] Sub-task: Handle different series lengths (scenarios ending earlier).
+- [x] Task: Implement Payment Evolution Area Chart [a2ccc2a]
+    - [x] Sub-task: Use Recharts `AreaChart` to show `payment` value over time.
+    - [x] Sub-task: Verify visual distinction between constant payment (Base/ReduceTerm) and decreasing payment (ReduceInstallment).
+- [x] Task: Implement Savings Bar Chart [a2ccc2a]
+    - [x] Sub-task: Use Recharts `BarChart` to compare Total Injected vs Total Interest Saved.
 - [ ] Task: Conductor - User Manual Verification 'Chart Implementation' (Protocol in workflow.md)
 
 ## Phase 4: Integration & Polish
