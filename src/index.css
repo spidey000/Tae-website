@@ -28,7 +28,7 @@
     position: relative;
   }
 
-  /* Scanlines Overlay */
+  /* Scanlines Overlay - Removed for clarity in charts
   body::after {
     content: "";
     position: fixed;
@@ -46,6 +46,7 @@
     pointer-events: none;
     z-index: 9999;
   }
+  */
 }
 
 @layer utilities {
