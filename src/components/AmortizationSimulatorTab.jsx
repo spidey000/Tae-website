@@ -3,8 +3,9 @@ import { BaseLoanInputs } from './Simulator/BaseLoanInputs';
 import { ScenarioInputs } from './Simulator/ScenarioInputs';
 import { ComparisonTable } from './Simulator/ComparisonTable';
 import { ComparisonCharts } from './Simulator/ComparisonCharts';
+import { AmortizationTable } from './AmortizationTable';
 import { calculateAmortizationWithInjection } from '../utils/amortizationEngine';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Table as TableIcon } from 'lucide-react';
 
 export function AmortizationSimulatorTab() {
   // --- State ---
@@ -16,6 +17,8 @@ export function AmortizationSimulatorTab() {
       annualTIN: 3.5,
     };
   });
+
+  const [activeTable, setActiveTable] = useState('base'); // 'base' or index 0, 1, 2...
 
   const [scenarios, setScenarios] = useState(() => {
     const saved = localStorage.getItem('tae_sim_scenarios');
@@ -168,6 +171,53 @@ export function AmortizationSimulatorTab() {
             scenarios={results.scenarios} 
             principal={baseData.principal}
           />
+
+          {/* Detailed Amortization Table Section */}
+          <div className="space-y-4 pt-6 border-t border-white/5">
+             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-2">
+                <h3 className="text-sm font-bold text-accent uppercase tracking-widest flex items-center gap-2">
+                   <TableIcon className="w-4 h-4" /> Tabla de Amortización Detallada
+                </h3>
+                
+                {/* Table Selector */}
+                <div className="flex bg-black/40 border border-border rounded p-1 gap-1 overflow-x-auto max-w-full">
+                  <button
+                    onClick={() => setActiveTable('base')}
+                    className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded transition-all whitespace-nowrap ${
+                      activeTable === 'base' 
+                        ? 'bg-accent/20 text-accent' 
+                        : 'text-gray-500 hover:text-gray-300'
+                    }`}
+                  >
+                    Base
+                  </button>
+                  {scenarios.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setActiveTable(idx)}
+                      className={`px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded transition-all whitespace-nowrap ${
+                        activeTable === idx 
+                          ? 'bg-accent/20 text-accent' 
+                          : 'text-gray-500 hover:text-gray-300'
+                      }`}
+                    >
+                      Escenario {idx + 1}
+                    </button>
+                  ))}
+                </div>
+             </div>
+
+             <AmortizationTable 
+               schedule={activeTable === 'base' 
+                  ? results.base?.schedule 
+                  : results.scenarios[activeTable]?.schedule
+               } 
+             />
+             
+             <p className="text-[10px] text-gray-500 italic text-center max-w-2xl mx-auto">
+               * Los cálculos pueden presentar pequeñas variaciones de redondeo (±1 mes o céntimos) respecto a su banco debido a las diferencias en el tratamiento de decimales en cada entidad.
+             </p>
+          </div>
         </div>
       </div>
     </div>
