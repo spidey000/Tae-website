@@ -100,6 +100,7 @@ export function AmortizationSimulatorTab() {
         const res = calculateAmortizationWithInjection({
           ...baseData,
           ...scen,
+          investReturnRate: scen.investReturnRate ?? 4,
         });
         return { ...res, strategy: scen.strategy };
     });
