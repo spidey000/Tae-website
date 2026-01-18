@@ -87,7 +87,6 @@ export const calculateAmortizationWithInjection = ({
     if (shouldInject && injectionAmount > 0) {
       extraPrincipal = injectionAmount;
       didInject = true;
-      totalInjected += extraPrincipal;
     }
 
     // C. Standard Payment Logic
@@ -115,6 +114,8 @@ export const calculateAmortizationWithInjection = ({
         extraPrincipal = currentBalance;
       }
       currentBalance -= extraPrincipal;
+      totalInjected += extraPrincipal; // Track actual injected amount
+
       
       // F. Recalculation Trigger
       if (currentBalance > 0) {
@@ -143,6 +144,7 @@ export const calculateAmortizationWithInjection = ({
     schedule.push({
       month,
       payment: paymentForThisMonth + extraPrincipal,
+      installment: paymentForThisMonth, // New field: Just the required monthly quota
       interest,
       amortization: amortization + extraPrincipal,
       balance: currentBalance,
@@ -200,10 +202,12 @@ export const mergeSchedules = (baseSchedule, scenariosSchedules = []) => {
       entry[`scen${idx}`] = item ? item.balance : 0;
       // Also include payment if we want to chart it
       entry[`scen${idx}Payment`] = item ? item.payment : 0;
+      entry[`scen${idx}Installment`] = item ? item.installment : 0;
     });
 
     // Also include base payment
     entry.basePayment = baseItem ? baseItem.payment : 0;
+    entry.baseInstallment = baseItem ? baseItem.installment : 0;
 
     merged.push(entry);
   }
