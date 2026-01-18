@@ -92,6 +92,16 @@ const ComparisonTable = ({ base, scenarios }) => {
       bestCriteria: 'min', // Usually lower monthly payment is "better" for cashflow
       highlightBest: true,
       showDelta: false 
+    },
+    {
+      id: 'tae',
+      label: 'Final Total TAE',
+      getValue: (d) => d.tae || 0,
+      format: (v) => formatPercent(v / 100),
+      bestCriteria: 'min',
+      highlightBest: true,
+      showDelta: true,
+      inverseDelta: true // Lower TAE is better
     }
   ];
 
