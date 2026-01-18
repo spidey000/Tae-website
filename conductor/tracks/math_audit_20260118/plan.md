@@ -10,12 +10,12 @@ Este plan detalla los pasos para auditar, corregir y documentar la precisión ma
 - [x] Task: Verificación de la transformación de datos para los gráficos en `src/components/AmortizationChart.jsx` [574ad10]
 - [x] Task: Conductor - User Manual Verification 'Análisis y Diagnóstico' (Protocol in workflow.md) [b94d164]
 
-## Phase 2: Fortalecimiento de la Suite de Tests
+## Phase 2: Fortalecimiento de la Suite de Tests [checkpoint: f40f003]
 
 - [x] Task: Crear tests de estrés para el motor de amortización (plazos largos, tipos de interés extremos) [3b7fd8f]
 - [x] Task: Implementar tests específicos de redondeo financiero (casos de borde .005) en `src/utils/__tests__/` [3b7fd8f]
 - [x] Task: Validar la consistencia entre el motor de amortización y el resumen de resultados [e82143e]
-- [~] Task: Conductor - User Manual Verification 'Fortalecimiento de la Suite de Tests' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Fortalecimiento de la Suite de Tests' (Protocol in workflow.md) [f40f003]
 
 ## Phase 3: Implementación de Correcciones y Refactorización
 
