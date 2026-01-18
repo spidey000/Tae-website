@@ -213,10 +213,6 @@ export function AmortizationSimulatorTab() {
                   : results.scenarios[activeTable]?.schedule
                } 
              />
-             
-             <p className="text-[10px] text-gray-500 italic text-center max-w-2xl mx-auto">
-               * Los cálculos pueden presentar pequeñas variaciones de redondeo (±1 mes o céntimos) respecto a su banco debido a las diferencias en el tratamiento de decimales en cada entidad.
-             </p>
           </div>
         </div>
       </div>

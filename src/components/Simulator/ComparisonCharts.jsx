@@ -229,7 +229,7 @@ export function ComparisonCharts({ base, scenarios, principal }) {
       </div>
 
       {/* Insight Footer */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
          <div className="p-4 border border-white/5 bg-card/30 cyber-chamfer text-[10px] text-gray-400 leading-relaxed">
             <span className="text-accent font-bold uppercase mr-2">Proyección:</span>
             Los gráficos muestran la evolución teórica basada en tipos de interés constantes. 
@@ -238,6 +238,10 @@ export function ComparisonCharts({ base, scenarios, principal }) {
          <div className="p-4 border border-white/5 bg-card/30 cyber-chamfer text-[10px] text-gray-400 leading-relaxed">
             <span className="text-accent-secondary font-bold uppercase mr-2">Nota:</span>
             El ahorro acumulado incluye la diferencia de intereses pagados entre el escenario base y el proyectado con amortizaciones.
+         </div>
+         <div className="p-4 border border-white/5 bg-card/30 cyber-chamfer text-[10px] text-gray-400 leading-relaxed">
+            <span className="text-accent-tertiary font-bold uppercase mr-2">Precisión:</span>
+            Los cálculos pueden presentar variaciones de redondeo (±1 mes o céntimos) respecto a su banco debido a diferencias en el tratamiento de decimales.
          </div>
       </div>
 
