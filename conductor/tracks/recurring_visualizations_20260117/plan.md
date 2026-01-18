@@ -27,7 +27,7 @@
     - [x] Sub-task: Use Recharts `BarChart` to compare Total Injected vs Total Interest Saved.
 - [ ] Task: Conductor - User Manual Verification 'Chart Implementation' (Protocol in workflow.md)
 
-## Phase 4: Integration & Polish
+## Phase 4: Integration & Polish [checkpoint: 23b5df7]
 - [x] Task: Implement State Persistence [7285c4c]
     - [x] Sub-task: Persist `baseData` and `scenarios` in `AmortizationSimulatorTab` to `localStorage`.
     - [x] Sub-task: Persist active tab in `App.jsx` to `localStorage`.
