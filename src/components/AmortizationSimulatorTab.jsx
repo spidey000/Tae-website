@@ -3,6 +3,7 @@ import { BaseLoanInputs } from './Simulator/BaseLoanInputs';
 import { ScenarioInputs } from './Simulator/ScenarioInputs';
 import { ComparisonTable } from './Simulator/ComparisonTable';
 import { ComparisonCharts } from './Simulator/ComparisonCharts';
+import { AdvancedCharts } from './Simulator/AdvancedCharts';
 import { AmortizationTable } from './AmortizationTable';
 import { calculateAmortizationWithInjection } from '../utils/amortizationEngine';
 import { Plus, Trash2, Table as TableIcon } from 'lucide-react';
@@ -170,6 +171,11 @@ export function AmortizationSimulatorTab() {
             base={results.base} 
             scenarios={results.scenarios} 
             principal={baseData.principal}
+          />
+
+          <AdvancedCharts 
+            base={results.base} 
+            scenarios={results.scenarios} 
           />
 
           {/* Detailed Amortization Table Section */}
